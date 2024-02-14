@@ -1,36 +1,43 @@
 #include "ofApp.h"
 
+ofTrueTypeFont font;
+
 //--------------------------------------------------------------
 void ofApp::setup() {
     ofSetLogLevel(OF_LOG_VERBOSE);
-
-    // Initialize parameters
-    floatParams.emplace_back("Float Param 1", 0.0, 0.0, 10.0);
-    floatParams.emplace_back("Float Param 2", 5.0, 0.0, 10.0);
-
-    intParams.emplace_back("Int Param 1", 5, 0, 10);
-    intParams.emplace_back("Int Param 2", 2, 0, 5);
-
-    // Create GUI elements
-    float y = 10;  // Initial y-position
-    for (auto& param : floatParams) {
-        auto guiElement = std::make_shared<ofxFloatSlider>();
-        guiElement->setup(param);
-        guiElement->setPosition(10, y);  // Set position
-        guiElements.push_back(guiElement);
-        y += 30;  // Adjust vertical spacing
-    }
-
-    for (auto& param : intParams) {
-        auto guiElement = std::make_shared<ofxIntSlider>();
-        guiElement->setup(param);
-        guiElement->setPosition(10, y);  // Set position
-        guiElements.push_back(guiElement);
-        y += 30;  // Adjust vertical spacing
-    }
-
-    // Set GUI position and size
-    gui.setPosition(10, 10);
+    monoLineTextInput.setup();
+    monoLineTextInput.text = "hello world";
+    monoLineTextInput.bounds.x = 100;
+    monoLineTextInput.bounds.y = 100;
+    monoLineTextInput.bounds.height = 40;
+    monoLineTextInput.bounds.width = 188;
+    multilineTextInput.setup();
+    
+    multilineTextInput.text = "0: #include \"testApp.h\"\n"
+    "1: \n"
+    "2: //--------------------------------------------------------------\n"
+    "3: void testApp::setup() {\n"
+    "4: \n"
+    "5:     monoLineTextInput.setup();\n"
+    "6:     monoLineTextInput.text = \"hello world\";\n"
+    "7:     monoLineTextInput.bounds.x = 100;\n"
+    "8:     monoLineTextInput.bounds.y = 100;\n"
+    "9:\n"
+    "10:    multilineTextInput.setup();\n"
+    "11: \n"
+    "12:     monoLineTextInput.text = \"hello world\";\n"
+    "13:    monoLineTextInput.bounds.x = 100;\n"
+    "14:    monoLineTextInput.bounds.y = 100;\n"
+    "15:\n"
+    "16:\n"
+    "17: }\n";
+    multilineTextInput.bounds.x = 300;
+    multilineTextInput.bounds.y = 100;
+    multilineTextInput.bounds.width = 400;
+    multilineTextInput.bounds.height = 500;
+    multilineTextInput.multiline = true;
+    font.loadFont(OF_TTF_SERIF, 18);
+    monoLineTextInput.setFont(font);
 }
 
 //--------------------------------------------------------------
@@ -40,10 +47,14 @@ void ofApp::update(){
 
 //--------------------------------------------------------------
 void ofApp::draw(){
-    /// Draw the GUI panel
-    for (auto& element : guiElements) {
-        element->draw();
-    }
+    ofBackground(255*.15);
+    ofDisableAntiAliasing();
+    ofSetColor(255);
+    ofRect(monoLineTextInput.bounds);
+    ofRect(multilineTextInput.bounds);
+    ofNoFill();
+    monoLineTextInput.draw();
+    multilineTextInput.draw();
 }
 
 //--------------------------------------------------------------

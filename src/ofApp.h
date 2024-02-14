@@ -1,7 +1,7 @@
 #pragma once
 
 #include "ofMain.h"
-#include "ofxGui.h"
+#include "ofxTextInputField.h"
 
 class ofApp : public ofBaseApp{
 
@@ -24,11 +24,7 @@ class ofApp : public ofBaseApp{
 		void dragEvent(ofDragInfo dragInfo) override;
 		void gotMessage(ofMessage msg) override;
     
-private:
-    ofxPanel gui; // GUI panel for editable text fields
-    std::vector<std::shared_ptr<ofxBaseGui>> guiElements;
-    std::vector<ofParameter<float>> floatParams;
-    std::vector<ofParameter<int>> intParams;
+        ofxTextInputField monoLineTextInput, multilineTextInput;
 
 		
 };
