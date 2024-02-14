@@ -7,7 +7,7 @@ void ofApp::setup() {
     ofSetLogLevel(OF_LOG_VERBOSE);
     ofDisableAntiAliasing();
     ofTrueTypeFont font;
-    font.load("/System/Library/Fonts/Supplemental/Times New Roman.ttf", 18);
+    font.load(OF_TTF_SERIF, 18);
     /*
     monoLineTextInput.setup();
     monoLineTextInput.text = "hello world";

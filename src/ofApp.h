@@ -60,7 +60,7 @@ public:
         drawOrder.push_back(newNFValue); // Add to draw order
         
         textInputField.setup();
-        textInputField.text = "MMMMMMMM"; // ofToString(newNFValue->value.get());
+        textInputField.text = ofToString(newNFValue->value.get());
         textInputField.bounds.x = x;
         textInputField.bounds.y = y;
         textInputField.bounds.height = height;
