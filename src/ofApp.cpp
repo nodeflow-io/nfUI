@@ -2,13 +2,35 @@
 
 //--------------------------------------------------------------
 void ofApp::setup() {
-    ofParameter<float> floatParam("Float Param", 0.0, 0.0, 10.0);
-    ofParameter<int> intParam("Int Param", 5, 0, 10);
+    ofSetLogLevel(OF_LOG_VERBOSE);
 
-    parameters.emplace_back("Float Param", floatParam);
-    parameters.emplace_back("Int Param", intParam);
+    // Initialize parameters
+    floatParams.emplace_back("Float Param 1", 0.0, 0.0, 10.0);
+    floatParams.emplace_back("Float Param 2", 5.0, 0.0, 10.0);
 
-    textInputRenderer.setup(parameters);
+    intParams.emplace_back("Int Param 1", 5, 0, 10);
+    intParams.emplace_back("Int Param 2", 2, 0, 5);
+
+    // Create GUI elements
+    float y = 10;  // Initial y-position
+    for (auto& param : floatParams) {
+        auto guiElement = std::make_shared<ofxFloatSlider>();
+        guiElement->setup(param);
+        guiElement->setPosition(10, y);  // Set position
+        guiElements.push_back(guiElement);
+        y += 30;  // Adjust vertical spacing
+    }
+
+    for (auto& param : intParams) {
+        auto guiElement = std::make_shared<ofxIntSlider>();
+        guiElement->setup(param);
+        guiElement->setPosition(10, y);  // Set position
+        guiElements.push_back(guiElement);
+        y += 30;  // Adjust vertical spacing
+    }
+
+    // Set GUI position and size
+    gui.setPosition(10, 10);
 }
 
 //--------------------------------------------------------------
@@ -18,7 +40,10 @@ void ofApp::update(){
 
 //--------------------------------------------------------------
 void ofApp::draw(){
-    textInputRenderer.draw();
+    /// Draw the GUI panel
+    for (auto& element : guiElements) {
+        element->draw();
+    }
 }
 
 //--------------------------------------------------------------
