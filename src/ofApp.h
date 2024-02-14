@@ -115,6 +115,7 @@ class ofApp : public ofBaseApp{
 	public:
 		void setup() override;
 		void update() override;
+        void drawValue();
 		void draw() override;
 		void exit() override;
 

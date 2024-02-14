@@ -54,51 +54,60 @@ void ofApp::setup() {
     ofxTextInputField textInputField2;
     ofxTextInputField textInputField3;
     ofxTextInputField textInputField4;
+    ofxTextInputField textInputField5;
     
     textInputFields.push_back(textInputField1);
     textInputFields.push_back(textInputField2);
     textInputFields.push_back(textInputField3);
     textInputFields.push_back(textInputField4);
+    textInputFields.push_back(textInputField5);
     
     // Add NFValues to the node with labels and set up textInputFields
-    nfNode.addNFValue<StringNFValue, std::string>("String Value", "Hello", textInputFields[0], 200, 220, 100, 20, font);
-    nfNode.addNFValue<DoubleNFValue, double>("Double Value", 3.14, textInputFields[1], 200, 240, 100, 20, font);
-    nfNode.addNFValue<BoolNFValue, bool>("Bool Value", true, textInputFields[2], 200, 260, 100, 20, font);
-    nfNode.addNFValue<IntNFValue, int>("Int Value", 42, textInputFields[3], 200, 280, 100, 20, font);
-
+    nfNode.addNFValue<DoubleNFValue, double>("Stepper", 3.14, textInputFields[0], 200, 200, 100, 20, font);
+    nfNode.addNFValue<IntNFValue, int>("Accleration", 42, textInputFields[1], 200, 220, 100, 20, font);
+    nfNode.addNFValue<BoolNFValue, bool>("Reset", false, textInputFields[2], 200, 240, 100, 20, font);
+    nfNode.addNFValue<StringNFValue, std::string>("Mode", "Forward", textInputFields[3], 200, 260, 100, 20, font);
+    nfNode.addNFValue<BoolNFValue, bool>("isReady", true, textInputFields[4], 200, 280, 100, 20, font);
 }
 
 //--------------------------------------------------------------
 void ofApp::update(){
 
 }
+void drawPanel(uint32_t x, uint32_t y, uint32_t width, uint32_t height) {
+    // Set color to blue (filled)
+    ofSetColor(128, 128, 128);
+    // Draw a filled rectangle at position (100, 100) with a width of 200 and height of 150
+    ofDrawRectangle(x, y, width, height);
+
+    // Set color to black (outline)
+    ofSetColor(255);
+    // Draw the same rectangle with no fill to create the outline
+    ofNoFill();
+    ofDrawRectangle(x, y, width, height);
+    ofDrawRectangle(x + width, y, width, height);
+    ofFill(); // Restore fill mode for subsequent drawings
+}
 
 //--------------------------------------------------------------
-void ofApp::draw(){
+void ofApp::drawValue(){
     ofBackground(0);
     ofSetColor(255);
     
-    
-    /*
-    ofRect(monoLineTextInput.bounds);
-    ofRect(multilineTextInput.bounds);
-    
-    monoLineTextInput.draw();
-    multilineTextInput.draw();
-    ofPushStyle();
-    // Draw the parameter display
-    parameterDisplay->draw();
-    ofPopStyle();
-     */
-    
-    // NF
     // Access and modify NFValues in the order they were added
     const std::vector<NFValue*>& drawOrder = nfNode.getDrawOrder();
     size_t indexCounter=0;
     for (const auto& nfValue : drawOrder) {
+        ofRectangle rect = textInputFields[indexCounter].bounds;
+        drawPanel(rect.x, rect.y, rect.width, rect.height);
+        ofSetColor(255);
+        // adjust position for font rendering
+        rect.x += 10;
+        rect.y += 14;
         if (typeid(StringNFValue) == typeid(*nfValue)) {
             StringNFValue* strNFValue = dynamic_cast<StringNFValue*>(nfValue);
-            ofDrawBitmapString(strNFValue->value.getName() + ": " + strNFValue->value.get(), 20, 220);
+            ofDrawBitmapString(strNFValue->value.getName(), rect.x, rect.y);
+            ofDrawBitmapString(strNFValue->value.get(), rect.x+rect.width, rect.y);
             /*
             ofRect(textInputFields[indexCounter].bounds);
             ofNoFill();
@@ -107,7 +116,8 @@ void ofApp::draw(){
             
         } else if (typeid(DoubleNFValue) == typeid(*nfValue)) {
             DoubleNFValue* doubleNFValue = dynamic_cast<DoubleNFValue*>(nfValue);
-            ofDrawBitmapString(doubleNFValue->value.getName() + ": " + ofToString(doubleNFValue->value.get()), 20, 240);
+            ofDrawBitmapString(doubleNFValue->value.getName(), rect.x, rect.y);
+            ofDrawBitmapString(doubleNFValue->value.get(), rect.x+rect.width, rect.y);
             /*
             ofRect(textInputFields[indexCounter].bounds);
             ofNoFill();
@@ -115,7 +125,14 @@ void ofApp::draw(){
              */
         } else if (typeid(BoolNFValue) == typeid(*nfValue)) {
             BoolNFValue* boolNFValue = dynamic_cast<BoolNFValue*>(nfValue);
-            ofDrawBitmapString(boolNFValue->value.getName() + ": " + ofToString(boolNFValue->value.get()), 20, 260);
+            ofDrawBitmapString(boolNFValue->value.getName(), rect.x, rect.y);
+            bool isTrue = boolNFValue->value.get();
+            if (isTrue) {
+                ofDrawBitmapString("True", rect.x+rect.width, rect.y);
+            } else {
+                ofDrawBitmapString("False", rect.x+rect.width, rect.y);
+            }
+            
             /*
             ofRect(textInputFields[indexCounter].bounds);
             ofNoFill();
@@ -123,7 +140,8 @@ void ofApp::draw(){
              */
         } else if (typeid(IntNFValue) == typeid(*nfValue)) {
             IntNFValue* intNFValue = dynamic_cast<IntNFValue*>(nfValue);
-            ofDrawBitmapString(intNFValue->value.getName() + ": " + ofToString(intNFValue->value.get()), 20, 280);
+            ofDrawBitmapString(intNFValue->value.getName(), rect.x, rect.y);
+            ofDrawBitmapString(intNFValue->value.get(), rect.x+rect.width, rect.y);
             /*
             ofRect(textInputFields[indexCounter].bounds);
             ofNoFill();
@@ -132,6 +150,13 @@ void ofApp::draw(){
         }
         indexCounter++;
     }
+}
+
+//--------------------------------------------------------------
+void ofApp::draw(){
+    ofBackground(0);
+    ofSetColor(255);
+    drawValue();
 }
 
 //--------------------------------------------------------------
