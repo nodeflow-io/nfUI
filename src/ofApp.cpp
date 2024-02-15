@@ -34,7 +34,7 @@ void ofApp::setupTxt() {
     multilineTextInput.bounds.height = 500;
     multilineTextInput.multiline = true;
     // Load a TrueType font file (replace "your_font.ttf" with the actual filename)
-    if (font.loadFont("Roboto-Thin.ttf", 18)) {
+    if (font.loadFont("Roboto-Thin.ttf", 12)) {
         // Font loaded successfully, you can use it now
     } else {
         // Handle the case where the font failed to load
