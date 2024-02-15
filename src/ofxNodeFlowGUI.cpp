@@ -52,7 +52,6 @@ void ofxNodeFlowGUI::drawPanel(uint32_t x, uint32_t y, uint32_t width, uint32_t 
     ofSetColor(128, 128, 128);
     // Draw a filled rectangle at position (100, 100) with a width of 200 and height of 150
     ofDrawRectangle(x, y, width, height);
-    
     // Set color to black (outline)
     ofSetColor(255);
     // Draw the same rectangle with no fill to create the outline
@@ -63,30 +62,35 @@ void ofxNodeFlowGUI::drawPanel(uint32_t x, uint32_t y, uint32_t width, uint32_t 
 }
 
 void ofxNodeFlowGUI::drawValue() {
+    static uint32_t debugDisplay = 0;
     ofBackground(0);
     ofSetColor(255);
-    
+    ofPushStyle();
     // Access and modify NFValues in the order they were added
     const std::vector<NFValue*>& drawOrder = nfNode.getDrawOrder();
     size_t indexCounter=0;
     for (const auto& nfValue : drawOrder) {
-        ofRectangle initialPosition = textInputFields[indexCounter].bounds;
-        ofRectangle labelPosition = textInputFields[indexCounter].bounds;
-        ofRectangle valuePosition = textInputFields[indexCounter].bounds;
+        ofRectangle initialPosition = textInputFields[indexCounter].position;
+        ofRectangle labelPosition = initialPosition;
+        ofRectangle valuePosition = initialPosition;
         this->drawPanel(labelPosition.x, labelPosition.y, labelPosition.width, labelPosition.height);
         ofSetColor(255);
-        // adjust position for font rendering
+        // adjust label position for font rendering
         labelPosition.x += 10;
         labelPosition.y += 14;
         valuePosition.x += valuePosition.width+7;
-        valuePosition.y += valuePosition.y-86;
+        valuePosition.y += valuePosition.y;
         textInputFields[indexCounter].bounds=valuePosition;
+        textInputFields[indexCounter].setup();
+        if (debugDisplay<5) {
+            std::cout << indexCounter << " " << initialPosition.y << " " << initialPosition.y << " -> " << valuePosition.x << " " << valuePosition.y <<  "\n";
+            debugDisplay++;
+        }
         if (typeid(StringNFValue) == typeid(*nfValue)) {
             StringNFValue* strNFValue = dynamic_cast<StringNFValue*>(nfValue);
             ofDrawBitmapString(strNFValue->value.getName(), labelPosition.x, labelPosition.y);
             textInputFields[indexCounter].text = strNFValue->value.get();
             textInputFields[indexCounter].draw();
-            
         } else if (typeid(DoubleNFValue) == typeid(*nfValue)) {
             DoubleNFValue* doubleNFValue = dynamic_cast<DoubleNFValue*>(nfValue);
             ofDrawBitmapString(doubleNFValue->value.getName(), labelPosition.x, labelPosition.y);
@@ -110,9 +114,10 @@ void ofxNodeFlowGUI::drawValue() {
             textInputFields[indexCounter].draw();
         }
         // set back to the initial position because we are drawing a reference
-        textInputFields[indexCounter].bounds = initialPosition;
+        textInputFields[indexCounter].bounds = textInputFields[indexCounter].position;
         indexCounter++;
     }
+    ofPopStyle();
 }
 
 void ofxNodeFlowGUI::draw() { 

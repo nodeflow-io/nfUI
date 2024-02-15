@@ -64,6 +64,7 @@ class ofxTextInputField {
     bool drawCursor;
     
     ofRectangle bounds;
+    ofRectangle position;
 	
     void draw();
 	void clear();

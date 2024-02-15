@@ -1,7 +1,6 @@
 #include "ofApp.h"
 
 void ofApp::setupTxt() {
-    
     monoLineTextInput.setup();
     monoLineTextInput.text = "hello world";
     monoLineTextInput.bounds.x = 20;
@@ -53,7 +52,6 @@ void ofApp::setup() {
     font.load(OF_TTF_SERIF, 18);
     _nfGUI.setup();
     setupTxt();
-    
 }
 
 //--------------------------------------------------------------
