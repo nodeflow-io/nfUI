@@ -7,6 +7,7 @@
 //  modified by James George 12/2/2011
 //  modified by Momo the Monster 7/10/2012
 //  swappable fonts added by James George 9/11/2012
+//  removed some depreceated drawing calls - Matthias Strohmaier 2/14/2024
 //
 //	MIT license
 //	http://www.opensource.org/licenses/mit-license.php
@@ -168,26 +169,26 @@ void ofxTextInputField::draw() {
 		
 		if(beginCursorY==endCursorY) {
 			// single line selection
-			ofRect(HORIZONTAL_PADDING + startX, VERTICAL_PADDING + fontRef->getLineHeight()*beginCursorY,
+            ofDrawRectangle(HORIZONTAL_PADDING + startX, VERTICAL_PADDING + fontRef->getLineHeight()*beginCursorY,
 				   endX - startX, fontRef->getLineHeight());
 		} else {
 			
 			// multiline selection.
 			// do first line to the end
-			ofRect(HORIZONTAL_PADDING + startX, VERTICAL_PADDING + fontRef->getLineHeight()*beginCursorY,
+            ofDrawRectangle(HORIZONTAL_PADDING + startX, VERTICAL_PADDING + fontRef->getLineHeight()*beginCursorY,
 				   fontRef->stringWidth(lines[beginCursorY]) - startX,
 				   fontRef->getLineHeight()
 			);
 			
 			// loop through entirely selected lines
 			for(int i = beginCursorY + 1; i < endCursorY; i++) {
-				ofRect(HORIZONTAL_PADDING, VERTICAL_PADDING + fontRef->getLineHeight()*i,
+                ofDrawRectangle(HORIZONTAL_PADDING, VERTICAL_PADDING + fontRef->getLineHeight()*i,
 					   fontRef->stringWidth(lines[i]),
 					   fontRef->getLineHeight()
 				);
 			}
 			// do last line up to endX
-			ofRect(HORIZONTAL_PADDING, VERTICAL_PADDING + fontRef->getLineHeight()*endCursorY,
+            ofDrawRectangle(HORIZONTAL_PADDING, VERTICAL_PADDING + fontRef->getLineHeight()*endCursorY,
 					endX, fontRef->getLineHeight()
 			);
 		}
@@ -224,7 +225,7 @@ void ofxTextInputField::draw() {
 		
 		ofSetLineWidth(1.0f);
 		//TODO: multiline with fontRef
-        ofLine(cursorPos, cursorTop,
+        ofDrawLine(cursorPos, cursorTop,
 			   cursorPos, cursorBottom);
         ofPopStyle();
     }
