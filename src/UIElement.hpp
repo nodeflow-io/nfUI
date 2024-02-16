@@ -35,13 +35,13 @@ struct NfUIConfig {
     NfUIConfig() {
         // Set default values for the config
         backgroundColor = ofColor::gray;
-        textColor = ofColor::black;
+        textColor = ofColor::white;
         borderColor = ofColor::white;
-        focusColor = ofColor::blue;
+        focusColor = ofColor::yellow;
         focusBackgroundColor = ofColor::lightBlue;
         padding = 5.0f;
         margin = 10.0f;
-        borderSize = 2.0f;
+        borderSize = 1.0f;
         width = 100.0f;
         height = 30.0f;
         minWidth = 50.0f;

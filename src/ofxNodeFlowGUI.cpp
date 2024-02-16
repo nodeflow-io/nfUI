@@ -19,7 +19,7 @@ void ofxNodeFlowGUI::setup() {
     // Load a TrueType font file (replace "your_font.ttf" with the actual filename)
     std::string fontFace = "Roboto-Thin.ttf";
     uint32_t fontSize = 11;
-    if (font.loadFont(fontFace, fontSize)) {
+    if (_font.loadFont(fontFace, fontSize)) {
         // Font loaded successfully, you can use it now
         ofLogError() << "ofxNodeFlowGUI::setup(): loaded font" << fontFace+ " size: " << fontSize;
     } else {
@@ -33,18 +33,18 @@ void ofxNodeFlowGUI::setup() {
     nfUI::ofxTextInputField textInputField4;
     nfUI::ofxTextInputField textInputField5;
     
-    textInputFields.push_back(textInputField1);
-    textInputFields.push_back(textInputField2);
-    textInputFields.push_back(textInputField3);
-    textInputFields.push_back(textInputField4);
-    textInputFields.push_back(textInputField5);
+    _textInputFields.push_back(textInputField1);
+    _textInputFields.push_back(textInputField2);
+    _textInputFields.push_back(textInputField3);
+    _textInputFields.push_back(textInputField4);
+    _textInputFields.push_back(textInputField5);
     
     // Add NFValues to the node with labels and set up textInputFields
-    nfNode.addNFValue<DoubleNFValue, double>("Stepper", 3.14, textInputFields[0], 20, 20, 120, 20, font);
-    nfNode.addNFValue<IntNFValue, int>("Accelleration", 42, textInputFields[1], 20, 40, 120, 20, font);
-    nfNode.addNFValue<BoolNFValue, bool>("Reset", false, textInputFields[2], 20, 60, 120, 20, font);
-    nfNode.addNFValue<StringNFValue, std::string>("Mode", "Forward", textInputFields[3], 20, 80, 120, 20, font);
-    nfNode.addNFValue<BoolNFValue, bool>("isReady", true, textInputFields[4], 20, 100, 120, 20, font);
+    _nfNode.addNFValue<DoubleNFValue, double>("Stepper", 3.14, _textInputFields[0], 20, 20, 120, 20, _font);
+    _nfNode.addNFValue<IntNFValue, int>("Accelleration", 42, _textInputFields[1], 20, 40, 120, 20, _font);
+    _nfNode.addNFValue<BoolNFValue, bool>("Reset", false, _textInputFields[2], 20, 60, 120, 20, _font);
+    _nfNode.addNFValue<StringNFValue, std::string>("Mode", "Forward", _textInputFields[3], 20, 80, 120, 20, _font);
+    _nfNode.addNFValue<BoolNFValue, bool>("isReady", true, _textInputFields[4], 20, 100, 120, 20, _font);
 }
 
 void ofxNodeFlowGUI::drawPanel(uint32_t x, uint32_t y, uint32_t width, uint32_t height) {
@@ -71,13 +71,13 @@ void ofxNodeFlowGUI::drawValue() {
     uint32_t channelSpacing = 20;
     uint32_t paddingHorizontal = 10;
     // Access and modify NFValues in the order they were added
-    const std::vector<NFValue*>& drawOrder = nfNode.getDrawOrder();
+    const std::vector<NFValue*>& drawOrder = _nfNode.getDrawOrder();
     size_t indexCounter=0;
     std::string name;
     std::string value;
     // iterate over all name / value pairs
     for (const auto& nfValue : drawOrder) {
-        ofRectangle initialPosition = textInputFields[indexCounter].position;
+        ofRectangle initialPosition = _textInputFields[indexCounter].position;
         ofRectangle labelPosition = initialPosition;
         ofRectangle valuePosition = initialPosition;
         this->drawPanel(labelPosition.x, labelPosition.y, labelPosition.width, labelPosition.height);
@@ -110,10 +110,10 @@ void ofxNodeFlowGUI::drawValue() {
         glPushMatrix();
         ofDrawBitmapString(name, labelPosition.x, labelPosition.y);
         glTranslatef(0, -2, 0);
-        textInputFields[indexCounter].setup();
-        textInputFields[indexCounter].bounds=valuePosition;
-        textInputFields[indexCounter].text = value;
-        textInputFields[indexCounter].draw();
+        _textInputFields[indexCounter].setup();
+        _textInputFields[indexCounter].bounds=valuePosition;
+        _textInputFields[indexCounter].text = value;
+        _textInputFields[indexCounter].draw();
         glPopMatrix();
         indexCounter++;
     }

@@ -141,19 +141,10 @@ bool ofxTextInputField::getIsEnabled(){
 }
 
 void ofxTextInputField::draw() {
-    
     ofPushMatrix();
     ofTranslate(bounds.x, bounds.y);
-    
-    
-    
-    
-    
-    
-    
+
     if(selecting) {
-        
-        
         ofPushStyle();
         // argh, splitting all the time.
         vector<string> lines = ofSplitString(text, "\n");

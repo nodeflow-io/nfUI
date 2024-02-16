@@ -106,10 +106,11 @@ public:
     void drawPanel(uint32_t x, uint32_t y, uint32_t width, uint32_t height);
     void drawValue();
     void draw();
+    nfUI::NfUIConfig _nfuiConfig;
 protected:
-    ofTrueTypeFont font;
-    std::vector<nfUI::ofxTextInputField> textInputFields;
-    NFNode nfNode;
+    ofTrueTypeFont _font;
+    std::vector<nfUI::ofxTextInputField> _textInputFields;
+    NFNode _nfNode;
 };
 
 #endif /* ofxNodeFlowGUI_hpp */
