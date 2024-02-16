@@ -124,15 +124,15 @@ public:
     ofxNodeFlowGUI();
     virtual ~ofxNodeFlowGUI();
     
-    void setup();
+    void setup(NFNode& _nfNode, std::vector<nfUI::ofxTextInputField>& _textInputFields);
+    void update(NFNode& nfNode, std::vector<nfUI::ofxTextInputField>& _textInputFields);
     void drawPanel(uint32_t x, uint32_t y, uint32_t width, uint32_t height);
-    void drawValue();
-    void draw();
+    void drawValue(NFNode& _nfNode, std::vector<nfUI::ofxTextInputField>& _textInputFields);
+    void draw(NFNode& _nfNode, std::vector<nfUI::ofxTextInputField>& _textInputFields);
     nfUI::NfUIConfig _nfuiConfig;
 protected:
     ofTrueTypeFont _font;
-    std::vector<nfUI::ofxTextInputField> _textInputFields;
-    NFNode _nfNode;
+    
 };
 
 #endif /* ofxNodeFlowGUI_hpp */

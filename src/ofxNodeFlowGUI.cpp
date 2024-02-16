@@ -15,7 +15,7 @@ ofxNodeFlowGUI::ofxNodeFlowGUI() {
 ofxNodeFlowGUI::~ofxNodeFlowGUI()  {
 }
 
-void ofxNodeFlowGUI::setup() {
+void ofxNodeFlowGUI::setup(NFNode& _nfNode, std::vector<nfUI::ofxTextInputField>& _textInputFields) {
     // Load a TrueType font file (replace "your_font.ttf" with the actual filename)
     std::string fontFace = "Roboto-Thin.ttf";
     uint32_t fontSize = 11;
@@ -27,24 +27,11 @@ void ofxNodeFlowGUI::setup() {
         ofLogError() << "ofxNodeFlowGUI::setup(): Failed to load font!";
     }
     // Add NFValues to the node with labels
-    nfUI::ofxTextInputField textInputField1;
-    nfUI::ofxTextInputField textInputField2;
-    nfUI::ofxTextInputField textInputField3;
-    nfUI::ofxTextInputField textInputField4;
-    nfUI::ofxTextInputField textInputField5;
     
-    _textInputFields.push_back(textInputField1);
-    _textInputFields.push_back(textInputField2);
-    _textInputFields.push_back(textInputField3);
-    _textInputFields.push_back(textInputField4);
-    _textInputFields.push_back(textInputField5);
+}
+
+void ofxNodeFlowGUI::update(NFNode& nfNode, std::vector<nfUI::ofxTextInputField>& _textInputFields) {
     
-    // Add NFValues to the node with labels and set up textInputFields
-    _nfNode.addNFValue<DoubleNFValue, double>("Stepper", 3.14, _textInputFields[0], 20, 20, 120, 20, _font);
-    _nfNode.addNFValue<IntNFValue, int>("Accelleration", 42, _textInputFields[1], 20, 40, 120, 20, _font);
-    _nfNode.addNFValue<BoolNFValue, bool>("Reset", false, _textInputFields[2], 20, 60, 120, 20, _font);
-    _nfNode.addNFValue<StringNFValue, std::string>("Mode", "Forward", _textInputFields[3], 20, 80, 120, 20, _font);
-    _nfNode.addNFValue<BoolNFValue, bool>("isReady", true, _textInputFields[4], 20, 100, 120, 20, _font);
 }
 
 void ofxNodeFlowGUI::drawPanel(uint32_t x, uint32_t y, uint32_t width, uint32_t height) {
@@ -61,7 +48,7 @@ void ofxNodeFlowGUI::drawPanel(uint32_t x, uint32_t y, uint32_t width, uint32_t 
     ofFill(); // Restore fill mode for subsequent drawings
 }
 
-void ofxNodeFlowGUI::drawValue() {
+void ofxNodeFlowGUI::drawValue(NFNode& _nfNode, std::vector<nfUI::ofxTextInputField>& _textInputFields) {
     ofBackground(0);
     ofSetColor(_nfuiConfig.textColor);
     ofPushStyle();
@@ -120,6 +107,6 @@ void ofxNodeFlowGUI::drawValue() {
     ofPopStyle();
 }
 
-void ofxNodeFlowGUI::draw() { 
-    this->drawValue();
+void ofxNodeFlowGUI::draw(NFNode& _nfNode, std::vector<nfUI::ofxTextInputField>& _textInputFields) {
+    this->drawValue(_nfNode, _textInputFields);
 }
