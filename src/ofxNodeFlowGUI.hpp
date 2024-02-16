@@ -68,12 +68,12 @@ public:
         drawOrder.push_back(newNFValue); // Add to draw order
         
         // Set up the textInputField
- 
+        textInputField.disable();
         textInputField.position.x = x;
         textInputField.position.y = y;
         textInputField.position.height = height;
         textInputField.position.width = width;
-        textInputField.setFont(font);
+        // textInputField.setFont(font); // we just render the default bitmap font
         
 
         return newNFValue;

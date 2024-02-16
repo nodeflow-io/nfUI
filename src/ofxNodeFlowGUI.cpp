@@ -78,7 +78,7 @@ void ofxNodeFlowGUI::drawValue() {
         // adjust label position for font rendering
         labelPosition.x += 10;
         labelPosition.y += 14;
-        valuePosition.x += valuePosition.width+7;
+        valuePosition.x =0; // += valuePosition.width+7;
         valuePosition.y += valuePosition.y;
         textInputFields[indexCounter].bounds=valuePosition;
         textInputFields[indexCounter].setup();
@@ -89,12 +89,15 @@ void ofxNodeFlowGUI::drawValue() {
         if (typeid(StringNFValue) == typeid(*nfValue)) {
             StringNFValue* strNFValue = dynamic_cast<StringNFValue*>(nfValue);
             ofDrawBitmapString(strNFValue->value.getName(), labelPosition.x, labelPosition.y);
+            glPushMatrix();
+            glTranslatef(valuePosition.x, valuePosition.y, 0);
             textInputFields[indexCounter].text = strNFValue->value.get();
             textInputFields[indexCounter].draw();
+            glPopMatrix();
         } else if (typeid(DoubleNFValue) == typeid(*nfValue)) {
             DoubleNFValue* doubleNFValue = dynamic_cast<DoubleNFValue*>(nfValue);
             ofDrawBitmapString(doubleNFValue->value.getName(), labelPosition.x, labelPosition.y);
-            textInputFields[indexCounter].text = doubleNFValue->value.get();
+            textInputFields[indexCounter].text = ofToString(doubleNFValue->value.get());
             textInputFields[indexCounter].draw();
         } else if (typeid(BoolNFValue) == typeid(*nfValue)) {
             BoolNFValue* boolNFValue = dynamic_cast<BoolNFValue*>(nfValue);
@@ -110,7 +113,7 @@ void ofxNodeFlowGUI::drawValue() {
         } else if (typeid(IntNFValue) == typeid(*nfValue)) {
             IntNFValue* intNFValue = dynamic_cast<IntNFValue*>(nfValue);
             ofDrawBitmapString(intNFValue->value.getName(), labelPosition.x, labelPosition.y);
-            textInputFields[indexCounter].text = intNFValue->value.get();
+            textInputFields[indexCounter].text = ofToString(intNFValue->value.get());
             textInputFields[indexCounter].draw();
         }
         // set back to the initial position because we are drawing a reference
