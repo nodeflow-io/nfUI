@@ -61,22 +61,43 @@ public:
 
     // Add an NFValue to the node with label, value, and textInputField
     template <typename T, typename... Args>
-    T* addNFValue(const std::string& label, Args&&... args, ofxTextInputField& textInputField, uint32_t x, uint32_t y, uint32_t width, uint32_t height, ofTrueTypeFont& font) {
+    T* addNFValue(const std::string& label, Args&&... args, nfUI::ofxTextInputField& textInputField, uint32_t x, uint32_t y, uint32_t width, uint32_t height, ofTrueTypeFont& font) {
         T* newNFValue = new T(std::forward<Args>(args)...);
         newNFValue->value.setName(label); // Set the label for the parameter
         nfValues.push_back(newNFValue);
         drawOrder.push_back(newNFValue); // Add to draw order
         
         // Set up the textInputField
-        textInputField.setup();
-        textInputField.text = ofToString(newNFValue->value.get());
-        textInputField.bounds.x = x;
-        textInputField.bounds.y = y;
-        textInputField.bounds.height = height;
-        textInputField.bounds.width = width;
-        textInputField.setFont(font);
+        textInputField.disable();
+        textInputField.position.x = x;
+        textInputField.position.y = y;
+        textInputField.position.height = height;
+        textInputField.position.width = width;
         
-
+        // Convert the value to a string and assign it to textInputField.text
+        // we don't use name here but I left it in for later debugging purposes
+        std::string name, value;
+        // get name and value as strings for display
+        if (typeid(StringNFValue) == typeid(*newNFValue)) {
+            StringNFValue* strNFValue = dynamic_cast<StringNFValue*>(newNFValue);
+            name = strNFValue->value.getName();
+            value = strNFValue->value.get();
+        } else if (typeid(DoubleNFValue) == typeid(*newNFValue)) {
+            DoubleNFValue* doubleNFValue = dynamic_cast<DoubleNFValue*>(newNFValue);
+            name = doubleNFValue->value.getName();
+            value = ofToString(doubleNFValue->value.get());
+        } else if (typeid(BoolNFValue) == typeid(*newNFValue)) {
+            BoolNFValue* boolNFValue = dynamic_cast<BoolNFValue*>(newNFValue);
+            name = boolNFValue->value.getName();
+            value = ofToString(boolNFValue->value.get());
+        } else if (typeid(IntNFValue) == typeid(*newNFValue)) {
+            IntNFValue* intNFValue = dynamic_cast<IntNFValue*>(newNFValue);
+            name = intNFValue->value.getName();
+            value = ofToString(intNFValue->value.get());
+        }
+        
+        textInputField.text = value;
+        // textInputField.setFont(font); // we just render the default bitmap font
         return newNFValue;
     }
 
@@ -103,14 +124,15 @@ public:
     ofxNodeFlowGUI();
     virtual ~ofxNodeFlowGUI();
     
-    void setup();
+    void setup(NFNode& _nfNode, std::vector<nfUI::ofxTextInputField>& _textInputFields);
+    void update(NFNode& nfNode, std::vector<nfUI::ofxTextInputField>& _textInputFields);
     void drawPanel(uint32_t x, uint32_t y, uint32_t width, uint32_t height);
-    void drawValue();
-    void draw();
+    void drawValue(NFNode& _nfNode, std::vector<nfUI::ofxTextInputField>& _textInputFields);
+    void draw(NFNode& _nfNode, std::vector<nfUI::ofxTextInputField>& _textInputFields);
+    nfUI::NfUIConfig _nfuiConfig;
 protected:
-    ofTrueTypeFont font;
-    std::vector<ofxTextInputField> textInputFields;
-    NFNode nfNode;
+    ofTrueTypeFont _font;
+    
 };
 
 #endif /* ofxNodeFlowGUI_hpp */

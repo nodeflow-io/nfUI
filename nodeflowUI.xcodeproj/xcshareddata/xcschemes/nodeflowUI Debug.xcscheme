@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "E4B69B5A0A3A1756003C02F2"
-               BuildableName = ".app"
+               BuildableName = "nodeflowUI.app"
                BlueprintName = "nodeflowUI"
                ReferencedContainer = "container:nodeflowUI.xcodeproj">
             </BuildableReference>
@@ -31,7 +31,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "E4B69B5A0A3A1756003C02F2"
-            BuildableName = ".app"
+            BuildableName = "nodeflowUI.app"
             BlueprintName = "nodeflowUI"
             ReferencedContainer = "container:nodeflowUI.xcodeproj">
          </BuildableReference>
@@ -54,7 +54,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "E4B69B5A0A3A1756003C02F2"
-            BuildableName = ".app"
+            BuildableName = "nodeflowUI.app"
             BlueprintName = "nodeflowUI"
             ReferencedContainer = "container:nodeflowUI.xcodeproj">
          </BuildableReference>
@@ -71,7 +71,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "E4B69B5A0A3A1756003C02F2"
-            BuildableName = ".app"
+            BuildableName = "nodeflowUI.app"
             BlueprintName = "nodeflowUI"
             ReferencedContainer = "container:nodeflowUI.xcodeproj">
          </BuildableReference>

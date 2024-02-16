@@ -27,9 +27,11 @@ public:
     void dragEvent(ofDragInfo dragInfo) override;
     void gotMessage(ofMessage msg) override;
     
-    ofxTextInputField monoLineTextInput, multilineTextInput;
+    // ofxTextInputField monoLineTextInput, multilineTextInput;
 private:
-    ofTrueTypeFont font;
+    ofTrueTypeFont _font;
     ofxNodeFlowGUI _nfGUI;
+    NFNode _nfNode;
+    std::vector<nfUI::ofxTextInputField> _textInputFields;
     
 };
