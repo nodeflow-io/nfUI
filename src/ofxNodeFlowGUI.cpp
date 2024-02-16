@@ -64,7 +64,6 @@ void ofxNodeFlowGUI::drawPanel(uint32_t x, uint32_t y, uint32_t width, uint32_t 
 }
 
 void ofxNodeFlowGUI::drawValue() {
-    static uint32_t debugDisplay = 0;
     ofBackground(0);
     ofSetColor(255);
     ofPushStyle();
@@ -75,6 +74,9 @@ void ofxNodeFlowGUI::drawValue() {
     // Access and modify NFValues in the order they were added
     const std::vector<NFValue*>& drawOrder = nfNode.getDrawOrder();
     size_t indexCounter=0;
+    std::string name;
+    std::string value;
+    // iterate over all name / value pairs
     for (const auto& nfValue : drawOrder) {
         ofRectangle initialPosition = textInputFields[indexCounter].position;
         ofRectangle labelPosition = initialPosition;
@@ -87,64 +89,34 @@ void ofxNodeFlowGUI::drawValue() {
         labelPosition.y = y + 14;
         valuePosition.x = x + valuePosition.width+7;
         valuePosition.y = y;
-        
-        if (debugDisplay<5) {
-            std::cout << indexCounter << " " << initialPosition.y << " " << initialPosition.y << " -> " << valuePosition.x << " " << valuePosition.y <<  "\n";
-            debugDisplay++;
-        }
+        // get name and value as strings for display
         if (typeid(StringNFValue) == typeid(*nfValue)) {
             StringNFValue* strNFValue = dynamic_cast<StringNFValue*>(nfValue);
-            glPushMatrix();
-            ofDrawBitmapString(strNFValue->value.getName(), labelPosition.x, labelPosition.y);
-            glTranslatef(0, -2, 0);
-            textInputFields[indexCounter].setup();
-            textInputFields[indexCounter].bounds=valuePosition;
-            textInputFields[indexCounter].text = strNFValue->value.get();
-            textInputFields[indexCounter].draw();
-            glPopMatrix();
+            name = strNFValue->value.getName();
+            value = strNFValue->value.get();
         } else if (typeid(DoubleNFValue) == typeid(*nfValue)) {
             DoubleNFValue* doubleNFValue = dynamic_cast<DoubleNFValue*>(nfValue);
-            ofDrawBitmapString(doubleNFValue->value.getName(), labelPosition.x, labelPosition.y);
-            glPushMatrix();
-            glTranslatef(0, -2, 0);
-            textInputFields[indexCounter].setup();
-            textInputFields[indexCounter].bounds=valuePosition;
-            textInputFields[indexCounter].text = ofToString(doubleNFValue->value.get());
-            textInputFields[indexCounter].draw();
-            glPopMatrix();
+            name = doubleNFValue->value.getName();
+            value = ofToString(doubleNFValue->value.get());
         } else if (typeid(BoolNFValue) == typeid(*nfValue)) {
             BoolNFValue* boolNFValue = dynamic_cast<BoolNFValue*>(nfValue);
-            ofDrawBitmapString(boolNFValue->value.getName(), labelPosition.x, labelPosition.y);
-            glPushMatrix();
-            glTranslatef(0, -2, 0);
-            bool isTrue = boolNFValue->value.get();
-            if (isTrue) {
-                textInputFields[indexCounter].setup();
-                textInputFields[indexCounter].bounds=valuePosition;
-                textInputFields[indexCounter].text = ofToString(isTrue);
-                textInputFields[indexCounter].draw();
-            } else {
-                textInputFields[indexCounter].setup();
-                textInputFields[indexCounter].bounds=valuePosition;
-                textInputFields[indexCounter].text = ofToString(isTrue);
-                textInputFields[indexCounter].draw();
-            }
-            glPopMatrix();
+            name = boolNFValue->value.getName();
+            value = ofToString(boolNFValue->value.get());
         } else if (typeid(IntNFValue) == typeid(*nfValue)) {
             IntNFValue* intNFValue = dynamic_cast<IntNFValue*>(nfValue);
-            ofDrawBitmapString(intNFValue->value.getName(), labelPosition.x, labelPosition.y);
-            textInputFields[indexCounter].text = ofToString(intNFValue->value.get()) + ofToString(indexCounter);
-            glPushMatrix();
-            glTranslatef(0, -2, 0);
-            textInputFields[indexCounter].setup();
-            textInputFields[indexCounter].bounds=valuePosition;
-            textInputFields[indexCounter].draw();
-            glPopMatrix();
+            name = intNFValue->value.getName();
+            value = ofToString(intNFValue->value.get());
         }
-        // set back to the initial position because we are drawing a reference
-        // textInputFields[indexCounter].bounds = textInputFields[indexCounter].position;
+        // draw input field
+        glPushMatrix();
+        ofDrawBitmapString(name, labelPosition.x, labelPosition.y);
+        glTranslatef(0, -2, 0);
+        textInputFields[indexCounter].setup();
+        textInputFields[indexCounter].bounds=valuePosition;
+        textInputFields[indexCounter].text = value;
+        textInputFields[indexCounter].draw();
+        glPopMatrix();
         indexCounter++;
-    
     }
     ofPopStyle();
 }
