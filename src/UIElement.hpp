@@ -2,7 +2,7 @@
 //  nfUIElement.hpp
 //  nodeflowUI
 //
-//  Created by Ulrike Siegl on 16.02.24.
+//  Created by Matthias Strohmaier on 16.02.24.
 //
 
 #ifndef UIElement_hpp
@@ -39,11 +39,11 @@ struct NfUIConfig {
         borderColor = ofColor::white;
         focusColor = ofColor::yellow;
         focusBackgroundColor = ofColor::lightBlue;
-        padding = 5.0f;
-        margin = 10.0f;
+        padding = 10.0f;
+        margin = 5.0f;
         borderSize = 1.0f;
         width = 100.0f;
-        height = 30.0f;
+        height = 20.0f;
         minWidth = 50.0f;
         minHeight = 20.0f;
         isFocused = false;

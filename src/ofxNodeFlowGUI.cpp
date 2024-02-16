@@ -49,11 +49,11 @@ void ofxNodeFlowGUI::setup() {
 
 void ofxNodeFlowGUI::drawPanel(uint32_t x, uint32_t y, uint32_t width, uint32_t height) {
     // Set color to backgroundcolor000 (filled)
-    ofSetColor(128, 128, 128);
+    ofSetColor(_nfuiConfig.backgroundColor);
     // Draw a filled rectangle at position (100, 100) with a width of 200 and height of 150
     ofDrawRectangle(x, y, width, height);
     // Set color to black (outline)
-    ofSetColor(255);
+    ofSetColor(_nfuiConfig.borderColor);
     // Draw the same rectangle with no fill to create the outline
     ofNoFill();
     ofDrawRectangle(x, y, width, height);
@@ -63,13 +63,13 @@ void ofxNodeFlowGUI::drawPanel(uint32_t x, uint32_t y, uint32_t width, uint32_t 
 
 void ofxNodeFlowGUI::drawValue() {
     ofBackground(0);
-    ofSetColor(255);
+    ofSetColor(_nfuiConfig.textColor);
     ofPushStyle();
     uint32_t py=20;
     uint32_t x=20;
     uint32_t y=20;
-    uint32_t channelSpacing = 20;
-    uint32_t paddingHorizontal = 10;
+    uint32_t channelSpacing = _nfuiConfig.height;
+    uint32_t paddingHorizontal = _nfuiConfig.padding;
     // Access and modify NFValues in the order they were added
     const std::vector<NFValue*>& drawOrder = _nfNode.getDrawOrder();
     size_t indexCounter=0;
@@ -80,8 +80,8 @@ void ofxNodeFlowGUI::drawValue() {
         ofRectangle initialPosition = _textInputFields[indexCounter].position;
         ofRectangle labelPosition = initialPosition;
         ofRectangle valuePosition = initialPosition;
-        this->drawPanel(labelPosition.x, labelPosition.y, labelPosition.width, labelPosition.height);
-        ofSetColor(255);
+        this->drawPanel(labelPosition.x, labelPosition.y, labelPosition.width, _nfuiConfig.height);
+        ofSetColor(_nfuiConfig.textColor);
         // adjust label position for font rendering
         y = py+ (indexCounter * channelSpacing);
         labelPosition.x = x + paddingHorizontal;
@@ -112,7 +112,7 @@ void ofxNodeFlowGUI::drawValue() {
         glTranslatef(0, -2, 0);
         _textInputFields[indexCounter].setup();
         _textInputFields[indexCounter].bounds=valuePosition;
-        _textInputFields[indexCounter].text = value;
+        // _textInputFields[indexCounter].text = value;
         _textInputFields[indexCounter].draw();
         glPopMatrix();
         indexCounter++;

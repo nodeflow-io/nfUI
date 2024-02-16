@@ -73,9 +73,31 @@ public:
         textInputField.position.y = y;
         textInputField.position.height = height;
         textInputField.position.width = width;
-        // textInputField.setFont(font); // we just render the default bitmap font
         
-
+        // Convert the value to a string and assign it to textInputField.text
+        // we don't use name here but I left it in for later debugging purposes
+        std::string name, value;
+        // get name and value as strings for display
+        if (typeid(StringNFValue) == typeid(*newNFValue)) {
+            StringNFValue* strNFValue = dynamic_cast<StringNFValue*>(newNFValue);
+            name = strNFValue->value.getName();
+            value = strNFValue->value.get();
+        } else if (typeid(DoubleNFValue) == typeid(*newNFValue)) {
+            DoubleNFValue* doubleNFValue = dynamic_cast<DoubleNFValue*>(newNFValue);
+            name = doubleNFValue->value.getName();
+            value = ofToString(doubleNFValue->value.get());
+        } else if (typeid(BoolNFValue) == typeid(*newNFValue)) {
+            BoolNFValue* boolNFValue = dynamic_cast<BoolNFValue*>(newNFValue);
+            name = boolNFValue->value.getName();
+            value = ofToString(boolNFValue->value.get());
+        } else if (typeid(IntNFValue) == typeid(*newNFValue)) {
+            IntNFValue* intNFValue = dynamic_cast<IntNFValue*>(newNFValue);
+            name = intNFValue->value.getName();
+            value = ofToString(intNFValue->value.get());
+        }
+        
+        textInputField.text = value;
+        // textInputField.setFont(font); // we just render the default bitmap font
         return newNFValue;
     }
 
