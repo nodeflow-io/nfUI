@@ -1,6 +1,8 @@
 #include "ofApp.h"
 
 void ofApp::setupTxt() {
+    
+    /*
     monoLineTextInput.setup();
     monoLineTextInput.text = "hello world";
     monoLineTextInput.bounds.x = 20;
@@ -40,7 +42,7 @@ void ofApp::setupTxt() {
         ofLogError() << "Failed to load font!";
     }
     monoLineTextInput.setFont(font);
-    
+    */
     
 }
 
@@ -62,6 +64,7 @@ void ofApp::update(){
 
 //--------------------------------------------------------------
 void ofApp::drawTxt() {
+    /*
     ofBackground(255*.15);
     
     ofSetColor(255);
@@ -73,6 +76,7 @@ void ofApp::drawTxt() {
     ofSetColor(0);
     monoLineTextInput.draw();
     multilineTextInput.draw();
+     */
 }
 
 

@@ -27,11 +27,11 @@ void ofxNodeFlowGUI::setup() {
         ofLogError() << "ofxNodeFlowGUI::setup(): Failed to load font!";
     }
     // Add NFValues to the node with labels
-    ofxTextInputField textInputField1;
-    ofxTextInputField textInputField2;
-    ofxTextInputField textInputField3;
-    ofxTextInputField textInputField4;
-    ofxTextInputField textInputField5;
+    nfUI::ofxTextInputField textInputField1;
+    nfUI::ofxTextInputField textInputField2;
+    nfUI::ofxTextInputField textInputField3;
+    nfUI::ofxTextInputField textInputField4;
+    nfUI::ofxTextInputField textInputField5;
     
     textInputFields.push_back(textInputField1);
     textInputFields.push_back(textInputField2);
@@ -48,8 +48,7 @@ void ofxNodeFlowGUI::setup() {
 }
 
 void ofxNodeFlowGUI::drawPanel(uint32_t x, uint32_t y, uint32_t width, uint32_t height) {
-    glPushMatrix();
-    // Set color to blue (filled)
+    // Set color to backgroundcolor000 (filled)
     ofSetColor(128, 128, 128);
     // Draw a filled rectangle at position (100, 100) with a width of 200 and height of 150
     ofDrawRectangle(x, y, width, height);
@@ -60,7 +59,6 @@ void ofxNodeFlowGUI::drawPanel(uint32_t x, uint32_t y, uint32_t width, uint32_t 
     ofDrawRectangle(x, y, width, height);
     ofDrawRectangle(x + width, y, width, height);
     ofFill(); // Restore fill mode for subsequent drawings
-    glPopMatrix();
 }
 
 void ofxNodeFlowGUI::drawValue() {
@@ -71,6 +69,7 @@ void ofxNodeFlowGUI::drawValue() {
     uint32_t x=20;
     uint32_t y=20;
     uint32_t channelSpacing = 20;
+    uint32_t paddingHorizontal = 10;
     // Access and modify NFValues in the order they were added
     const std::vector<NFValue*>& drawOrder = nfNode.getDrawOrder();
     size_t indexCounter=0;
@@ -85,7 +84,7 @@ void ofxNodeFlowGUI::drawValue() {
         ofSetColor(255);
         // adjust label position for font rendering
         y = py+ (indexCounter * channelSpacing);
-        labelPosition.x = x + 10;
+        labelPosition.x = x + paddingHorizontal;
         labelPosition.y = y + 14;
         valuePosition.x = x + valuePosition.width+7;
         valuePosition.y = y;

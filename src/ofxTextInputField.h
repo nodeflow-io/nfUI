@@ -16,6 +16,7 @@
 #pragma once
 
 #include "ofMain.h"
+#include "UIElement.hpp"
 
 //For lack of a type abstraction, this lets you #define a font renderer so
 //(like ofxFTGL or ofxFont)
@@ -42,77 +43,81 @@
 #endif
 // TODO: wrapping
 #include "ofxTextInputFieldFontRenderer.h"
-
-class ofxTextInputField {
-  public:
-	ofxTextInputField();
-	virtual ~ofxTextInputField();
-	//swap in a font!
-	void setFont(OFX_TEXTFIELD_FONT_RENDERER& font);
+namespace nfUI {
+class ofxTextInputField : public nfUI::UIElement {
+    
+public:
+    // Constructor for ofxTextInputField
+    // Constructor for ofxTextInputField
+    ofxTextInputField(const NfUIConfig& config = NfUIConfig());
+    virtual ~ofxTextInputField();
+    //swap in a font!
+    void setFont(OFX_TEXTFIELD_FONT_RENDERER& font);
     
     void setup();
-	
-	void enable();
-	void disable();
+    
+    void enable();
+    void disable();
     bool getIsEnabled();
-	
-	bool getIsEditing();
-	void beginEditing();
-	void endEditing();
-	
+    
+    bool getIsEditing();
+    void beginEditing();
+    void endEditing();
+    
     //can be set manually or otherwise is controlled by enable/disable
     bool drawCursor;
     
     ofRectangle bounds;
     ofRectangle position;
-	
-    void draw();
-	void clear();
-	
-	string text;
-	int cursorPosition;
-	
-	int selectionBegin;
-	int selectionEnd;
-	bool selecting;
-	
-	ofEvent<string> textChanged;
-	void keyPressed(ofKeyEventArgs &a);
-    void keyReleased(ofKeyEventArgs &a);
-	
-	bool autoClear;
-	bool autoTab;
-	
-	bool multiline;
     
-	#ifdef USE_GLFW_CLIPBOARD
+    void draw();
+    void clear();
+    
+    string text;
+    int cursorPosition;
+    
+    int selectionBegin;
+    int selectionEnd;
+    bool selecting;
+    
+    ofEvent<string> textChanged;
+    void keyPressed(ofKeyEventArgs &a);
+    void keyReleased(ofKeyEventArgs &a);
+    
+    bool autoClear;
+    bool autoTab;
+    
+    bool multiline;
+    
+#ifdef USE_GLFW_CLIPBOARD
     void setClipboard(string clippy);
     string getClipboard();
-	#endif
-	
-  protected:
-	float lastTimeCursorMoved;
-	int VERTICAL_PADDING;
-	int HORIZONTAL_PADDING;
-	ofxTextInput::FontRenderer* fontRef;
-	
+#endif
+    
+protected:
+    float lastTimeCursorMoved;
+    int VERTICAL_PADDING;
+    int HORIZONTAL_PADDING;
+    ofxTextInput::FontRenderer* fontRef;
+    
     bool 	isEnabled;
-	bool	isEditing;
-	bool	mouseDownInRect;
-	void    mousePressed(ofMouseEventArgs& args);
+    bool	isEditing;
+    bool	mouseDownInRect;
+    void    mousePressed(ofMouseEventArgs& args);
     void    mouseDragged(ofMouseEventArgs& args);
-	void    mouseReleased(ofMouseEventArgs& args);
-	
-	
-	//int getLineForPosition(int pos);
-
-	//void setCursorPositionFromXY();
-	//void setCursorFromMouse(int x, int y);
-	//void setCursorXYFromPosition();
-	void getCursorCoords(int pos, int &cursorX, int &cursorY);
-	int getCursorPositionFromMouse(int x, int y);
+    void    mouseReleased(ofMouseEventArgs& args);
+    
+    
+    //int getLineForPosition(int pos);
+    
+    //void setCursorPositionFromXY();
+    //void setCursorFromMouse(int x, int y);
+    //void setCursorXYFromPosition();
+    void getCursorCoords(int pos, int &cursorX, int &cursorY);
+    int getCursorPositionFromMouse(int x, int y);
     
     bool isShifted, isCommand;
     map<int, char> shiftMap;
     ofColor colorBackground = {255,0,0,255};
 };
+}

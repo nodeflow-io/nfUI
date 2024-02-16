@@ -61,7 +61,7 @@ public:
 
     // Add an NFValue to the node with label, value, and textInputField
     template <typename T, typename... Args>
-    T* addNFValue(const std::string& label, Args&&... args, ofxTextInputField& textInputField, uint32_t x, uint32_t y, uint32_t width, uint32_t height, ofTrueTypeFont& font) {
+    T* addNFValue(const std::string& label, Args&&... args, nfUI::ofxTextInputField& textInputField, uint32_t x, uint32_t y, uint32_t width, uint32_t height, ofTrueTypeFont& font) {
         T* newNFValue = new T(std::forward<Args>(args)...);
         newNFValue->value.setName(label); // Set the label for the parameter
         nfValues.push_back(newNFValue);
@@ -108,7 +108,7 @@ public:
     void draw();
 protected:
     ofTrueTypeFont font;
-    std::vector<ofxTextInputField> textInputFields;
+    std::vector<nfUI::ofxTextInputField> textInputFields;
     NFNode nfNode;
 };
 

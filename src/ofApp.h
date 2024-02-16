@@ -27,7 +27,7 @@ public:
     void dragEvent(ofDragInfo dragInfo) override;
     void gotMessage(ofMessage msg) override;
     
-    ofxTextInputField monoLineTextInput, multilineTextInput;
+    // ofxTextInputField monoLineTextInput, multilineTextInput;
 private:
     ofTrueTypeFont font;
     ofxNodeFlowGUI _nfGUI;
