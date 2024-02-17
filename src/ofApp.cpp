@@ -5,33 +5,51 @@
 void ofApp::setup() {
     ofSetLogLevel(OF_LOG_VERBOSE);
     ofDisableAntiAliasing();
+    ofSetFrameRate(30);
+    ofSetVerticalSync(true);
     ofTrueTypeFont font;
     font.load(OF_TTF_SERIF, 18);
+    
+    // --- setup debug grid configuration
+    // Set up grid parameters
+    _guiParams.setShowGrid(true);
+    _guiParams.setGridSize(20);
+    _guiParams.setMajorStep(100);
+    _guiParams.setMinorStep(20);
+    _guiParams.setMajorGridColor(ofColor(255, 0, 0, 128)); // Red for major grid lines
+    _guiParams.setMinorGridColor(ofColor(255, 0, 0, 50));  // Red dark for minor grid lines
     
     // --- setup entities
     nfUI::ofxTextInputField* textInputField1 = new nfUI::ofxTextInputField();
     nfUI::ofxTextInputField* textInputField2 = new nfUI::ofxTextInputField();
     nfUI::ofxTextInputField* textInputField3 = new nfUI::ofxTextInputField();
-    nfUI::ofxTextInputField* textInputField4 = new nfUI::ofxTextInputField();
-    nfUI::ofxTextInputField* textInputField5 = new nfUI::ofxTextInputField();
-    nfUI::Button* buttonCalculate = new nfUI::Button();
+    // nfUI::ofxTextInputField* textInputField4 = new nfUI::ofxTextInputField();
+    // nfUI::ofxTextInputField* textInputField5 = new nfUI::ofxTextInputField();
+    nfUI::Button* buttonSetParameters = new nfUI::Button();
     
-    textInputField1->setup();
-    _uiElements.push_back(textInputField1);
-    _uiElements.push_back(textInputField2);
-    _uiElements.push_back(textInputField3);
-    _uiElements.push_back(textInputField4);
-    _uiElements.push_back(textInputField5);
-    _uiElements.push_back(buttonCalculate);
+    _uiElements.emplace_back(textInputField1);
+    _uiElements.emplace_back(textInputField2);
+    _uiElements.emplace_back(textInputField3);
+    // _uiElements.emplace_back(textInputField4);
+    // _uiElements.emplace_back(textInputField5);
+    _uiElements.emplace_back(buttonSetParameters);
     
     // Add NFValues to the node with labels and set up UIElements
+    _nfNode.addNFValue<BoolNFValue, nfUI::ofxTextInputField, bool>("Show Grid", _guiParams.getShowGrid(), *textInputField1, 20, 60, 120, 20, _font);
+    _nfNode.addNFValue<IntNFValue, nfUI::ofxTextInputField, int>("Gridsize", _guiParams.getGridSize(), *textInputField2, 20, 40, 120, 20, _font);
+    _nfNode.addNFValue<IntNFValue, nfUI::ofxTextInputField, int>("Major Step", _guiParams.getMajorStep(), *textInputField3, 20, 40, 120, 20, _font);
+    _nfNode.addNFValue<StringNFValue, nfUI::Button, std::string>("Button", "Set Params", *buttonSetParameters, 20, 80, 120, 20, _font);
+
+
+   /*
     _nfNode.addNFValue<DoubleNFValue, nfUI::ofxTextInputField, double>("Stepper", 3.14, *textInputField1, 20, 20, 120, 20, _font);
     _nfNode.addNFValue<IntNFValue, nfUI::ofxTextInputField, int>("Acceleration", 42, *textInputField2, 20, 40, 120, 20, _font);
     _nfNode.addNFValue<BoolNFValue, nfUI::ofxTextInputField, bool>("Reset", false, *textInputField3, 20, 60, 120, 20, _font);
     _nfNode.addNFValue<StringNFValue, nfUI::ofxTextInputField, std::string>("Mode", "Forward", *textInputField4, 20, 80, 120, 20, _font);
     _nfNode.addNFValue<BoolNFValue, nfUI::ofxTextInputField, bool>("isReady", true, *textInputField5, 20, 100, 120, 20, _font);
     _nfNode.addNFValue<StringNFValue, nfUI::Button, std::string>("Button", "Solve Production", *buttonCalculate, 20, 80, 120, 20, _font);
-
+    */
+    
     // setup GUI
     _nfGUI.setup(_nfNode, _uiElements);
 }
@@ -46,6 +64,7 @@ void ofApp::update(){
 void ofApp::draw(){
     ofBackground(0);
     ofSetColor(255);
+    _nfGUI.drawGrid(this->_guiParams);
     _nfGUI.draw(this->_nfNode, this->_uiElements);
     ofSetColor(0);
 }
@@ -97,7 +116,13 @@ void ofApp::keyPressed(int key) {
                     }
                 }
             break;
-
+            
+        case 'g': // 'g' key
+            // Action for 'g' key
+            _guiParams._showGrid = !_guiParams._showGrid;
+            std::cout << _guiParams._showGrid << "\n";
+            break;
+            
         case 'h': // 'h' key
             // Action for 'h' key
             break;

@@ -158,6 +158,7 @@ public:
     }
     
     virtual void setBounds(ofRectangle bounds) {
+        this->bounds = bounds;
     }
     
     // Draw method
@@ -195,6 +196,10 @@ private:
     virtual bool isMouseInside(int mouseX, int mouseY) {
         return (mouseX >= x && mouseX <= x + width && mouseY >= y && mouseY <= y + height);
     }
+    
+    // virtual void    mousePressed(ofMouseEventArgs& args);
+    // virtual void    mouseDragged(ofMouseEventArgs& args);
+    // virtual void    mouseReleased(ofMouseEventArgs& args);
 };
 
 }

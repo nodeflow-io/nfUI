@@ -8,6 +8,7 @@
 //  modified by Momo the Monster 7/10/2012
 //  swappable fonts added by James George 9/11/2012
 //  removed some depreceated drawing calls - Matthias Strohmaier 2/14/2024
+//  TODO: plattform agnostic keys
 //
 //	MIT license
 //	http://www.opensource.org/licenses/mit-license.php
@@ -212,10 +213,7 @@ void ofxTextInputField::draw() {
         
         int cursorTop = VERTICAL_PADDING + fontRef->getLineHeight()*cursorY;
         int cursorBottom = cursorTop + fontRef->getLineHeight();
-        
-        
-        
-        
+
         ofSetLineWidth(1.0f);
         //TODO: multiline with fontRef
         ofDrawLine(cursorPos, cursorTop,
@@ -224,8 +222,6 @@ void ofxTextInputField::draw() {
     }
     
     fontRef->drawString(text, HORIZONTAL_PADDING, fontRef->getLineHeight()+VERTICAL_PADDING);
-    
-    
     
     ofPopMatrix();
 }

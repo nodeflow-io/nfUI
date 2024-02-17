@@ -2,7 +2,7 @@
 //  ofxNodeFlowGUI.cpp
 //  nodeflowUI
 //
-//  Created by Ulrike Siegl on 15.02.24.
+//  Created by Matthias Strohmaier on 15.02.24.
 //
 
 #include "ofxNodeFlowGUI.hpp"
@@ -37,12 +37,12 @@ void ofxNodeFlowGUI::drawPanel(uint32_t x, uint32_t y, uint32_t width, uint32_t 
 
 
 void ofxNodeFlowGUI::drawValue(NFNode& _nfNode, std::vector<nfUI::UIElement*>& _uiElements) {
-    ofBackground(0);
+    // ofBackground(0);
     ofSetColor(_nfuiConfig.textColor);
     ofPushStyle();
     uint32_t py = 20;
-    uint32_t x = 20;
-    uint32_t y = 20;
+    uint32_t x = 400;
+    uint32_t y = 400;
     uint32_t channelSpacing = _nfuiConfig.height;
     uint32_t paddingHorizontal = _nfuiConfig.padding;
 
@@ -90,7 +90,7 @@ void ofxNodeFlowGUI::drawValue(NFNode& _nfNode, std::vector<nfUI::UIElement*>& _
         // draw input field
         glPushMatrix();
         ofDrawBitmapString(name, labelPosition.x, labelPosition.y);
-        glTranslatef(0, -2, 0);
+        glTranslatef(valuePosition.x, valuePosition.y, 0);
         _uiElements[indexCounter]->setup();
         _uiElements[indexCounter]->setBounds(valuePosition);
         _uiElements[indexCounter]->draw();
@@ -100,6 +100,37 @@ void ofxNodeFlowGUI::drawValue(NFNode& _nfNode, std::vector<nfUI::UIElement*>& _
     }
 
     ofPopStyle();
+}
+
+void ofxNodeFlowGUI::drawGrid(const GUIParams& guiParams) {
+    if (!guiParams._showGrid) return;
+    // Draw vertical grid lines
+    for (int x = 0; x <= ofGetWidth(); x += guiParams._gridSize) {
+        if (x % guiParams._majorStep == 0) {
+            ofSetColor(guiParams._majorGridColor);
+            ofDrawLine(x, 0, x, ofGetHeight());
+
+            // Draw text label
+            ofDrawBitmapString(ofToString(x), x, ofGetHeight() - 5);
+        } else {
+            ofSetColor(guiParams._minorGridColor);
+            ofDrawLine(x, 0, x, ofGetHeight());
+        }
+    }
+
+    // Draw horizontal grid lines
+    for (int y = 0; y <= ofGetHeight(); y += guiParams._gridSize) {
+        if (y % guiParams._majorStep == 0) {
+            ofSetColor(guiParams._majorGridColor);
+            ofDrawLine(0, y, ofGetWidth(), y);
+
+            // Draw text label
+            ofDrawBitmapString(ofToString(y), 5, y);
+        } else {
+            ofSetColor(guiParams._minorGridColor);
+            ofDrawLine(0, y, ofGetWidth(), y);
+        }
+    }
 }
 
 void ofxNodeFlowGUI::draw(NFNode& _nfNode, std::vector<nfUI::UIElement*>& _uiElements) {

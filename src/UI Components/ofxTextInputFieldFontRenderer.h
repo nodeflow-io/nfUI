@@ -87,13 +87,7 @@ namespace ofxTextInput {
 		float getLineHeight() {
 			return 8.f*1.725f;
 		}
-		
-		
-		
-		
-		
-		
-		
+
 		float stringWidth(const string &str) {
 			int w = 0;
 			for(int i = 0; i < str.size(); i++) {

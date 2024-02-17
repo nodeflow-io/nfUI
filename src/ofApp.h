@@ -31,6 +31,7 @@ public:
 private:
     ofTrueTypeFont _font;
     ofxNodeFlowGUI _nfGUI;
+    GUIParams _guiParams;
     NFNode _nfNode;
     std::vector<nfUI::ofxTextInputField> _textInputFields;
     // define a vector of UI Elements

@@ -53,7 +53,7 @@ public:
     //swap in a font!
     void setFont(OFX_TEXTFIELD_FONT_RENDERER& font);
     
-    void setup();
+    void setup() override;
     
     void enable();
     void disable();
@@ -69,7 +69,7 @@ public:
     ofRectangle bounds;
     ofRectangle position;
     
-    void draw();
+    void draw() override;
     void clear();
     
     string text;

@@ -63,6 +63,16 @@ bool Button::getIsEnabled() {
 }
 
 void Button::draw() {
+    // Draw border
+    ofSetColor(borderColor);
+    ofDrawRectangle(bounds.x, bounds.y, width, height);
+    
+    // Draw background
+    ofSetColor(isFocused ? focusBackgroundColor : backgroundColor);
+    ofDrawRectangle(bounds.x + borderSize, bounds.y + borderSize, width - 2 * borderSize, height - 2 * borderSize);
+    
+    // Draw text
+    ofSetColor(textColor);
     ofPushMatrix();
     ofTranslate(bounds.x, bounds.y);
     // TODO: padding top , bottom , etc

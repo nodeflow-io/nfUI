@@ -10,6 +10,7 @@
 
 #include "ofMain.h"
 // dependencies
+#include "GUIParams.hpp"
 #include "ofxTextInputField.h"
 #include "Button.hpp"
 
@@ -95,7 +96,6 @@ public:
             name = intNFValue->value.getName();
             value = ofToString(intNFValue->value.get());
         }
-
         uiElement.text = value;
 
         return newNFValue;
@@ -151,6 +151,8 @@ public:
     void update(NFNode& _nfNode, std::vector<nfUI::UIElement*>& _uiElements);
     void drawPanel(uint32_t x, uint32_t y, uint32_t width, uint32_t height);
     void drawValue(NFNode& _nfNode, std::vector<nfUI::UIElement*>& _uiElements);
+    
+    void drawGrid(const GUIParams& guiParams);
     void draw(NFNode& _nfNode, std::vector<nfUI::UIElement*>& _uiElements);
     nfUI::NfUIConfig _nfuiConfig;
 protected:
