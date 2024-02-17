@@ -117,6 +117,10 @@ class ofxNodeFlowGUI {
 public:
     ofxNodeFlowGUI();
     virtual ~ofxNodeFlowGUI();
+    // Getter for version as a string
+    std::string getVersionString() const {
+        return std::to_string(_majorVersion) + "." + std::to_string(_minorVersion) + "." + std::to_string(_patchVersion);
+    }
     
     template <typename UIElementType>
     void setup(NFNode& _nfNode, std::vector<UIElementType*>& _uiElements) {
@@ -158,6 +162,9 @@ public:
     nfUI::NfUIConfig _nfuiConfig;
 protected:
     ofTrueTypeFont _font;
+    int _majorVersion = 0;
+    int _minorVersion = 0;
+    int _patchVersion = 2;
     
 };
 
