@@ -152,6 +152,7 @@ public:
     void drawPanel(uint32_t x, uint32_t y, uint32_t width, uint32_t height);
     void drawValue(NFNode& _nfNode, std::vector<nfUI::UIElement*>& _uiElements);
     
+    void drawStatusBar(const GUIParams& guiParams);
     void drawGrid(const GUIParams& guiParams);
     void draw(NFNode& _nfNode, std::vector<nfUI::UIElement*>& _uiElements);
     nfUI::NfUIConfig _nfuiConfig;

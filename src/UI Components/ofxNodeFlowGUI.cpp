@@ -101,6 +101,22 @@ void ofxNodeFlowGUI::drawValue(NFNode& _nfNode, std::vector<nfUI::UIElement*>& _
 
     ofPopStyle();
 }
+void ofxNodeFlowGUI::drawStatusBar(const GUIParams& guiParams) {
+    if (!guiParams._showStatusBar) return;
+    // Draw the status bar rectangle
+    ofSetColor(guiParams._statusBarColor);
+    ofDrawRectangle(0, 0, ofGetWidth(), guiParams._statusBarHeight);
+
+    // Draw the text displays
+    ofSetColor(guiParams._statusBarTextColor);
+
+    // Draw "nodeFlow UI - version 0.0.2"
+    ofDrawBitmapString("nodeFlow UI - version 0.0.2        Nodes: 1    Channels: 3    Connections: 0", 10, (guiParams._statusBarHeight / 2)+4);
+
+    // Draw "FPS: 30"
+    std::string fpsText = "FPS: " + ofToString(std::round(ofGetFrameRate()));
+    ofDrawBitmapString(fpsText, ofGetWidth() - 80, (guiParams._statusBarHeight / 2)+4);
+}
 
 void ofxNodeFlowGUI::drawGrid(const GUIParams& guiParams) {
     if (!guiParams._showGrid) return;

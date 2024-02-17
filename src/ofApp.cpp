@@ -11,8 +11,13 @@ void ofApp::setup() {
     font.load(OF_TTF_SERIF, 18);
     
     // --- setup debug grid configuration
+    // Set up status bar parameters
+    _guiParams.setShowStatusBar(true);
+    _guiParams.setStatusBarHeight(20);
+    _guiParams.setStatusBarColor(ofColor(100, 100, 100, 255));
+    _guiParams.setStatusBarTextColor(ofColor(255, 255, 0, 255));
     // Set up grid parameters
-    _guiParams.setShowGrid(true);
+    _guiParams.setShowGrid(false);
     _guiParams.setGridSize(20);
     _guiParams.setMajorStep(100);
     _guiParams.setMinorStep(20);
@@ -64,7 +69,11 @@ void ofApp::update(){
 void ofApp::draw(){
     ofBackground(0);
     ofSetColor(255);
+    // draw the background grid
     _nfGUI.drawGrid(this->_guiParams);
+    // draw status bar
+    _nfGUI.drawStatusBar(this->_guiParams);
+    // draw UI elements
     _nfGUI.draw(this->_nfNode, this->_uiElements);
     ofSetColor(0);
 }
@@ -120,11 +129,17 @@ void ofApp::keyPressed(int key) {
         case 'g': // 'g' key
             // Action for 'g' key
             _guiParams._showGrid = !_guiParams._showGrid;
-            std::cout << _guiParams._showGrid << "\n";
+            std::cout << "main _showGrid: " << _guiParams._showGrid << "\n";
             break;
             
         case 'h': // 'h' key
             // Action for 'h' key
+            break;
+        
+        case 'i': // 'g' key
+            // Action for 'g' key
+            _guiParams._showStatusBar = !_guiParams._showStatusBar;
+            std::cout << "main _showStatusBar: "  << _guiParams._showStatusBar << "\n";
             break;
 
         case '1': // '1' key

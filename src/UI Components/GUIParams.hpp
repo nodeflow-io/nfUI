@@ -13,7 +13,57 @@
 class GUIParams {
 public:
     
-    GUIParams() : _showGrid(true), _gridSize(10), _majorStep(100), _minorStep(10), _majorGridColor(255), _minorGridColor(200) {}
+    // HERE IS A PROBLEM IN THE CONSTRUTOR
+    // IT SAYS: Member initializer '_showStatusBar' does not name a non-static data member or base class
+    GUIParams() :
+        _showStatusBar(true),
+        _statusBarHeight(30),
+        _statusBarColor(ofColor::grey),
+        _statusBarTextColor(ofColor::yellow),
+        _showGrid(true),
+        _gridSize(10),
+        _majorStep(100),
+        _minorStep(10),
+        _majorGridColor(255),
+        _minorGridColor(200)
+        
+    {}
+    
+    // Getter and setter for showStatusBar
+    bool getShowStatusBar() const {
+        return _showStatusBar;
+    }
+
+    void setShowStatusBar(bool show) {
+        _showStatusBar = show;
+    }
+
+    // Getter and setter for statusBarHeight
+    uint32_t getStatusBarHeight() const {
+        return _statusBarHeight;
+    }
+
+    void setStatusBarHeight(uint32_t height) {
+        _statusBarHeight = height;
+    }
+
+    // Getter and setter for statusBarColor
+    const ofColor& getStatusBarColor() const {
+        return _statusBarColor;
+    }
+
+    void setStatusBarColor(const ofColor& color) {
+        _statusBarColor = color;
+    }
+    
+    // Getter and setter for statusBarTextColor
+    const ofColor& getStatusBarTextColor() const {
+        return _statusBarTextColor;
+    }
+
+    void setStatusBarTextColor(const ofColor& color) {
+        _statusBarTextColor = color;
+    }
     
     // Getter and setter for showGrid
     bool getShowGrid() const {
@@ -68,6 +118,13 @@ public:
         _minorGridColor = color;
     }
     
+    // Statusbar parameters
+    bool _showStatusBar;
+    uint32_t _statusBarHeight;
+    ofColor _statusBarColor;
+    ofColor _statusBarTextColor;
+    
+    // Grid parameters
     bool _showGrid;
     uint32_t _gridSize;
     uint32_t _majorStep;
