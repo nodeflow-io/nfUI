@@ -121,7 +121,7 @@ public:
     void setPadding(float value) { padding = ofClamp(value, 0.0f, MAX_PADDING); }
     
     float getMargin() const { return margin; }
-    void setMargin(float value) { margin = ofClamp(value, 0.0f, MAX_MARGIN; }
+    void setMargin(float value) { margin = ofClamp(value, 0.0f, MAX_MARGIN); }
     
     float getBorderSize() const { return borderSize; }
     void setBorderSize(float value) { borderSize = ofClamp(value, 0.0f, MAX_BORDER_SIZE); }
