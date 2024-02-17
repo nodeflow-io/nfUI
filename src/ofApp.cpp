@@ -23,12 +23,13 @@ void ofApp::setup() {
     _textInputFields.push_back(textInputField5);
     
     // Add NFValues to the node with labels and set up textInputFields
-    _nfNode.addNFValue<DoubleNFValue, double>("Stepper", 3.14, _textInputFields[0], 20, 20, 120, 20, _font);
-    _nfNode.addNFValue<IntNFValue, int>("Accelleration", 42, _textInputFields[1], 20, 40, 120, 20, _font);
-    _nfNode.addNFValue<BoolNFValue, bool>("Reset", false, _textInputFields[2], 20, 60, 120, 20, _font);
-    _nfNode.addNFValue<StringNFValue, std::string>("Mode", "Forward", _textInputFields[3], 20, 80, 120, 20, _font);
-    _nfNode.addNFValue<BoolNFValue, bool>("isReady", true, _textInputFields[4], 20, 100, 120, 20, _font);
-    // --
+    _nfNode.addNFValue<DoubleNFValue, nfUI::ofxTextInputField, double>("Stepper", 3.14, _textInputFields[0], 20, 20, 120, 20, _font);
+    _nfNode.addNFValue<IntNFValue, nfUI::ofxTextInputField, int>("Accelleration", 42, _textInputFields[1], 20, 40, 120, 20, _font);
+    _nfNode.addNFValue<BoolNFValue, nfUI::ofxTextInputField, bool>("Reset", false, _textInputFields[2], 20, 60, 120, 20, _font);
+    _nfNode.addNFValue<StringNFValue, nfUI::ofxTextInputField, std::string>("Mode", "Forward", _textInputFields[3], 20, 80, 120, 20, _font);
+    _nfNode.addNFValue<BoolNFValue, nfUI::ofxTextInputField, bool>("isReady", true, _textInputFields[4], 20, 100, 120, 20, _font);
+
+ // --
     _nfGUI.setup(_nfNode, _textInputFields);
 }
 
