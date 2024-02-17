@@ -48,7 +48,6 @@ class ofxTextInputField : public nfUI::UIElement {
     
 public:
     // Constructor for ofxTextInputField
-    // Constructor for ofxTextInputField
     ofxTextInputField(const NfUIConfig& config = NfUIConfig());
     virtual ~ofxTextInputField();
     //swap in a font!
