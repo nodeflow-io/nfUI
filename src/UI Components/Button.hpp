@@ -33,7 +33,7 @@ public:
     void disable();
     bool getIsEnabled();
     
-    ofRectangle bounds;
+    ofRectangle bounds, position;
     
     void draw();
     void clear();

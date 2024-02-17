@@ -31,6 +31,7 @@ struct NfUIConfig {
     float minWidth;
     float minHeight;
     bool isFocused;
+    ofRectangle bounds;
     
     NfUIConfig() {
         // Set default values for the config
@@ -47,6 +48,7 @@ struct NfUIConfig {
         minWidth = 50.0f;
         minHeight = 20.0f;
         isFocused = false;
+        bounds = ofRectangle (0,0, 100.0f, 20.0f);
     }
 };
 
@@ -66,6 +68,7 @@ public:
     ofParameter<float> minWidth;
     ofParameter<float> minHeight;
     ofParameter<bool> isFocused;
+    ofParameter<ofRectangle> bounds;
     
     // Constructor with Config parameter
     UIElement(const NfUIConfig& config = NfUIConfig()) {
@@ -83,6 +86,7 @@ public:
         minWidth.set("Min Width", config.minWidth);
         minHeight.set("Min Height", config.minHeight);
         isFocused.set("Is Focused", config.isFocused);
+        bounds.set("Bounds", config.bounds);
         
         // Add parameters to the group
         parameters.setName("UI Element Parameters");
@@ -99,6 +103,7 @@ public:
         parameters.add(minWidth);
         parameters.add(minHeight);
         parameters.add(isFocused);
+        parameters.add(bounds);
     }
     
     // Getter and setter methods for other properties
@@ -144,8 +149,19 @@ public:
     
     // Add getter and setter methods for other properties as needed
     
+    
+    virtual void setup() {
+    }
+    
+    virtual ofRectangle getBounds() {
+        return this->bounds;
+    }
+    
+    virtual void setBounds(ofRectangle bounds) {
+    }
+    
     // Draw method
-    void draw() {
+    virtual void draw() {
         // Draw border
         ofSetColor(borderColor);
         ofDrawRectangle(x, y, width, height);
@@ -162,7 +178,7 @@ public:
     }
     
     // Event handling
-    void mousePressed(int mouseX, int mouseY) {
+    virtual void mousePressed(int mouseX, int mouseY) {
         if (isMouseInside(mouseX, mouseY)) {
             isFocused = true;
         } else {
@@ -176,7 +192,7 @@ private:
     float y;
     
     // Helper method to check if the mouse is inside the element
-    bool isMouseInside(int mouseX, int mouseY) {
+    virtual bool isMouseInside(int mouseX, int mouseY) {
         return (mouseX >= x && mouseX <= x + width && mouseY >= y && mouseY <= y + height);
     }
 };

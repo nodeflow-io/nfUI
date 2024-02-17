@@ -8,29 +8,32 @@ void ofApp::setup() {
     ofTrueTypeFont font;
     font.load(OF_TTF_SERIF, 18);
     
+    // --- setup entities
+    nfUI::ofxTextInputField* textInputField1 = new nfUI::ofxTextInputField();
+    nfUI::ofxTextInputField* textInputField2 = new nfUI::ofxTextInputField();
+    nfUI::ofxTextInputField* textInputField3 = new nfUI::ofxTextInputField();
+    nfUI::ofxTextInputField* textInputField4 = new nfUI::ofxTextInputField();
+    nfUI::ofxTextInputField* textInputField5 = new nfUI::ofxTextInputField();
+    nfUI::Button* buttonCalculate = new nfUI::Button();
     
-    // ---
-    nfUI::ofxTextInputField textInputField1;
-    nfUI::ofxTextInputField textInputField2;
-    nfUI::ofxTextInputField textInputField3;
-    nfUI::ofxTextInputField textInputField4;
-    nfUI::ofxTextInputField textInputField5;
+    textInputField1->setup();
+    _uiElements.push_back(textInputField1);
+    _uiElements.push_back(textInputField2);
+    _uiElements.push_back(textInputField3);
+    _uiElements.push_back(textInputField4);
+    _uiElements.push_back(textInputField5);
+    _uiElements.push_back(buttonCalculate);
     
-    _textInputFields.push_back(textInputField1);
-    _textInputFields.push_back(textInputField2);
-    _textInputFields.push_back(textInputField3);
-    _textInputFields.push_back(textInputField4);
-    _textInputFields.push_back(textInputField5);
-    
-    // Add NFValues to the node with labels and set up textInputFields
-    _nfNode.addNFValue<DoubleNFValue, nfUI::ofxTextInputField, double>("Stepper", 3.14, _textInputFields[0], 20, 20, 120, 20, _font);
-    _nfNode.addNFValue<IntNFValue, nfUI::ofxTextInputField, int>("Accelleration", 42, _textInputFields[1], 20, 40, 120, 20, _font);
-    _nfNode.addNFValue<BoolNFValue, nfUI::ofxTextInputField, bool>("Reset", false, _textInputFields[2], 20, 60, 120, 20, _font);
-    _nfNode.addNFValue<StringNFValue, nfUI::ofxTextInputField, std::string>("Mode", "Forward", _textInputFields[3], 20, 80, 120, 20, _font);
-    _nfNode.addNFValue<BoolNFValue, nfUI::ofxTextInputField, bool>("isReady", true, _textInputFields[4], 20, 100, 120, 20, _font);
+    // Add NFValues to the node with labels and set up UIElements
+    _nfNode.addNFValue<DoubleNFValue, nfUI::ofxTextInputField, double>("Stepper", 3.14, *textInputField1, 20, 20, 120, 20, _font);
+    _nfNode.addNFValue<IntNFValue, nfUI::ofxTextInputField, int>("Acceleration", 42, *textInputField2, 20, 40, 120, 20, _font);
+    _nfNode.addNFValue<BoolNFValue, nfUI::ofxTextInputField, bool>("Reset", false, *textInputField3, 20, 60, 120, 20, _font);
+    _nfNode.addNFValue<StringNFValue, nfUI::ofxTextInputField, std::string>("Mode", "Forward", *textInputField4, 20, 80, 120, 20, _font);
+    _nfNode.addNFValue<BoolNFValue, nfUI::ofxTextInputField, bool>("isReady", true, *textInputField5, 20, 100, 120, 20, _font);
+    _nfNode.addNFValue<StringNFValue, nfUI::Button, std::string>("Button", "Solve Production", *buttonCalculate, 20, 80, 120, 20, _font);
 
- // --
-    _nfGUI.setup(_nfNode, _textInputFields);
+    // setup GUI
+    _nfGUI.setup(_nfNode, _uiElements);
 }
 
 //--------------------------------------------------------------
@@ -43,7 +46,7 @@ void ofApp::update(){
 void ofApp::draw(){
     ofBackground(0);
     ofSetColor(255);
-    _nfGUI.draw(this->_nfNode, this->_textInputFields);
+    _nfGUI.draw(this->_nfNode, this->_uiElements);
     ofSetColor(0);
 }
 

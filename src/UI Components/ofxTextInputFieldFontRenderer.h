@@ -14,7 +14,8 @@
  *				 
  *  ofxTextInputFieldFontRenderer.h, created by Marek Bereza on 14/08/2013.
  */
-
+#ifndef ofxTextInputFieldFontRenderer_h
+#define ofxTextInputFieldFontRenderer_h
 
 namespace ofxTextInput {
 	class FontRenderer {
@@ -106,3 +107,5 @@ namespace ofxTextInput {
 		
 	};
 };
+
+#endif
