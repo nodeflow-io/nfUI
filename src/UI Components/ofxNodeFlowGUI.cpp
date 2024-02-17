@@ -44,7 +44,7 @@ void ofxNodeFlowGUI::drawValue(NFNode& _nfNode, std::vector<nfUI::UIElement*>& _
     uint32_t x = 400;
     uint32_t y = 400;
     uint32_t channelSpacing = _nfuiConfig.height;
-    uint32_t paddingHorizontal = _nfuiConfig.padding;
+    uint32_t paddingHorizontal = _nfuiConfig.paddingTop;
 
     // Access and modify NFValues in the order they were added
     const std::vector<NFValue*>& drawOrder = _nfNode.getDrawOrder();
@@ -58,7 +58,7 @@ void ofxNodeFlowGUI::drawValue(NFNode& _nfNode, std::vector<nfUI::UIElement*>& _
         ofRectangle labelPosition = initialPosition;
         ofRectangle valuePosition = initialPosition;
 
-        this->drawPanel(labelPosition.x, labelPosition.y, labelPosition.width, _nfuiConfig.height);
+        // this->drawPanel(labelPosition.x, labelPosition.y, labelPosition.width, _nfuiConfig.height);
         ofSetColor(_nfuiConfig.textColor);
 
         // adjust label position for font rendering

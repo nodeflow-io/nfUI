@@ -9,6 +9,7 @@
 #define UIElement_hpp
 
 #include "ofMain.h"
+#include <limits>
 
 // Constants
 namespace nfUI {
@@ -23,8 +24,14 @@ struct NfUIConfig {
     ofColor borderColor;
     ofColor focusColor;
     ofColor focusBackgroundColor;
-    float padding;
-    float margin;
+    float paddingTop;
+    float paddingRight;
+    float paddingBottom;
+    float paddingLeft;
+    float marginTop;
+    float marginRight;
+    float marginBottom;
+    float marginLeft;
     float borderSize;
     float width;
     float height;
@@ -40,8 +47,14 @@ struct NfUIConfig {
         borderColor = ofColor::white;
         focusColor = ofColor::yellow;
         focusBackgroundColor = ofColor::lightBlue;
-        padding = 10.0f;
-        margin = 5.0f;
+        paddingTop = 3.0f;
+        paddingRight = 10.0f;
+        paddingBottom = 3.0f;
+        paddingLeft = 10.0f;
+        marginTop = 3.0f;
+        marginRight = 10.0f;
+        marginBottom = 3.0f;
+        marginLeft = 10.0f;
         borderSize = 1.0f;
         width = 100.0f;
         height = 20.0f;
@@ -52,6 +65,48 @@ struct NfUIConfig {
     }
 };
 
+
+class Offsets {
+public:
+    ofParameterGroup parameters;
+    ofParameter<float> top;
+    ofParameter<float> right;
+    ofParameter<float> bottom;
+    ofParameter<float> left;
+
+    Offsets(const std::string& groupName, float topValue = 0, float rightValue = 0, float bottomValue = 0, float leftValue = 0)
+        : top(groupName + " Top", topValue, 0, std::numeric_limits<float>::max()),
+          right(groupName + " Right", rightValue, 0, std::numeric_limits<float>::max()),
+          bottom(groupName + " Bottom", bottomValue, 0, std::numeric_limits<float>::max()),
+          left(groupName + " Left", leftValue, 0, std::numeric_limits<float>::max()) {
+        parameters.setName(groupName);
+        parameters.add(top);
+        parameters.add(right);
+        parameters.add(bottom);
+        parameters.add(left);
+    }
+
+    // Getters
+    float getTop() const { return top; }
+    float getRight() const { return right; }
+    float getBottom() const { return bottom; }
+    float getLeft() const { return left; }
+
+    // Setters
+    void set(float value) {
+        setTop(value);
+        setRight(value);
+        setBottom(value);
+        setLeft(value);
+    }
+    void setTop(float value) { top = std::min(value, std::numeric_limits<float>::max()); }
+    void setRight(float value) { right = std::min(value, std::numeric_limits<float>::max()); }
+    void setBottom(float value) { bottom = std::min(value, std::numeric_limits<float>::max()); }
+    void setLeft(float value) { left = std::min(value, std::numeric_limits<float>::max()); }
+};
+
+
+
 class UIElement {
 public:
     ofParameterGroup parameters;
@@ -60,8 +115,8 @@ public:
     ofParameter<ofColor> borderColor;
     ofParameter<ofColor> focusColor;
     ofParameter<ofColor> focusBackgroundColor;
-    ofParameter<float> padding;
-    ofParameter<float> margin;
+    Offsets padding;
+    Offsets margin;
     ofParameter<float> borderSize;
     ofParameter<float> width;
     ofParameter<float> height;
@@ -71,15 +126,31 @@ public:
     ofParameter<ofRectangle> bounds;
     
     // Constructor with Config parameter
-    UIElement(const NfUIConfig& config = NfUIConfig()) {
+    UIElement(const NfUIConfig& config = NfUIConfig())
+            : padding("Margin", config.paddingTop, config.paddingRight, config.paddingBottom, config.paddingLeft),
+        margin("Margin", config.marginTop, config.marginRight, config.marginBottom, config.marginLeft) {
+         
         // Set default values from the config
         backgroundColor.set("Background Color", config.backgroundColor);
         textColor.set("Text Color", config.textColor);
         borderColor.set("Border Color", config.borderColor);
         focusColor.set("Focus Color", config.focusColor);
         focusBackgroundColor.set("Focus Background Color", config.focusBackgroundColor);
-        padding.set("Padding", config.padding, 0.0f, 20.0f);
-        margin.set("Margin", config.margin, 0.0f, 50.0f);
+        
+        /*
+        padding.parameters.setName("Padding");
+        padding.parameters.getFloat("Padding Top") = config.paddingTop;
+        padding.parameters.getFloat("Padding Right") = config.paddingRight;
+        padding.parameters.getFloat("Padding Bottom") = config.paddingBottom;
+        padding.parameters.getFloat("Padding Left") = config.paddingLeft;
+        
+        margin.parameters.setName("Margin");
+        margin.parameters.getFloat("Padding Top") = config.marginTop;
+        margin.parameters.getFloat("Padding Right") = config.marginRight;
+        margin.parameters.getFloat("Padding Bottom") = config.marginBottom;
+        margin.parameters.getFloat("Padding Left") = config.marginLeft;
+        */
+        
         borderSize.set("Border Size", config.borderSize, 0.0f, 10.0f);
         width.set("Width", config.width, config.minWidth, numeric_limits<float>::max());
         height.set("Height", config.height, config.minHeight, numeric_limits<float>::max());
@@ -95,8 +166,8 @@ public:
         parameters.add(borderColor);
         parameters.add(focusColor);
         parameters.add(focusBackgroundColor);
-        parameters.add(padding);
-        parameters.add(margin);
+        parameters.add(padding.parameters);
+        parameters.add(margin.parameters);
         parameters.add(borderSize);
         parameters.add(width);
         parameters.add(height);
@@ -122,12 +193,33 @@ public:
     ofColor getFocusBackgroundColor() const { return focusBackgroundColor; }
     void setFocusBackgroundColor(const ofColor& value) { focusBackgroundColor = value; }
     
-    float getPadding() const { return padding; }
-    void setPadding(float value) { padding = ofClamp(value, 0.0f, MAX_PADDING); }
+    // Getter and setter methods for padding properties
+    float getPaddingTop() const { return padding.getTop(); }
+    void setPaddingTop(float value) { padding.setTop(value); }
+
+    float getPaddingRight() const { return padding.getRight(); }
+    void setPaddingRight(float value) { padding.setRight(value); }
+
+    float getPaddingBottom() const { return padding.getBottom(); }
+    void setPaddingBottom(float value) { padding.setBottom(value); }
+
+    float getPaddingLeft() const { return padding.getLeft(); }
+    void setPaddingLeft(float value) { padding.setLeft(value); }
     
-    float getMargin() const { return margin; }
-    void setMargin(float value) { margin = ofClamp(value, 0.0f, MAX_MARGIN); }
+    // Getter and setter methods for margin properties
+    float getMarginTop() const { return margin.getTop(); }
+    void setMarginop(float value) { margin.setTop(value); }
+
+    float getMarginRight() const { return margin.getRight(); }
+    void setMarginRight(float value) { margin.setRight(value); }
+
+    float getMarginBottom() const { return margin.getBottom(); }
+    void setMarginBottom(float value) { margin.setBottom(value); }
+
+    float getMarginLeft() const { return margin.getLeft(); }
+    void setMarginLeft(float value) { margin.setLeft(value); }
     
+
     float getBorderSize() const { return borderSize; }
     void setBorderSize(float value) { borderSize = ofClamp(value, 0.0f, MAX_BORDER_SIZE); }
     
@@ -173,7 +265,7 @@ public:
         
         // Draw text
         ofSetColor(textColor);
-        ofDrawBitmapString("Your Text", x + padding + borderSize, y + height / 2);
+        ofDrawBitmapString("Your Text", x + padding.getLeft() + borderSize, y + height / 2);
         
         // Add more drawing logic as needed
     }

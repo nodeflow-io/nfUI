@@ -35,10 +35,10 @@ void ofApp::setup() {
     _uiElements.emplace_back(buttonSetParameters);
     
     // Add NFValues to the node with labels and set up UIElements
-    _nfNode.addNFValue<BoolNFValue, nfUI::ofxTextInputField, bool>("Show Grid", _guiParams.getShowGrid(), *textInputField1, 20, 60, 120, 20, _font);
-    _nfNode.addNFValue<IntNFValue, nfUI::ofxTextInputField, int>("Gridsize", _guiParams.getGridSize(), *textInputField2, 20, 40, 120, 20, _font);
-    _nfNode.addNFValue<IntNFValue, nfUI::ofxTextInputField, int>("Major Step", _guiParams.getMajorStep(), *textInputField3, 20, 40, 120, 20, _font);
-    _nfNode.addNFValue<StringNFValue, nfUI::Button, std::string>("Button", "Set Params", *buttonSetParameters, 20, 80, 120, 20, _font);
+    _nfNode.addNFValue<BoolNFValue, nfUI::ofxTextInputField, bool>("Show Grid", _guiParams.getShowGrid(), *textInputField1, 20, 60, 100, 20, _font);
+    _nfNode.addNFValue<IntNFValue, nfUI::ofxTextInputField, int>("Gridsize", _guiParams.getGridSize(), *textInputField2, 20, 40, 100, 20, _font);
+    _nfNode.addNFValue<IntNFValue, nfUI::ofxTextInputField, int>("Major Step", _guiParams.getMajorStep(), *textInputField3, 20, 40, 100, 20, _font);
+    _nfNode.addNFValue<StringNFValue, nfUI::Button, std::string>("Button", "Set Params", *buttonSetParameters, 20, 80, 100, 20, _font);
 
 
    /*

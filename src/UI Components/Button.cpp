@@ -76,7 +76,7 @@ void Button::draw() {
     ofPushMatrix();
     ofTranslate(bounds.x, bounds.y);
     // TODO: padding top , bottom , etc
-    fontRef->drawString(text, this->padding, fontRef->getLineHeight()+this->padding);
+    fontRef->drawString(text, this->padding.getLeft(), fontRef->getLineHeight()+this->padding.getTop());
     ofPopMatrix();
 }
 
