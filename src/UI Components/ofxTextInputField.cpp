@@ -98,6 +98,7 @@ void ofxTextInputField::disable(){
     }
     
 }
+
 void ofxTextInputField::beginEditing() {
     if(!isEditing){
         ofAddListener(ofEvents().keyPressed, this, &ofxTextInputField::keyPressed);
