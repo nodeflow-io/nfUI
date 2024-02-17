@@ -15,7 +15,7 @@ namespace nfUI {
 // Define upper clamp limits as constants
 const float MAX_PADDING = 10000.0f;
 const float MAX_MARGIN = 10000.0f;
-const float MAX_BORDER_SIZE = 1000.0f;
+const float MAX_BORDER_SIZE = 10000.0f;
 
 struct NfUIConfig {
     ofColor backgroundColor;
@@ -118,13 +118,13 @@ public:
     void setFocusBackgroundColor(const ofColor& value) { focusBackgroundColor = value; }
     
     float getPadding() const { return padding; }
-    void setPadding(float value) { padding = ofClamp(value, 0.0f, 20.0f); }
+    void setPadding(float value) { padding = ofClamp(value, 0.0f, MAX_PADDING); }
     
     float getMargin() const { return margin; }
-    void setMargin(float value) { margin = ofClamp(value, 0.0f, 50.0f); }
+    void setMargin(float value) { margin = ofClamp(value, 0.0f, MAX_MARGIN; }
     
     float getBorderSize() const { return borderSize; }
-    void setBorderSize(float value) { borderSize = ofClamp(value, 0.0f, 10.0f); }
+    void setBorderSize(float value) { borderSize = ofClamp(value, 0.0f, MAX_BORDER_SIZE); }
     
     bool getIsFocused() const { return isFocused; }
     void setIsFocused(bool value) { isFocused = value; }
