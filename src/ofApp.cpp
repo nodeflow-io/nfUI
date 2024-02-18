@@ -48,6 +48,7 @@ void ofApp::setup() {
     _uiElements.emplace_back(tif1);
     _uiElements.emplace_back(tif2);
     _uiElements.emplace_back(tif3);
+    _uiElements.emplace_back(tif4);
     // _uiElements.emplace_back(textInputField4);
     // _uiElements.emplace_back(textInputField5);
     _uiElements.emplace_back(buttonSetParameters);
