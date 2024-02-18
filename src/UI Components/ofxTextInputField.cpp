@@ -67,6 +67,7 @@ ofxTextInputField::ofxTextInputField(const NfUIConfig& config) : UIElement(confi
 
 // Constructor for ofxTextInputField
 ofxTextInputField::ofxTextInputField(const NfUIConfig& config, const std::string& elementName) : UIElement(config) {
+    parameters.setName(elementName);
     shiftMap[44] = '<';
     shiftMap[45] = '_';
     shiftMap[46] = '>';
