@@ -76,12 +76,14 @@ bool Button::getIsEnabled() {
 void Button::draw() {
     // Draw border
     auto pos = ofRectangle(160,120,120,20);
+    // Get the boolean value
+    bool focusedValue = parameters.getBool("IsFocused");
     bounds = pos;
     ofSetColor(borderColor);
     ofDrawRectangle(pos.x, pos.y, pos.width, pos.height);
     
     // Draw background
-    ofSetColor(isFocused ? focusBackgroundColor : backgroundColor);
+    ofSetColor(focusedValue ? focusBackgroundColor : backgroundColor);
     ofDrawRectangle(pos.x + borderSize, pos.y + borderSize, width - 2 * borderSize, height - 2 * borderSize);
     
     // Draw text
@@ -109,7 +111,7 @@ void Button::mousePressed(ofMouseEventArgs& args) {
     // Handle mouse pressed event for the button, if needed
     mouseDownInRect = bounds.inside(args.x, args.y);
     if(mouseDownInRect) {
-
+        parameters.getBool("IsFocused") = true; // Set to true
     }
 }
 
@@ -119,6 +121,7 @@ void Button::mouseReleased(ofMouseEventArgs& args) {
     if (mouseDownInRect) {
         UIEventArgs eventArgs;
         ofNotifyEvent(clicked, eventArgs, this);
+        parameters.getBool("IsFocused") = false; // Set to true
     }
 }
 
