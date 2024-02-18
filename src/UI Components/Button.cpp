@@ -75,17 +75,19 @@ bool Button::getIsEnabled() {
 
 void Button::draw() {
     // Draw border
+    auto pos = ofRectangle(160,120,120,20);
+    bounds = pos;
     ofSetColor(borderColor);
-    ofDrawRectangle(bounds.x, bounds.y, width, height);
+    ofDrawRectangle(pos.x, pos.y, pos.width, pos.height);
     
     // Draw background
     ofSetColor(isFocused ? focusBackgroundColor : backgroundColor);
-    ofDrawRectangle(bounds.x + borderSize, bounds.y + borderSize, width - 2 * borderSize, height - 2 * borderSize);
+    ofDrawRectangle(pos.x + borderSize, pos.y + borderSize, width - 2 * borderSize, height - 2 * borderSize);
     
     // Draw text
     ofSetColor(textColor);
     ofPushMatrix();
-    ofTranslate(bounds.x, bounds.y);
+    ofTranslate(pos.x, pos.y);
     // TODO: padding top , bottom , etc
     fontRef->drawString(text, this->padding.getLeft(), fontRef->getLineHeight()+this->padding.getTop());
     ofPopMatrix();

@@ -142,11 +142,20 @@ void ofApp::keyPressed(int key) {
                     }
                 }
             break;
+        case OF_KEY_F1:
+            // F1 key pressed
+            _guiParams._showGrid = !_guiParams._showGrid;
+            std::cout << "main _showGrid: " << _guiParams._showGrid << "\n";
+            break;
+        case OF_KEY_F2:
+            // F2 key pressed
+            _guiParams._showStatusBar = !_guiParams._showStatusBar;
+            std::cout << "main _showStatusBar: "  << _guiParams._showStatusBar << "\n";
+            break;
             
         case 'g': // 'g' key
             // Action for 'g' key
-            _guiParams._showGrid = !_guiParams._showGrid;
-            std::cout << "main _showGrid: " << _guiParams._showGrid << "\n";
+            
             break;
             
         case 'h': // 'h' key
@@ -155,8 +164,7 @@ void ofApp::keyPressed(int key) {
         
         case 'i': // 'g' key
             // Action for 'g' key
-            _guiParams._showStatusBar = !_guiParams._showStatusBar;
-            std::cout << "main _showStatusBar: "  << _guiParams._showStatusBar << "\n";
+            
             break;
 
         case '1': // '1' key

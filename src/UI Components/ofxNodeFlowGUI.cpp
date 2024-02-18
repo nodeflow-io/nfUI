@@ -22,7 +22,7 @@ void ofxNodeFlowGUI::update(NFNode& _nfNode, std::vector<nfUI::UIElement*>& _uiE
 }
 
 void ofxNodeFlowGUI::drawPanel(uint32_t x, uint32_t y, uint32_t width, uint32_t height) {
-    x = x - (width+10); // TODO -> padding
+    // x = x - (width+10); // TODO -> padding
     // Set color to backgroundcolor000 (filled)
     ofSetColor(_nfuiConfig.backgroundColor);
     // Draw a filled rectangle at position (100, 100) with a width of 200 and height of 150
@@ -41,9 +41,10 @@ void ofxNodeFlowGUI::drawValue(NFNode& _nfNode, std::vector<nfUI::UIElement*>& _
     // ofBackground(0);
     ofSetColor(_nfuiConfig.textColor);
     ofPushStyle();
-    uint32_t py = 20;
-    uint32_t x = 20;
-    uint32_t y = 400;
+    // uint32_t py = 20;
+    // uint32_t x = 10;
+    // uint32_t y = 430;
+    auto pos = ofRectangle(40,40,120,20);
     uint32_t channelSpacing = _nfuiConfig.height;
     uint32_t paddingHorizontal = _nfuiConfig.paddingTop;
 
@@ -52,22 +53,22 @@ void ofxNodeFlowGUI::drawValue(NFNode& _nfNode, std::vector<nfUI::UIElement*>& _
     size_t indexCounter = 0;
     std::string name;
     std::string value;
-
+    
     // iterate over all name / value pairs
     for (const auto& nfValue : drawOrder) {
-        ofRectangle initialPosition = _uiElements[indexCounter]->getBounds();
-        ofRectangle labelPosition = initialPosition;
-        ofRectangle valuePosition = initialPosition;
+        // ofRectangle initialPosition = pos; // ofRect(400,40,120,20); //_uiElements[indexCounter]->getBounds();
+        ofRectangle labelPosition = pos;
+        ofRectangle valuePosition = pos;
 
-        this->drawPanel(labelPosition.x, labelPosition.y, labelPosition.width, _nfuiConfig.height);
+        this->drawPanel(pos.x, pos.y, pos.width, _nfuiConfig.height);
         ofSetColor(_nfuiConfig.textColor);
 
         // adjust label position for font rendering
-        y = py + (indexCounter * channelSpacing);
-        labelPosition.x = x + paddingHorizontal;
-        labelPosition.y = y + 14;
-        valuePosition.x = x + valuePosition.width + 7;
-        valuePosition.y = y;
+        // y = py + (indexCounter * channelSpacing);
+        labelPosition.x = pos.x;
+        labelPosition.y = pos.y + 14;
+        valuePosition.x = pos.x + valuePosition.width + 7;
+        valuePosition.y = pos.y;
 
         // get name and value as strings for display
         if (typeid(StringNFValue) == typeid(*nfValue)) {
@@ -89,14 +90,15 @@ void ofxNodeFlowGUI::drawValue(NFNode& _nfNode, std::vector<nfUI::UIElement*>& _
         }
 
         // draw input field
-        glPushMatrix();
+        // glPushMatrix();
         ofDrawBitmapString(name, labelPosition.x, labelPosition.y);
         glTranslatef(0, -2, 0);
         _uiElements[indexCounter]->setup();
         _uiElements[indexCounter]->setBounds(valuePosition);
         _uiElements[indexCounter]->draw();
-        glPopMatrix();
-
+        // glTranslatef(0, 20, 0);
+        // glPopMatrix();
+        pos.y +=20;
         indexCounter++;
     }
 
