@@ -64,7 +64,7 @@ public:
     template <typename T, typename UIElementType, typename... Args>
     T* addNFValue(const std::string& label, Args&&... args, UIElementType uiElement, uint32_t x, uint32_t y, uint32_t width, uint32_t height, ofTrueTypeFont& font) {
         // ...
-
+        ofLogVerbose("NFNode::addNFValue");
         T* newNFValue = new T(std::forward<Args>(args)...);
         newNFValue->value.setName(label);
         nfValues.push_back(newNFValue);
@@ -125,7 +125,7 @@ public:
     template <typename UIElementType>
     void setup(NFNode& _nfNode, std::vector<UIElementType*>& _uiElements) {
         // Your setup code here
-        
+        ofLogVerbose("ofxNodeFlowGUI: setup");
         // Load a TrueType font file (replace "your_font.ttf" with the actual filename)
         std::string fontFace = "Roboto-Thin.ttf";
         uint32_t fontSize = 11;

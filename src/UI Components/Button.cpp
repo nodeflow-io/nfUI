@@ -10,6 +10,17 @@
 namespace nfUI {
 // Constructor for ofxTextInputField
 Button::Button(const NfUIConfig& config) : UIElement(config) {
+    parameters.setName("Button");
+    text = "Submit";
+    fontRef = NULL;
+    isEnabled = false;
+    bounds = ofRectangle(0,0,100,22);
+    mouseDownInRect = false;
+    fontRef = new ofxTextInput::BitmapFontRenderer();
+}
+
+Button::Button(const NfUIConfig& config, const std::string& elementName) : UIElement(config) {
+    parameters.setName(elementName);
     text = "Submit";
     fontRef = NULL;
     isEnabled = false;
@@ -94,10 +105,19 @@ void Button::keyReleased(ofKeyEventArgs& a) {
 
 void Button::mousePressed(ofMouseEventArgs& args) {
     // Handle mouse pressed event for the button, if needed
+    mouseDownInRect = bounds.inside(args.x, args.y);
+    if(mouseDownInRect) {
+
+    }
 }
 
 void Button::mouseReleased(ofMouseEventArgs& args) {
     // Handle mouse released event for the button, if needed
+    mouseDownInRect = bounds.inside(args.x, args.y);
+    if (mouseDownInRect) {
+        UIEventArgs eventArgs;
+        ofNotifyEvent(clicked, eventArgs, this);
+    }
 }
 
 }

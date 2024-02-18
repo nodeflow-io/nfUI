@@ -3,6 +3,12 @@
 
 //--------------------------------------------------------------
 void ofApp::setup() {
+    // set the logging level you can use:
+    // OF_LOG_VERBOSE
+    // OF_LOG_NOTICE
+    // OF_LOG_WARNING
+    // OF_LOG_ERROR
+    // OF_LOG_FATAL_ERROR
     ofSetLogLevel(OF_LOG_VERBOSE);
     ofDisableAntiAliasing();
     ofSetFrameRate(30);
@@ -29,11 +35,16 @@ void ofApp::setup() {
     nfUI::ofxTextInputField* tif1 = new nfUI::ofxTextInputField(config, "Show Grid");
     nfUI::ofxTextInputField* tif2 = new nfUI::ofxTextInputField(config, "Grid Size");
     nfUI::ofxTextInputField* tif3 = new nfUI::ofxTextInputField(config, "Major Step");
+    nfUI::ofxTextInputField* tif4 = new nfUI::ofxTextInputField(config, "Minor Step");
 
     // nfUI::ofxTextInputField* textInputField4 = new nfUI::ofxTextInputField();
     // nfUI::ofxTextInputField* textInputField5 = new nfUI::ofxTextInputField();
-    nfUI::Button* buttonSetParameters = new nfUI::Button();
+    nfUI::Button* buttonSetParameters = new nfUI::Button(config, "Set Parameters");
     
+    // setup event handlers for the callbacks
+    ofAddListener(buttonSetParameters->clicked, this, &ofApp::onButtonSetParametersClicked);
+    
+    // add every UIElement to our UIElements structure
     _uiElements.emplace_back(tif1);
     _uiElements.emplace_back(tif2);
     _uiElements.emplace_back(tif3);
@@ -42,10 +53,13 @@ void ofApp::setup() {
     _uiElements.emplace_back(buttonSetParameters);
     
     // Add NFValues to the node with labels and set up UIElements
-    _nfNode.addNFValue<BoolNFValue, nfUI::ofxTextInputField, bool>("Show Grid", _guiParams.getShowGrid(), *tif1, 20, 60, 100, 20, _font);
-    _nfNode.addNFValue<IntNFValue, nfUI::ofxTextInputField, int>("Gridsize", _guiParams.getGridSize(), *tif2, 20, 40, 100, 20, _font);
-    _nfNode.addNFValue<IntNFValue, nfUI::ofxTextInputField, int>("Major Step", _guiParams.getMajorStep(), *tif3, 20, 40, 100, 20, _font);
-    _nfNode.addNFValue<StringNFValue, nfUI::Button, std::string>("Button", "Set Params", *buttonSetParameters, 20, 80, 100, 20, _font);
+    // label, value
+    _nfNode.addNFValue<BoolNFValue, nfUI::ofxTextInputField, bool>(tif1->parameters.getName(), _guiParams.getShowGrid(), *tif1, 20, 60, 100, 20, _font);
+    _nfNode.addNFValue<IntNFValue, nfUI::ofxTextInputField, int>(tif2->parameters.getName(), _guiParams.getGridSize(), *tif2, 20, 40, 100, 20, _font);
+    _nfNode.addNFValue<IntNFValue, nfUI::ofxTextInputField, int>(tif3->parameters.getName(), _guiParams.getMajorStep(), *tif3, 20, 40, 100, 20, _font);
+    _nfNode.addNFValue<IntNFValue, nfUI::ofxTextInputField, int>(tif4->parameters.getName(), _guiParams.getMajorStep(), *tif4, 20, 40, 100, 20, _font);
+    
+    _nfNode.addNFValue<StringNFValue, nfUI::Button, std::string>("Button", buttonSetParameters->parameters.getName(), *buttonSetParameters, 20, 80, 100, 20, _font);
 
 
    /*
@@ -167,6 +181,13 @@ void ofApp::keyPressed(int key) {
     }
 }
 
+//--------------------------------------------------------------
+// EVENT HANDLERS
+//--------------------------------------------------------------
+void ofApp::onButtonSetParametersClicked(nfUI::UIEventArgs& eventArgs) {
+    // Handle the UI element click event here
+    std::cout << "onButtonSetParametersClicked\n";
+}
 
 //--------------------------------------------------------------
 void ofApp::keyReleased(int key){

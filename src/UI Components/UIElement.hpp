@@ -105,7 +105,11 @@ public:
     void setLeft(float value) { left = std::min(value, std::numeric_limits<float>::max()); }
 };
 
-
+class UIEventArgs : public ofEventArgs {
+    // Add any data members if needed
+public:
+    UIEventArgs() {}  // Default constructor
+};
 
 class UIElement {
 public:
@@ -129,23 +133,28 @@ public:
     std::string text;
     ofParameter<ofRectangle> bounds;
     
+    // event handling
+    ofEvent<UIEventArgs> clicked;
+    
+    
+    
     // Constructor with Config parameter
     UIElement(const NfUIConfig& config = NfUIConfig(), const std::string& elementName = "DefaultName")
         : padding(elementName + " Padding", config.paddingTop, config.paddingRight, config.paddingBottom, config.paddingLeft),
           margin(elementName + " Margin", config.marginTop, config.marginRight, config.marginBottom, config.marginLeft) {
        
         // Set default values from the config
-        backgroundColor.set("Background Color", config.backgroundColor);
-        textColor.set("Text Color", config.textColor);
-        borderColor.set("Border Color", config.borderColor);
-        focusColor.set("Focus Color", config.focusColor);
-        focusBackgroundColor.set("Focus Background Color", config.focusBackgroundColor);
-        borderSize.set("Border Size", config.borderSize, 0.0f, 10.0f);
+        backgroundColor.set("BackgroundColor", config.backgroundColor);
+        textColor.set("TextColor", config.textColor);
+        borderColor.set("BorderColor", config.borderColor);
+        focusColor.set("FocusColor", config.focusColor);
+        focusBackgroundColor.set("FocusBackgroundColor", config.focusBackgroundColor);
+        borderSize.set("BorderSize", config.borderSize, 0.0f, 10.0f);
         width.set("Width", config.width, config.minWidth, numeric_limits<float>::max());
         height.set("Height", config.height, config.minHeight, numeric_limits<float>::max());
-        minWidth.set("Min Width", config.minWidth);
-        minHeight.set("Min Height", config.minHeight);
-        isFocused.set("Is Focused", config.isFocused);
+        minWidth.set("MinWidth", config.minWidth);
+        minHeight.set("MinHeight", config.minHeight);
+        isFocused.set("IsFocused", config.isFocused);
         bounds.set("Bounds", config.bounds);
         
         // Add parameters to the group

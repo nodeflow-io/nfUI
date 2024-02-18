@@ -23,6 +23,7 @@ class Button : public nfUI::UIElement {
 public:
     // Constructor for Button
     Button(const NfUIConfig& config = NfUIConfig());
+    Button(const NfUIConfig& config, const std::string& elementName);
     virtual ~Button();
     //swap in a font!
     void setFont(OFX_TEXTFIELD_FONT_RENDERER& font);

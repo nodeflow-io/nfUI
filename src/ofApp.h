@@ -14,6 +14,8 @@ public:
     void drawTxt() ;
     void exit() override;
     
+    void onButtonSetParametersClicked(nfUI::UIEventArgs& eventArgs);
+    
     void keyPressed(int key) override;
     void keyReleased(int key) override;
     void mouseMoved(int x, int y ) override;
