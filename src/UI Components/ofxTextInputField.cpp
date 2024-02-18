@@ -19,6 +19,7 @@
 namespace nfUI {
 // Constructor for ofxTextInputField
 ofxTextInputField::ofxTextInputField(const NfUIConfig& config) : UIElement(config) {
+    parameters.setName("ofxTextInputField");
     shiftMap[44] = '<';
     shiftMap[45] = '_';
     shiftMap[46] = '>';
@@ -397,8 +398,8 @@ void ofxTextInputField::keyPressed(ofKeyEventArgs& args) {
     //jg: made a step closer to this with swappable renderers and ofxFTGL -- but need unicode text input...
     lastTimeCursorMoved = ofGetElapsedTimef();
     int key = args.key;
-    
-    std::cout << parameters.getName() << ":" << key << std::endl;
+    // TODO: only if in VERBOSE MODE
+    std::cout << parameters.getName() << " (key pressed): " << key << std::endl;
     if(key == OF_KEY_SHIFT) {
         isShifted = true;
     }
