@@ -19,6 +19,7 @@
 namespace nfUI {
 // Constructor for ofxTextInputField
 ofxTextInputField::ofxTextInputField(const NfUIConfig& config) : UIElement(config) {
+    ofLogVerbose("ofxTextInputField(config)");
     parameters.setName("ofxTextInputField");
     shiftMap[44] = '<';
     shiftMap[45] = '_';
@@ -68,6 +69,7 @@ ofxTextInputField::ofxTextInputField(const NfUIConfig& config) : UIElement(confi
 
 // Constructor for ofxTextInputField
 ofxTextInputField::ofxTextInputField(const NfUIConfig& config, const std::string& elementName) : UIElement(config) {
+    ofLogVerbose("ofxTextInputField(config, elementName)");
     parameters.setName(elementName);
     shiftMap[44] = '<';
     shiftMap[45] = '_';

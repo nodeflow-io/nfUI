@@ -11,7 +11,7 @@ namespace nfUI {
 // Constructor for ofxTextInputField
 Button::Button(const NfUIConfig& config) : UIElement(config) {
     parameters.setName("Button");
-    text = "Submit";
+    text = "Submit Solve";
     fontRef = NULL;
     isEnabled = false;
     bounds = ofRectangle(0,0,100,22);
@@ -21,7 +21,7 @@ Button::Button(const NfUIConfig& config) : UIElement(config) {
 
 Button::Button(const NfUIConfig& config, const std::string& elementName) : UIElement(config) {
     parameters.setName(elementName);
-    text = "Submit";
+    text = "Submit Solve";
     fontRef = NULL;
     isEnabled = false;
     bounds = ofRectangle(0,0,100,22);

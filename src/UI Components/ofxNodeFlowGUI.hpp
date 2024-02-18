@@ -97,6 +97,7 @@ public:
             value = ofToString(intNFValue->value.get());
         }
         uiElement.text = value;
+        
 
         return newNFValue;
     }
@@ -122,33 +123,52 @@ public:
         return std::to_string(_majorVersion) + "." + std::to_string(_minorVersion) + "." + std::to_string(_patchVersion);
     }
     
+    // transfer the Nvalues to the UIelements
     template <typename UIElementType>
     void setup(NFNode& _nfNode, std::vector<UIElementType*>& _uiElements) {
         // Your setup code here
-        ofLogVerbose("ofxNodeFlowGUI: setup");
-        // Load a TrueType font file (replace "your_font.ttf" with the actual filename)
-        std::string fontFace = "Roboto-Thin.ttf";
-        uint32_t fontSize = 11;
-        if (_font.loadFont(fontFace, fontSize)) {
-            // Font loaded successfully, you can use it now
-            ofLogError() << "ofxNodeFlowGUI::setup(): loaded font" << fontFace+ " size: " << fontSize;
-        } else {
-            // Handle the case where the font failed to load
-            ofLogError() << "ofxNodeFlowGUI::setup(): Failed to load font!";
-        }
-        // For example, iterate through the vector and do something with each element
-        // TODO: implement type specific setters !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-        for (auto& uiElement : _uiElements) {
+        ofLogVerbose("ofxNodeFlowGUI::setup");
+
+        // Iterate through both NFValues and UIElements
+        auto nfValuesIt = _nfNode.getDrawOrder().begin();
+        auto uiElementsIt = _uiElements.begin();
+
+        while (nfValuesIt != _nfNode.getDrawOrder().end() && uiElementsIt != _uiElements.end()) {
+            // Get the NFValue and UIElement
+            NFValue* nfValue = *nfValuesIt;
+            UIElementType* uiElement = *uiElementsIt;
+
             // Perform setup specific to nfUI::UIElement
             // You can use dynamic_cast to check the actual type and perform specific actions
             if (auto* textInputField = dynamic_cast<nfUI::ofxTextInputField*>(uiElement)) {
                 // Handle setup for nfUI::ofxTextInputField
-                // ...
+                // Update text field with the corresponding NFValue
+                if (auto* stringNFValue = dynamic_cast<StringNFValue*>(nfValue)) {
+                    textInputField->text = stringNFValue->value.get();
+                } else if (auto* doubleNFValue = dynamic_cast<DoubleNFValue*>(nfValue)) {
+                    textInputField->text = ofToString(doubleNFValue->value.get());
+                } else if (auto* boolNFValue = dynamic_cast<BoolNFValue*>(nfValue)) {
+                    textInputField->text = ofToString(boolNFValue->value.get());
+                } else if (auto* intNFValue = dynamic_cast<IntNFValue*>(nfValue)) {
+                    textInputField->text = ofToString(intNFValue->value.get());
+                }
             } else if (auto* button = dynamic_cast<nfUI::Button*>(uiElement)) {
                 // Handle setup for nfUI::Button
-                // ...
+                // Update text field with the corresponding NFValue
+                if (auto* stringNFValue = dynamic_cast<StringNFValue*>(nfValue)) {
+                    button->text = stringNFValue->value.get();
+                } else if (auto* doubleNFValue = dynamic_cast<DoubleNFValue*>(nfValue)) {
+                    button->text = ofToString(doubleNFValue->value.get());
+                } else if (auto* boolNFValue = dynamic_cast<BoolNFValue*>(nfValue)) {
+                    button->text = ofToString(boolNFValue->value.get());
+                } else if (auto* intNFValue = dynamic_cast<IntNFValue*>(nfValue)) {
+                    button->text = ofToString(intNFValue->value.get());
+                }
             }
-            // Add other conditions for additional derived types if needed
+
+            // Move to the next NFValue and UIElement
+            ++nfValuesIt;
+            ++uiElementsIt;
         }
     }
     
