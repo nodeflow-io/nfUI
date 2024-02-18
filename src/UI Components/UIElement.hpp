@@ -122,7 +122,11 @@ public:
     ofParameter<float> height;
     ofParameter<float> minWidth;
     ofParameter<float> minHeight;
+    ofParameter<float> maxWidth;
+    ofParameter<float> maxHeight;
     ofParameter<bool> isFocused;
+    ofParameter<bool> isVisible;
+    std::string text;
     ofParameter<ofRectangle> bounds;
     
     // Constructor with Config parameter
@@ -283,6 +287,8 @@ private:
     // Internal properties like position (x, y) can be managed privately
     float x;
     float y;
+    float contentWidth;
+    float contentHeight;
     
     // Helper method to check if the mouse is inside the element
     virtual bool isMouseInside(int mouseX, int mouseY) {

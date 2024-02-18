@@ -72,7 +72,7 @@ public:
     void draw() override;
     void clear();
     
-    string text;
+    
     int cursorPosition;
     
     int selectionBegin;
