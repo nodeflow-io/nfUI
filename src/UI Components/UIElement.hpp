@@ -130,31 +130,16 @@ public:
     ofParameter<ofRectangle> bounds;
     
     // Constructor with Config parameter
-    UIElement(const NfUIConfig& config = NfUIConfig())
-            : padding("Margin", config.paddingTop, config.paddingRight, config.paddingBottom, config.paddingLeft),
-        margin("Margin", config.marginTop, config.marginRight, config.marginBottom, config.marginLeft) {
-         
+    UIElement(const NfUIConfig& config = NfUIConfig(), const std::string& elementName = "DefaultName")
+        : padding(elementName + " Padding", config.paddingTop, config.paddingRight, config.paddingBottom, config.paddingLeft),
+          margin(elementName + " Margin", config.marginTop, config.marginRight, config.marginBottom, config.marginLeft) {
+       
         // Set default values from the config
         backgroundColor.set("Background Color", config.backgroundColor);
         textColor.set("Text Color", config.textColor);
         borderColor.set("Border Color", config.borderColor);
         focusColor.set("Focus Color", config.focusColor);
         focusBackgroundColor.set("Focus Background Color", config.focusBackgroundColor);
-        
-        /*
-        padding.parameters.setName("Padding");
-        padding.parameters.getFloat("Padding Top") = config.paddingTop;
-        padding.parameters.getFloat("Padding Right") = config.paddingRight;
-        padding.parameters.getFloat("Padding Bottom") = config.paddingBottom;
-        padding.parameters.getFloat("Padding Left") = config.paddingLeft;
-        
-        margin.parameters.setName("Margin");
-        margin.parameters.getFloat("Padding Top") = config.marginTop;
-        margin.parameters.getFloat("Padding Right") = config.marginRight;
-        margin.parameters.getFloat("Padding Bottom") = config.marginBottom;
-        margin.parameters.getFloat("Padding Left") = config.marginLeft;
-        */
-        
         borderSize.set("Border Size", config.borderSize, 0.0f, 10.0f);
         width.set("Width", config.width, config.minWidth, numeric_limits<float>::max());
         height.set("Height", config.height, config.minHeight, numeric_limits<float>::max());
@@ -164,7 +149,7 @@ public:
         bounds.set("Bounds", config.bounds);
         
         // Add parameters to the group
-        parameters.setName("UI Element Parameters");
+        parameters.setName(elementName);
         parameters.add(backgroundColor);
         parameters.add(textColor);
         parameters.add(borderColor);

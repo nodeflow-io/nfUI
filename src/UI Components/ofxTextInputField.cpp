@@ -18,8 +18,55 @@
 
 namespace nfUI {
 // Constructor for ofxTextInputField
-    ofxTextInputField::ofxTextInputField(const NfUIConfig& config) : UIElement(config) {
+ofxTextInputField::ofxTextInputField(const NfUIConfig& config) : UIElement(config) {
+    shiftMap[44] = '<';
+    shiftMap[45] = '_';
+    shiftMap[46] = '>';
+    shiftMap[48] = ')';
+    shiftMap[49] = '!';
+    shiftMap[50] = '@';
+    shiftMap[51] = '#';
+    shiftMap[52] = '$';
+    shiftMap[53] = '%';
+    shiftMap[54] = '^';
+    shiftMap[55] = '&';
+    shiftMap[56] = '*';
+    shiftMap[57] = '(';
+    shiftMap[61] = '+';
+    shiftMap[63] = '/';
+    shiftMap[91] = '{';
+    shiftMap[92] = '|';
+    shiftMap[93] = '}';
+    shiftMap[96] = '~';
+    
+    text = "";
+    multiline = false;
+    autoTab = true;
+    cursorPosition = 0;
+    selectionBegin = 0;
+    selectionEnd = 0;
+    selecting = false;
+    
+    
+    fontRef = NULL;
+    isEnabled = false;
+    isEditing = false;
+    bounds = ofRectangle(0,0,100,22);
+    
+    drawCursor = false;
+    autoClear = false;
+    mouseDownInRect = false;
+    
+    fontRef = new ofxTextInput::BitmapFontRenderer();
+    //isSetup = false;
+    
+    VERTICAL_PADDING = 3;
+    HORIZONTAL_PADDING = 3;
+    lastTimeCursorMoved = ofGetElapsedTimef();
+}
 
+// Constructor for ofxTextInputField
+ofxTextInputField::ofxTextInputField(const NfUIConfig& config, const std::string& elementName) : UIElement(config) {
     shiftMap[44] = '<';
     shiftMap[45] = '_';
     shiftMap[46] = '>';
@@ -145,7 +192,7 @@ bool ofxTextInputField::getIsEnabled(){
 void ofxTextInputField::draw() {
     ofPushMatrix();
     ofTranslate(bounds.x, bounds.y);
-
+    
     if(selecting) {
         ofPushStyle();
         // argh, splitting all the time.
@@ -213,7 +260,7 @@ void ofxTextInputField::draw() {
         
         int cursorTop = VERTICAL_PADDING + fontRef->getLineHeight()*cursorY;
         int cursorBottom = cursorTop + fontRef->getLineHeight();
-
+        
         ofSetLineWidth(1.0f);
         //TODO: multiline with fontRef
         ofDrawLine(cursorPos, cursorTop,
@@ -350,7 +397,7 @@ void ofxTextInputField::keyPressed(ofKeyEventArgs& args) {
     lastTimeCursorMoved = ofGetElapsedTimef();
     int key = args.key;
     
-    std::cout << key << std::endl;
+    std::cout << parameters.getName() << ":" << key << std::endl;
     if(key == OF_KEY_SHIFT) {
         isShifted = true;
     }

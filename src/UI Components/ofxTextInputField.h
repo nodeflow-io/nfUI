@@ -44,11 +44,12 @@
 // TODO: wrapping
 #include "ofxTextInputFieldFontRenderer.h"
 namespace nfUI {
-class ofxTextInputField : public nfUI::UIElement {
-    
-public:
-    // Constructor for ofxTextInputField
-    ofxTextInputField(const NfUIConfig& config = NfUIConfig());
+    class ofxTextInputField : public nfUI::UIElement {
+    public:
+        // Constructor for ofxTextInputField
+        ofxTextInputField(const NfUIConfig& config);
+        ofxTextInputField(const NfUIConfig& config, const std::string& elementName);
+        // ...
     virtual ~ofxTextInputField();
     //swap in a font!
     void setFont(OFX_TEXTFIELD_FONT_RENDERER& font);

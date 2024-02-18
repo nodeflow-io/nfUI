@@ -25,24 +25,26 @@ void ofApp::setup() {
     _guiParams.setMinorGridColor(ofColor(255, 0, 0, 50));  // Red dark for minor grid lines
     
     // --- setup entities
-    nfUI::ofxTextInputField* textInputField1 = new nfUI::ofxTextInputField();
-    nfUI::ofxTextInputField* textInputField2 = new nfUI::ofxTextInputField();
-    nfUI::ofxTextInputField* textInputField3 = new nfUI::ofxTextInputField();
+    nfUI::NfUIConfig config; // Set your configuration parameters here
+    nfUI::ofxTextInputField* tif1 = new nfUI::ofxTextInputField(config, "Show Grid");
+    nfUI::ofxTextInputField* tif2 = new nfUI::ofxTextInputField(config, "Grid Size");
+    nfUI::ofxTextInputField* tif3 = new nfUI::ofxTextInputField(config, "Major Step");
+
     // nfUI::ofxTextInputField* textInputField4 = new nfUI::ofxTextInputField();
     // nfUI::ofxTextInputField* textInputField5 = new nfUI::ofxTextInputField();
     nfUI::Button* buttonSetParameters = new nfUI::Button();
     
-    _uiElements.emplace_back(textInputField1);
-    _uiElements.emplace_back(textInputField2);
-    _uiElements.emplace_back(textInputField3);
+    _uiElements.emplace_back(tif1);
+    _uiElements.emplace_back(tif2);
+    _uiElements.emplace_back(tif3);
     // _uiElements.emplace_back(textInputField4);
     // _uiElements.emplace_back(textInputField5);
     _uiElements.emplace_back(buttonSetParameters);
     
     // Add NFValues to the node with labels and set up UIElements
-    _nfNode.addNFValue<BoolNFValue, nfUI::ofxTextInputField, bool>("Show Grid", _guiParams.getShowGrid(), *textInputField1, 20, 60, 100, 20, _font);
-    _nfNode.addNFValue<IntNFValue, nfUI::ofxTextInputField, int>("Gridsize", _guiParams.getGridSize(), *textInputField2, 20, 40, 100, 20, _font);
-    _nfNode.addNFValue<IntNFValue, nfUI::ofxTextInputField, int>("Major Step", _guiParams.getMajorStep(), *textInputField3, 20, 40, 100, 20, _font);
+    _nfNode.addNFValue<BoolNFValue, nfUI::ofxTextInputField, bool>("Show Grid", _guiParams.getShowGrid(), *tif1, 20, 60, 100, 20, _font);
+    _nfNode.addNFValue<IntNFValue, nfUI::ofxTextInputField, int>("Gridsize", _guiParams.getGridSize(), *tif2, 20, 40, 100, 20, _font);
+    _nfNode.addNFValue<IntNFValue, nfUI::ofxTextInputField, int>("Major Step", _guiParams.getMajorStep(), *tif3, 20, 40, 100, 20, _font);
     _nfNode.addNFValue<StringNFValue, nfUI::Button, std::string>("Button", "Set Params", *buttonSetParameters, 20, 80, 100, 20, _font);
 
 
