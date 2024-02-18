@@ -22,6 +22,7 @@ void ofxNodeFlowGUI::update(NFNode& _nfNode, std::vector<nfUI::UIElement*>& _uiE
 }
 
 void ofxNodeFlowGUI::drawPanel(uint32_t x, uint32_t y, uint32_t width, uint32_t height) {
+    x = x - (width+10); // TODO -> padding
     // Set color to backgroundcolor000 (filled)
     ofSetColor(_nfuiConfig.backgroundColor);
     // Draw a filled rectangle at position (100, 100) with a width of 200 and height of 150
@@ -41,7 +42,7 @@ void ofxNodeFlowGUI::drawValue(NFNode& _nfNode, std::vector<nfUI::UIElement*>& _
     ofSetColor(_nfuiConfig.textColor);
     ofPushStyle();
     uint32_t py = 20;
-    uint32_t x = 400;
+    uint32_t x = 20;
     uint32_t y = 400;
     uint32_t channelSpacing = _nfuiConfig.height;
     uint32_t paddingHorizontal = _nfuiConfig.paddingTop;
@@ -58,7 +59,7 @@ void ofxNodeFlowGUI::drawValue(NFNode& _nfNode, std::vector<nfUI::UIElement*>& _
         ofRectangle labelPosition = initialPosition;
         ofRectangle valuePosition = initialPosition;
 
-        // this->drawPanel(labelPosition.x, labelPosition.y, labelPosition.width, _nfuiConfig.height);
+        this->drawPanel(labelPosition.x, labelPosition.y, labelPosition.width, _nfuiConfig.height);
         ofSetColor(_nfuiConfig.textColor);
 
         // adjust label position for font rendering
@@ -90,7 +91,7 @@ void ofxNodeFlowGUI::drawValue(NFNode& _nfNode, std::vector<nfUI::UIElement*>& _
         // draw input field
         glPushMatrix();
         ofDrawBitmapString(name, labelPosition.x, labelPosition.y);
-        glTranslatef(valuePosition.x, valuePosition.y, 0);
+        glTranslatef(0, -2, 0);
         _uiElements[indexCounter]->setup();
         _uiElements[indexCounter]->setBounds(valuePosition);
         _uiElements[indexCounter]->draw();

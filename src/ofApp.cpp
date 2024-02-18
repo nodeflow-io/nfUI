@@ -39,7 +39,7 @@ void ofApp::setup() {
 
     // nfUI::ofxTextInputField* textInputField4 = new nfUI::ofxTextInputField();
     // nfUI::ofxTextInputField* textInputField5 = new nfUI::ofxTextInputField();
-    nfUI::Button* buttonSetParameters = new nfUI::Button(config, "Set Parameters");
+    nfUI::Button* buttonSetParameters = new nfUI::Button(config, "Set Params");
     
     // setup event handlers for the callbacks
     ofAddListener(buttonSetParameters->clicked, this, &ofApp::onButtonSetParametersClicked);
@@ -54,11 +54,11 @@ void ofApp::setup() {
     _uiElements.emplace_back(buttonSetParameters);
     
     // Add NFValues to the node with labels and set up UIElements
-    // label, value
+    // label, value, *UIElelemnt, initial bounds
     _nfNode.addNFValue<BoolNFValue, nfUI::ofxTextInputField, bool>(tif1->parameters.getName(), _guiParams.getShowGrid(), *tif1, 20, 60, 100, 20, _font);
     _nfNode.addNFValue<IntNFValue, nfUI::ofxTextInputField, int>(tif2->parameters.getName(), _guiParams.getGridSize(), *tif2, 20, 40, 100, 20, _font);
     _nfNode.addNFValue<IntNFValue, nfUI::ofxTextInputField, int>(tif3->parameters.getName(), _guiParams.getMajorStep(), *tif3, 20, 40, 100, 20, _font);
-    _nfNode.addNFValue<IntNFValue, nfUI::ofxTextInputField, int>(tif4->parameters.getName(), _guiParams.getMajorStep(), *tif4, 20, 40, 100, 20, _font);
+    _nfNode.addNFValue<IntNFValue, nfUI::ofxTextInputField, int>(tif4->parameters.getName(), _guiParams.getMinorStep(), *tif4, 20, 40, 100, 20, _font);
     
     _nfNode.addNFValue<StringNFValue, nfUI::Button, std::string>("Button", buttonSetParameters->parameters.getName(), *buttonSetParameters, 20, 80, 100, 20, _font);
 

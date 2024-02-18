@@ -67,7 +67,7 @@ namespace nfUI {
     //can be set manually or otherwise is controlled by enable/disable
     bool drawCursor;
     
-    ofRectangle bounds;
+    // ofRectangle bounds;
     ofRectangle position;
     
     void draw() override;

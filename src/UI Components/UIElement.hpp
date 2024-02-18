@@ -131,7 +131,7 @@ public:
     ofParameter<bool> isFocused;
     ofParameter<bool> isVisible;
     std::string text;
-    ofParameter<ofRectangle> bounds;
+    ofRectangle bounds;
     
     // event handling
     ofEvent<UIEventArgs> clicked;
@@ -155,7 +155,7 @@ public:
         minWidth.set("MinWidth", config.minWidth);
         minHeight.set("MinHeight", config.minHeight);
         isFocused.set("IsFocused", config.isFocused);
-        bounds.set("Bounds", config.bounds);
+        // bounds.set("Bounds", config.bounds);
         
         // Add parameters to the group
         parameters.setName(elementName);
@@ -172,7 +172,7 @@ public:
         parameters.add(minWidth);
         parameters.add(minHeight);
         parameters.add(isFocused);
-        parameters.add(bounds);
+        // parameters.add(bounds);
     }
     
     // Getter and setter methods for other properties
