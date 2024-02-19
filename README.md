@@ -17,7 +17,7 @@
 
 ## UI Element Properties
 ### implemeted a DOM like representation
-```
+```(cpp)
 ofParameterGroup parameters;
 ofParameter<ofColor> backgroundColor;
 ofParameter<ofColor> textColor;
@@ -40,7 +40,7 @@ ofRectangle bounds;
 ```
 
 ## Offsets
-```
+```(cpp)
 ofParameterGroup parameters;
 ofParameter<float> top;
 ofParameter<float> right;
