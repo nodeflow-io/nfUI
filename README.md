@@ -1,15 +1,17 @@
 
-# nodeFlowUI Components
+# nodeFlowUI v.0.0.2
+
+# Components 
 
 ## textinput field
-- TODO:
-- respect input type (double, int, bool, hex, ...)
+- **TODO**
+- respect input type (double, int, bool, hex, ...) when entering text
 - add the multiline feature
-- implement text selection color
+- implement redndering of text selection colors (text, selection)
 - display * for password input
 
-## buttons
-- TODO:
+## button
+- **TODO**
 -- focus onMouseover (instead of click and release)
 
 
@@ -47,10 +49,10 @@ ofParameter<float> left;
 ```
 
 ### TODO:
--- text selection color
+-- implement configuration of text selection color
 -- in inspect view render margins and paddings like in a browser inspect view
 
-# TODO:
+# Roadmap
 
 ## Boxxer - the box rendering engine
 ### a recursive box render model
