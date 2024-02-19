@@ -665,10 +665,10 @@ void ofxTextInputField::clear() {
 // Function to check if a character is in the whitelist for a given ValueType
 bool ofxTextInputField::isValidChar(nfAPI::ValueType valueType, char inputChar) {
     static std::unordered_map<nfAPI::ValueType, std::unordered_set<char>> charWhitelists = {
-        {nfAPI::ValueType::StringType, {'\n', '\t', '\b', '\r', '\x1b'}}, // Example for StringType
-        {nfAPI::ValueType::BoolType, {'0', '1', '\n', '\t', '\b', '\r', '\x1b'}}, // Example for BoolType
-        {nfAPI::ValueType::IntType, {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '-', '+', '\n', '\t', '\b', '\r', '\x1b'}}, // Example for IntType
-        {nfAPI::ValueType::DoubleType, {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '-', '+', '.', 'e', 'E', '\n', '\t', '\b', '\r', '\x1b'}} // Example for DoubleType
+        {nfAPI::ValueType::String, {'\n', '\t', '\b', '\r', '\x1b'}}, // Example for StringType
+        {nfAPI::ValueType::Bool, {'0', '1', '\n', '\t', '\b', '\r', '\x1b'}}, // Example for BoolType
+        {nfAPI::ValueType::Int, {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '-', '+', '\n', '\t', '\b', '\r', '\x1b'}}, // Example for IntType
+        {nfAPI::ValueType::Double, {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '-', '+', '.', 'e', 'E', '\n', '\t', '\b', '\r', '\x1b'}} // Example for DoubleType
     };
 
     auto whitelistIt = charWhitelists.find(valueType);

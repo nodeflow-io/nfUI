@@ -84,17 +84,17 @@ public:
         // but for educational purposes we use constexpr since it
         // is resolved during compilation
         if constexpr (std::is_same<T, StringNFValue>::value) {
-            uiElement.setValueType(nfAPI::ValueType::StringType);
-            ofLogVerbose("ValueType set to StringType");
+            uiElement.setValueType(nfAPI::ValueType::String);
+            ofLogVerbose("ValueType set to String");
         } else if constexpr (std::is_same<T, DoubleNFValue>::value) {
-            uiElement.setValueType(nfAPI::ValueType::DoubleType);
-            ofLogVerbose("ValueType set to DoubleType");
+            uiElement.setValueType(nfAPI::ValueType::Double);
+            ofLogVerbose("ValueType set to Double");
         } else if constexpr (std::is_same<T, BoolNFValue>::value) {
-            uiElement.setValueType(nfAPI::ValueType::BoolType);
-            ofLogVerbose("ValueType set to BoolType");
+            uiElement.setValueType(nfAPI::ValueType::Bool);
+            ofLogVerbose("ValueType set to Bool");
         } else if constexpr (std::is_same<T, IntNFValue>::value) {
-            uiElement.setValueType(nfAPI::ValueType::IntType);
-            ofLogVerbose("ValueType set to IntType");
+            uiElement.setValueType(nfAPI::ValueType::Int);
+            ofLogVerbose("ValueType set to Int");
         }
         /*
         } else if constexpr (std::is_same<T, TimepointNFValue>::value) {
