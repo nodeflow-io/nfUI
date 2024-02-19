@@ -403,47 +403,39 @@ void ofxTextInputField::keyPressed(ofKeyEventArgs& args) {
     //ms: added filtering of invalid characters
     int key = args.key;
     char asciiChar = args.keycode;                  // Convert the key to an ASCII character
+    
+    nfAPI::ValueType vt= this->valueType;
+    std::cout << "valueType" <<  getValueTypeString(vt) << "\n";
+    
     lastTimeCursorMoved = ofGetElapsedTimef();
     std::cout << parameters.getName() << " (key pressed): " << key << " (ascii): " << asciiChar << std::endl;
-    // Check if the key is valid for the type
-    if (isValidChar(valueType, static_cast<char>(asciiChar))) {
-        std::cout << "Character '" << asciiChar << "' is valid for " << getValueTypeString(valueType) << "." << std::endl;
-    } else {
-        std::cout << "Character '" << asciiChar << "' is NOT valid for " << getValueTypeString(valueType) << "." << std::endl;
-        return;
+    
+    bool isControlKey = false;
+
+    // Check if it's a control key
+    switch (key) {
+        case OF_KEY_RETURN:
+        case OF_KEY_BACKSPACE:
+        case OF_KEY_TAB:
+        case OF_KEY_UP:
+        case OF_KEY_DOWN:
+        case OF_KEY_LEFT:
+        case OF_KEY_RIGHT:
+            isControlKey = true;
+            break;
+        // Add more cases for other control keys if needed
     }
     
-    /*
-    switch (valueType) {
-        case nfUI::ValueType::StringType:
-            // Logic for checking if the character is valid for a string
-            // Example: Allow all characters for a string
-            break;
-
-        case nfUI::ValueType::BoolType:
-            // Logic for checking if the character is valid for a boolean
-            // Example: Allow '0' and '1' for a boolean
-            break;
-
-        case nfUI::ValueType::IntType:
-            // Logic for checking if the character is valid for an integer
-            // Example: Allow digits and optional sign
-            break;
-
-        case nfUI::ValueType::DoubleType:
-            // Logic for checking if the character is valid for a double
-            // Example: Allow digits, optional sign, decimal point, and exponent
-            break;
-
-        // Add cases for other ValueTypes as needed
-
-        default:
-            // Handle the case where the ValueType is not recognized
-            break;
+    if(!isControlKey) {
+        // Check if the key is valid for the type
+        if (isValidChar(valueType, static_cast<char>(asciiChar))) {
+            std::cout << "Character '" << asciiChar << "' is valid for " << getValueTypeString(valueType) << "." << std::endl;
+        } else {
+            std::cout << "Character '" << asciiChar << "' is NOT valid for " << getValueTypeString(valueType) << "." << std::endl;
+            return;
+        }
     }
-     */
 
-    
     
     if(key == OF_KEY_SHIFT) {
         isShifted = true;

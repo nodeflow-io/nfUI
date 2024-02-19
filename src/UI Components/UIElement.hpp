@@ -140,7 +140,6 @@ public:
     ofEvent<UIEventArgs> clicked;
     
     
-    
     // Constructor with Config parameter
     UIElement(const NfUIConfig& config = NfUIConfig(), const std::string& elementName = "DefaultName")
         : padding(elementName + " Padding", config.paddingTop, config.paddingRight, config.paddingBottom, config.paddingLeft),
@@ -180,6 +179,9 @@ public:
     
     // Method to set the type
     void setValueType(nfAPI::ValueType type) {
+        // TODO: remove
+        // trigger an assert if the type is not supported
+        std::cout << getValueTypeString(type) << std::endl;
         valueType = type;
     }
     
@@ -303,41 +305,6 @@ private:
 };
 
 }
-/*
-
- Usage
- 
-// ofApp class for handling events
-class ofApp : public ofBaseApp {
-public:
-    UIElement uiElement;
-
-    void setup() {
-        ofSetBackgroundColor(255);
-    }
-
-    void draw() {
-        uiElement.draw();
-    }
-
-    void mousePressed(int x, int y, int button) {
-        uiElement.mousePressed(x, y);
-    }
-
-    // GUI event handling
-    void keyPressed(int key) {
-        if (key == 'g' || key == 'G') {
-            // Toggle visibility of the GUI
-            uiElement.parameters.getGroup("UI Element Parameters").toggleVisible();
-        }
-    }
-};
-
-int main() {
-    ofSetupOpenGL(800, 600, OF_WINDOW);
-    ofRunApp(new ofApp());
-}
-*/
 
 
 #endif /* UIElement_hpp */

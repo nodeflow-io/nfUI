@@ -29,26 +29,41 @@ inline std::string getValueTypeString(ValueType type) {
     switch (type) {
         case ValueType::NotSet:
             return "NotSet";
+            break;
         case ValueType::Null:
             return "NullType";
+            break;
         case ValueType::Bool:
             return "BoolType";
+            break;
         case ValueType::Int:
             return "IntType";
+            break;
         case ValueType::Double:
             return "DoubleType";
+            break;
         case ValueType::String:
             return "String";
+            break;
         case ValueType::Timepoint:
             return "TimePoint";
+            break;
         case ValueType::Duration:
             return "Duration";
+            break;
         case ValueType::Selection:
-            return "SelectionType";
+            return "Selection";
+            break;
         case ValueType::UUID:
             return "UUID";
+            break;
         default:
+            // Code for debug build
+#ifdef OF_DEBUG
+            assert(false && "Unknown ValueType");  // Trigger an assertion failure
+#endif
             return "UnknownType: " + std::to_string(static_cast<uint32_t>(type));
+            break;
     }
 }
 
