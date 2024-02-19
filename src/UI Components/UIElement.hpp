@@ -9,6 +9,7 @@
 #define UIElement_hpp
 
 #include "ofMain.h"
+#include "../API/ValueType.hpp";
 #include <limits>
 
 // Constants
@@ -17,6 +18,7 @@ namespace nfUI {
 const float MAX_PADDING = 10000.0f;
 const float MAX_MARGIN = 10000.0f;
 const float MAX_BORDER_SIZE = 10000.0f;
+
 
 struct NfUIConfig {
     ofColor backgroundColor;
@@ -113,6 +115,7 @@ public:
 
 class UIElement {
 public:
+    nfAPI::ValueType valueType;
     ofParameterGroup parameters;
     ofParameter<ofColor> backgroundColor;
     ofParameter<ofColor> textColor;
@@ -173,6 +176,11 @@ public:
         parameters.add(minHeight);
         parameters.add(isFocused);
         // parameters.add(bounds);
+    }
+    
+    // Method to set the type
+    void setValueType(nfAPI::ValueType type) {
+        valueType = type;
     }
     
     // Getter and setter methods for other properties

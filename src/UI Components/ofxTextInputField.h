@@ -43,6 +43,9 @@
 #endif
 // TODO: wrapping
 #include "ofxTextInputFieldFontRenderer.h"
+#include <unordered_map>
+#include <unordered_set>  // Make sure to include this header
+
 namespace nfUI {
     class ofxTextInputField : public nfUI::UIElement {
     public:
@@ -93,6 +96,8 @@ namespace nfUI {
     void setClipboard(string clippy);
     string getClipboard();
 #endif
+        
+        bool isValidChar(nfAPI::ValueType valueType, char inputChar);
     
 protected:
     float lastTimeCursorMoved;

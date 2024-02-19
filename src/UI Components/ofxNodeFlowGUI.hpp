@@ -9,10 +9,12 @@
 #define ofxNodeFlowGUI_hpp
 
 #include "ofMain.h"
-// dependencies
+// dependencies to UI
 #include "GUIParams.hpp"
 #include "ofxTextInputField.h"
 #include "Button.hpp"
+
+
 
 //--------------------------------------------------------------
 class NFValue {
@@ -76,6 +78,35 @@ public:
         uiElement.position.y = y;
         uiElement.position.height = height;
         uiElement.position.width = width;
+        
+        // Set the value type in UIElement based on the template type T
+        // we could use the if statements of the second block
+        // but for educational purposes we use constexpr since it
+        // is resolved during compilation
+        if constexpr (std::is_same<T, StringNFValue>::value) {
+            uiElement.setValueType(nfAPI::ValueType::StringType);
+            ofLogVerbose("ValueType set to StringType");
+        } else if constexpr (std::is_same<T, DoubleNFValue>::value) {
+            uiElement.setValueType(nfAPI::ValueType::DoubleType);
+            ofLogVerbose("ValueType set to DoubleType");
+        } else if constexpr (std::is_same<T, BoolNFValue>::value) {
+            uiElement.setValueType(nfAPI::ValueType::BoolType);
+            ofLogVerbose("ValueType set to BoolType");
+        } else if constexpr (std::is_same<T, IntNFValue>::value) {
+            uiElement.setValueType(nfAPI::ValueType::IntType);
+            ofLogVerbose("ValueType set to IntType");
+        }
+        /*
+        } else if constexpr (std::is_same<T, TimepointNFValue>::value) {
+            uiElement.setValueType(nfUI::ValueType::TimepointType);
+        } else if constexpr (std::is_same<T, DurationNFValue>::value) {
+            uiElement.setValueType(nfUI::ValueType::DurationType);
+        } else if constexpr (std::is_same<T, SelectionNFValue>::value) {
+            uiElement.setValueType(nfUI::ValueType::SelectionType);
+        } else if constexpr (std::is_same<T, UidNFValue>::value) {
+            uiElement.setValueType(UidType);
+        }
+         */
 
         // Convert the value to a string and assign it to uiElement.text
         std::string name, value;

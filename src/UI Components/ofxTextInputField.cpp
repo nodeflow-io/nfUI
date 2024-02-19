@@ -8,13 +8,15 @@
 //  modified by Momo the Monster 7/10/2012
 //  swappable fonts added by James George 9/11/2012
 //  removed some depreceated drawing calls - Matthias Strohmaier 2/14/2024
-//  TODO: plattform agnostic keys
+//  added input filtering for keys - Matthias Strohmaier 2/19/2024
+//  TODO: plattform agnostic keys - shift mapps
 //
 //	MIT license
 //	http://www.opensource.org/licenses/mit-license.php
 //
 
 #include "ofxTextInputField.h"
+#include "../API/ValueType.hpp"
 
 namespace nfUI {
 // Constructor for ofxTextInputField
@@ -398,10 +400,51 @@ string ofxTextInputField::getClipboard()
 void ofxTextInputField::keyPressed(ofKeyEventArgs& args) {
     //ew: add charachter (non unicode sorry!)
     //jg: made a step closer to this with swappable renderers and ofxFTGL -- but need unicode text input...
-    lastTimeCursorMoved = ofGetElapsedTimef();
+    //ms: added filtering of invalid characters
     int key = args.key;
-    // TODO: only if in VERBOSE MODE
-    std::cout << parameters.getName() << " (key pressed): " << key << std::endl;
+    char asciiChar = args.keycode;                  // Convert the key to an ASCII character
+    lastTimeCursorMoved = ofGetElapsedTimef();
+    std::cout << parameters.getName() << " (key pressed): " << key << " (ascii): " << asciiChar << std::endl;
+    // Check if the key is valid for the type
+    if (isValidChar(valueType, static_cast<char>(asciiChar))) {
+        std::cout << "Character '" << asciiChar << "' is valid for " << getValueTypeString(valueType) << "." << std::endl;
+    } else {
+        std::cout << "Character '" << asciiChar << "' is NOT valid for " << getValueTypeString(valueType) << "." << std::endl;
+        return;
+    }
+    
+    /*
+    switch (valueType) {
+        case nfUI::ValueType::StringType:
+            // Logic for checking if the character is valid for a string
+            // Example: Allow all characters for a string
+            break;
+
+        case nfUI::ValueType::BoolType:
+            // Logic for checking if the character is valid for a boolean
+            // Example: Allow '0' and '1' for a boolean
+            break;
+
+        case nfUI::ValueType::IntType:
+            // Logic for checking if the character is valid for an integer
+            // Example: Allow digits and optional sign
+            break;
+
+        case nfUI::ValueType::DoubleType:
+            // Logic for checking if the character is valid for a double
+            // Example: Allow digits, optional sign, decimal point, and exponent
+            break;
+
+        // Add cases for other ValueTypes as needed
+
+        default:
+            // Handle the case where the ValueType is not recognized
+            break;
+    }
+     */
+
+    
+    
     if(key == OF_KEY_SHIFT) {
         isShifted = true;
     }
@@ -618,4 +661,24 @@ void ofxTextInputField::clear() {
     text.clear();
     cursorPosition = 0;
 }
+
+// Function to check if a character is in the whitelist for a given ValueType
+bool ofxTextInputField::isValidChar(nfAPI::ValueType valueType, char inputChar) {
+    static std::unordered_map<nfAPI::ValueType, std::unordered_set<char>> charWhitelists = {
+        {nfAPI::ValueType::StringType, {'\n', '\t', '\b', '\r', '\x1b'}}, // Example for StringType
+        {nfAPI::ValueType::BoolType, {'0', '1', '\n', '\t', '\b', '\r', '\x1b'}}, // Example for BoolType
+        {nfAPI::ValueType::IntType, {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '-', '+', '\n', '\t', '\b', '\r', '\x1b'}}, // Example for IntType
+        {nfAPI::ValueType::DoubleType, {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '-', '+', '.', 'e', 'E', '\n', '\t', '\b', '\r', '\x1b'}} // Example for DoubleType
+    };
+
+    auto whitelistIt = charWhitelists.find(valueType);
+    if (whitelistIt != charWhitelists.end()) {
+        // Check if the inputChar is in the whitelist for the given ValueType
+        return whitelistIt->second.find(inputChar) != whitelistIt->second.end();
+    }
+
+    // Handle the case where the ValueType is not recognized
+    return false;
+}
+
 }
