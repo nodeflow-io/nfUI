@@ -4,7 +4,7 @@
 
 ## textinput field
 - respect input type (string, double, int, bool ...) when entering text
-- added checking of maxTextlength 
+- added checking of maxTextLength 
 - display asterisks for password input
 ### TODO
 - add the multiline feature
