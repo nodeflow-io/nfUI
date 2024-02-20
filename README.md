@@ -4,10 +4,10 @@
 
 ## textinput field
 - respect input type (double, int, bool, hex, ...) when entering text
+- added checking of maxTextlength 
 ### TODO
-- add a max length
 - add the multiline feature
-- implement redndering of text selection colors (text, selection)
+- implement rendering of text selection colors (text, selection)
 - display * for password input
 
 ## button
@@ -35,6 +35,7 @@ ofParameter<float> maxWidth;
 ofParameter<float> maxHeight;
 ofParameter<bool> isFocused;
 ofParameter<bool> isVisible;
+ofParameter<uint32_t> maxTextLength;
 std::string text;
 ofRectangle bounds;
 ```
