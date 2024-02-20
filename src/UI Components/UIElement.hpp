@@ -115,7 +115,7 @@ public:
 
 class UIElement {
 public:
-    nfAPI::ValueTypeHandler typeHandler;
+    nfAPI::ValueType valueType;
     ofParameterGroup parameters;
     ofParameter<ofColor> backgroundColor;
     ofParameter<ofColor> textColor;
@@ -142,8 +142,7 @@ public:
     
     // Constructor with Config parameter
     UIElement(const NfUIConfig& config = NfUIConfig(), const std::string& elementName = "DefaultName")
-        :   typeHandler(true),
-            padding(elementName + " Padding",
+        :   padding(elementName + " Padding",
                     config.paddingTop,
                     config.paddingRight,
                     config.paddingBottom,
@@ -187,15 +186,11 @@ public:
     }
     
     // Method to set the type
-    /*
-    void setValueType(nfAPI::ValueType type) {
-        // TODO: remove
-        // trigger an assert if the type is not supported
-        std::cout << "UIElement setValueType " << typeHandler.getValueTypeString(type) << std::endl;
-        typeHandler.setValueType(type);
-    }
-     */
     
+    void setValueType(nfAPI::ValueType type) {
+        valueType = type;
+    }
+     
     // Getter and setter methods for other properties
     ofColor getBackgroundColor() const { return backgroundColor; }
     void setBackgroundColor(const ofColor& value) { backgroundColor = value; }

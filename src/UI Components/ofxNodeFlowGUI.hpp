@@ -85,13 +85,13 @@ public:
         // but for educational purposes we use constexpr since it
         // is resolved during compilation
         if constexpr (std::is_same<T, StringNFValue>::value) {
-            uiElement.typeHandler.setValueType(nfAPI::ValueType::String);
+            uiElement.setValueType(nfAPI::ValueType::String);
         } else if constexpr (std::is_same<T, DoubleNFValue>::value) {
-            uiElement.typeHandler.setValueType(nfAPI::ValueType::Double);
+            uiElement.setValueType(nfAPI::ValueType::Double);
         } else if constexpr (std::is_same<T, BoolNFValue>::value) {
-            uiElement.typeHandler.setValueType(nfAPI::ValueType::Bool);
+            uiElement.setValueType(nfAPI::ValueType::Bool);
         } else if constexpr (std::is_same<T, IntNFValue>::value) {
-            uiElement.typeHandler.setValueType(nfAPI::ValueType::Int);
+            uiElement.setValueType(nfAPI::ValueType::Int);
         }
         /*
         } else if constexpr (std::is_same<T, TimepointNFValue>::value) {
