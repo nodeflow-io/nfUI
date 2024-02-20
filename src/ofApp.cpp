@@ -134,7 +134,13 @@ void ofApp::keyPressed(int key) {
 void ofApp::onButtonSetParametersClicked(nfUI::UIEventArgs& eventArgs) {
     // Handle the UI element click event here
     std::cout << "onButtonSetParametersClicked\n";
-    _guiParams._showGrid = nfAPI::toBool(tif1->text);
+    // update our GUI parameters from the UI Elements
+    _guiParams.setShowGrid(nfAPI::toBool(tif1->text));
+    _guiParams.setGridSize(nfAPI::toInt(tif2->text));
+    _guiParams.setMajorStep(nfAPI::toInt(tif3->text));
+    _guiParams.setMinorStep(nfAPI::toInt(tif4->text));
+    // TODO: Status text
+    _guiParams.setScalingFactor(nfAPI::toDouble(tif7->text));
 }
 
 //--------------------------------------------------------------

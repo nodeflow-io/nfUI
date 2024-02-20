@@ -64,6 +64,32 @@ inline bool toBool(const std::string& str) {
     return output == "true" || output == "1";
 }
 
+inline int toInt(const std::string& str) {
+    try {
+        return std::stoi(str);
+    } catch (const std::invalid_argument& e) {
+        // Handle or log the error as needed
+        return 0; // Return a default value
+    } catch (const std::out_of_range& e) {
+        // Handle or log the error as needed
+        return 0; // Return a default value
+    }
+}
+
+
+inline double toDouble(const std::string& str) {
+    try {
+        return std::stod(str);
+    } catch (const std::invalid_argument& e) {
+        // Handle or log the error as needed
+        return 0.0; // Return a default value
+    } catch (const std::out_of_range& e) {
+        // Handle or log the error as needed
+        return 0.0; // Return a default value
+    }
+}
+
+
 // This class ValueTypeHandler demonstrates the usage of ValueType
 // should be added to API Examples
 // this is useful for debugging because you can set it to show you the address of your objects
