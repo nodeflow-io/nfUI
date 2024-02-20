@@ -3,12 +3,12 @@
 # Components 
 
 ## textinput field
-- respect input type (double, int, bool, hex, ...) when entering text
+- respect input type (string, double, int, bool ...) when entering text
 - added checking of maxTextlength 
+- display asterisks for password input
 ### TODO
 - add the multiline feature
 - implement rendering of text selection colors (text, selection)
-- display * for password input
 
 ## button
 ### TODO
@@ -37,6 +37,7 @@ ofParameter<bool> isFocused;
 ofParameter<bool> isVisible;
 ofParameter<uint32_t> maxTextLength;
 std::string text;
+ofParameter<bool> textIsPassword;
 ofRectangle bounds;
 ```
 
