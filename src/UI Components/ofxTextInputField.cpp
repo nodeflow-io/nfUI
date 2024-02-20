@@ -400,7 +400,7 @@ string ofxTextInputField::getClipboard()
 void ofxTextInputField::keyPressed(ofKeyEventArgs& args) {
     //ew: add charachter (non unicode sorry!)
     //jg: made a step closer to this with swappable renderers and ofxFTGL -- but need unicode text input...
-    //ms: added filtering of invalid characters
+    //ms: added filtering of invalid characters for a particular type
     int key = args.key;
     char asciiChar = args.keycode;                  // Convert the key to an ASCII character
     
