@@ -4,19 +4,19 @@
 
 ## Components Panel
 
-### Show Grid (Bool)
-### Grid Size (Int)
-### Major Step (Int)
-### Minor Step (Int)
-### Status Text (String)
-### Password (String)
-### Button (String)
+- Show Grid (Bool)
+- Grid Size (Int)
+- Major Step (Int)
+- Minor Step (Int)
+- Status Text (String)
+- Password (String)
+- Button (String)
 
 ## Event handlers
 
-### Key: F1 -> toggle grid display
-### Key: F2 -> toggle StatusBar display
-### Button SetParams -> update GUI Parameters
+- Key: F1 -> toggle grid display
+- Key: F2 -> toggle StatusBar display
+- Button SetParams -> update GUI Parameters
 
 
 # Supported UI Elements 
