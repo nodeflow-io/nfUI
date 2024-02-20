@@ -35,8 +35,17 @@ private:
     ofxNodeFlowGUI _nfGUI;
     GUIParams _guiParams;
     NFNode _nfNode;
-    std::vector<nfUI::ofxTextInputField> _textInputFields;
+
     // define a vector of UI Elements
     std::vector<nfUI::UIElement*> _uiElements;
+    
+    // define UI Elements
+    nfUI::ofxTextInputField* tif1;
+    nfUI::ofxTextInputField* tif2;
+    nfUI::ofxTextInputField* tif3;
+    nfUI::ofxTextInputField* tif4;
+    nfUI::ofxTextInputField* tif5;
+    nfUI::ofxTextInputField* tif6;
+    nfUI::ofxTextInputField* tif7;
     
 };

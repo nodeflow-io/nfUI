@@ -55,6 +55,14 @@ inline std::string getValueTypeString(ValueType type) {
     }
 }
 
+// TODO : Put this in its own file ???
+
+inline bool toBool(const std::string& str) {
+    std::string output = str;
+    std::transform(output.begin(), output.end(), output.begin(),
+                       [](unsigned char c) { return std::tolower(c); });
+    return output == "true" || output == "1";
+}
 
 // This class ValueTypeHandler demonstrates the usage of ValueType
 // should be added to API Examples

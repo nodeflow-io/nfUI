@@ -37,20 +37,20 @@ void ofApp::setup() {
     configShowGrid.maxTextLength=1;         // set maxTextLength to 1 (it is a Bool 0/1)
     
     // define textfields
-    nfUI::ofxTextInputField* tif1 = new nfUI::ofxTextInputField(configShowGrid, "Show Grid");
+    tif1 = new nfUI::ofxTextInputField(configShowGrid, "Show Grid");
     
     auto configGridSize = config;           // make a copy of default config
     configGridSize.maxTextLength=4;         // set maxTextLength to 4
                                             // we use the same config for all three integer fields
-    nfUI::ofxTextInputField* tif2 = new nfUI::ofxTextInputField(configGridSize, "Grid Size");
-    nfUI::ofxTextInputField* tif3 = new nfUI::ofxTextInputField(configGridSize, "Major Step");
-    nfUI::ofxTextInputField* tif4 = new nfUI::ofxTextInputField(configGridSize, "Minor Step");
+    tif2 = new nfUI::ofxTextInputField(configGridSize, "Grid Size");
+    tif3 = new nfUI::ofxTextInputField(configGridSize, "Major Step");
+    tif4 = new nfUI::ofxTextInputField(configGridSize, "Minor Step");
     auto configStatusText = config;         // make a copy of default config
-    nfUI::ofxTextInputField* tif5 = new nfUI::ofxTextInputField(configStatusText, "StatusText");
+    tif5 = new nfUI::ofxTextInputField(configStatusText, "StatusText");
     auto configPassword = configStatusText;
     configPassword.textIsPassword = true;   // make the text input a password (*****)
-    nfUI::ofxTextInputField* tif6 = new nfUI::ofxTextInputField(configPassword, "Password");
-    nfUI::ofxTextInputField* tif7 = new nfUI::ofxTextInputField(configGridSize, "Scaling");
+    tif6 = new nfUI::ofxTextInputField(configPassword, "Password");
+    tif7 = new nfUI::ofxTextInputField(configGridSize, "Scaling");
     // define button
     nfUI::Button* buttonSetParameters = new nfUI::Button(config, "Set Params");
     
@@ -78,16 +78,6 @@ void ofApp::setup() {
     _nfNode.addNFValue<DoubleNFValue, nfUI::ofxTextInputField, double>("Scaling", _guiParams.getScalingFactor(), *tif7, 20, 40, 100, 20, _font);
     _nfNode.addNFValue<StringNFValue, nfUI::Button, std::string>("Button", buttonSetParameters->parameters.getName(), *buttonSetParameters, 20, 80, 100, 20, _font);
 
-
-   /*
-    _nfNode.addNFValue<DoubleNFValue, nfUI::ofxTextInputField, double>("Stepper", 3.14, *textInputField1, 20, 20, 120, 20, _font);
-    _nfNode.addNFValue<IntNFValue, nfUI::ofxTextInputField, int>("Acceleration", 42, *textInputField2, 20, 40, 120, 20, _font);
-    _nfNode.addNFValue<BoolNFValue, nfUI::ofxTextInputField, bool>("Reset", false, *textInputField3, 20, 60, 120, 20, _font);
-    _nfNode.addNFValue<StringNFValue, nfUI::ofxTextInputField, std::string>("Mode", "Forward", *textInputField4, 20, 80, 120, 20, _font);
-    _nfNode.addNFValue<BoolNFValue, nfUI::ofxTextInputField, bool>("isReady", true, *textInputField5, 20, 100, 120, 20, _font);
-    _nfNode.addNFValue<StringNFValue, nfUI::Button, std::string>("Button", "Solve Production", *buttonCalculate, 20, 80, 120, 20, _font);
-    */
-    
     // setup GUI
     _nfGUI.setup(_nfNode, _uiElements);
 }
@@ -120,44 +110,6 @@ void ofApp::exit(){
 void ofApp::keyPressed(int key) {
     // Perform actions based on the pressed key
     switch (key) {
-        case OF_KEY_RETURN: // ENTER key
-            // Action for ENTER key
-            // put it on std::out
-            // Iterate over NFNode's draw order
-                for (const auto& nfValue : _nfNode.getDrawOrder()) {
-                    // Iterate over _textInputFields to find the corresponding one
-                    for (const auto& textField : _textInputFields) {
-                        // Assuming the textInputFields are associated with NFValues based on their positions in the vector
-                        // You may need a more sophisticated way to associate NFValues with textInputFields in your actual code
-                        if (&textField == &_textInputFields[std::distance(&_nfNode.getDrawOrder()[0], &nfValue)]) {
-                            // Access name and value
-                            std::string name, value;
-                            if (typeid(StringNFValue) == typeid(*nfValue)) {
-                                StringNFValue* strNFValue = dynamic_cast<StringNFValue*>(nfValue);
-                                name = strNFValue->value.getName();
-                                value = strNFValue->value.get();
-                            } else if (typeid(DoubleNFValue) == typeid(*nfValue)) {
-                                DoubleNFValue* doubleNFValue = dynamic_cast<DoubleNFValue*>(nfValue);
-                                name = doubleNFValue->value.getName();
-                                value = ofToString(doubleNFValue->value.get());
-                            } else if (typeid(BoolNFValue) == typeid(*nfValue)) {
-                                BoolNFValue* boolNFValue = dynamic_cast<BoolNFValue*>(nfValue);
-                                name = boolNFValue->value.getName();
-                                value = ofToString(boolNFValue->value.get());
-                            } else if (typeid(IntNFValue) == typeid(*nfValue)) {
-                                IntNFValue* intNFValue = dynamic_cast<IntNFValue*>(nfValue);
-                                name = intNFValue->value.getName();
-                                value = ofToString(intNFValue->value.get());
-                            }
-
-                            // Draw the name and value using ofDrawBitmapString or any other rendering method
-                            ofDrawBitmapString(name + ": " + value, 150, 20);
-                            // Additional drawing logic for textInputFields can be added here
-                            std::cout << textField.text << std::endl;
-                        }
-                    }
-                }
-            break;
         case OF_KEY_F1:
             // F1 key pressed
             _guiParams._showGrid = !_guiParams._showGrid;
@@ -167,36 +119,6 @@ void ofApp::keyPressed(int key) {
             // F2 key pressed
             _guiParams._showStatusBar = !_guiParams._showStatusBar;
             std::cout << "main _showStatusBar: "  << _guiParams._showStatusBar << "\n";
-            break;
-            
-        case 'g': // 'g' key
-            // Action for 'g' key
-            
-            break;
-            
-        case 'h': // 'h' key
-            // Action for 'h' key
-            break;
-        
-        case 'i': // 'g' key
-            // Action for 'g' key
-            
-            break;
-
-        case '1': // '1' key
-            // Action for '1' key
-            break;
-
-        case '2': // '2' key
-            // Action for '2' key
-            break;
-
-        case '3': // '3' key
-            // Action for '3' key
-            break;
-
-        case '4': // '4' key
-            // Action for '4' key
             break;
 
         default:
@@ -212,6 +134,7 @@ void ofApp::keyPressed(int key) {
 void ofApp::onButtonSetParametersClicked(nfUI::UIEventArgs& eventArgs) {
     // Handle the UI element click event here
     std::cout << "onButtonSetParametersClicked\n";
+    _guiParams._showGrid = nfAPI::toBool(tif1->text);
 }
 
 //--------------------------------------------------------------
