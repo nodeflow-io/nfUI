@@ -31,10 +31,12 @@ void ofApp::setup() {
     _guiParams.setMajorGridColor(ofColor(255, 0, 0, 128)); // Red for major grid lines
     _guiParams.setMinorGridColor(ofColor(255, 0, 0, 50));  // Red dark for minor grid lines
     
-    // Setup UI Elements -------------------[ DOM Rendering configuration ]----------------------
+    // Setup UI Elements -------------------[ DOM configuration / Elements & Styles ]------------
     nfUI::NfUIConfig config;                // Set your configuration parameters here
     auto configShowGrid = config;           // make a copy of default config
     configShowGrid.maxTextLength=1;         // set maxTextLength to 1 (it is a Bool 0/1)
+    
+    // define textfields
     nfUI::ofxTextInputField* tif1 = new nfUI::ofxTextInputField(configShowGrid, "Show Grid");
     
     auto configGridSize = config;           // make a copy of default config
@@ -44,24 +46,23 @@ void ofApp::setup() {
     nfUI::ofxTextInputField* tif3 = new nfUI::ofxTextInputField(configGridSize, "Major Step");
     nfUI::ofxTextInputField* tif4 = new nfUI::ofxTextInputField(configGridSize, "Minor Step");
     auto configStatusText = config;         // make a copy of default config
-    // configStatusText.
     nfUI::ofxTextInputField* tif5 = new nfUI::ofxTextInputField(configStatusText, "StatusText");
-
-    // nfUI::ofxTextInputField* textInputField4 = new nfUI::ofxTextInputField();
-    // nfUI::ofxTextInputField* textInputField5 = new nfUI::ofxTextInputField();
+    auto configPassword = configStatusText;
+    configPassword.textIsPassword = true;   // make the text input a password (*****)
+    nfUI::ofxTextInputField* tif6 = new nfUI::ofxTextInputField(configPassword, "Password");
+    // define button
     nfUI::Button* buttonSetParameters = new nfUI::Button(config, "Set Params");
     
     // setup event handlers for the callbacks
     ofAddListener(buttonSetParameters->clicked, this, &ofApp::onButtonSetParametersClicked);
     
-    // add every UIElement to our UIElements structure -------[ Rendering order ]-----------
+    // add every UIElement to our UIElements --[ Rendering order ]-------------------------------
     _uiElements.emplace_back(tif1);
     _uiElements.emplace_back(tif2);
     _uiElements.emplace_back(tif3);
     _uiElements.emplace_back(tif4);
     _uiElements.emplace_back(tif5);
-    // _uiElements.emplace_back(textInputField4);
-    // _uiElements.emplace_back(textInputField5);
+    _uiElements.emplace_back(tif6);
     _uiElements.emplace_back(buttonSetParameters);
     
     // Add NFValues to the node with labels and set up UIElements
@@ -71,6 +72,7 @@ void ofApp::setup() {
     _nfNode.addNFValue<IntNFValue, nfUI::ofxTextInputField, int>(tif3->parameters.getName(), _guiParams.getMajorStep(), *tif3, 20, 40, 100, 20, _font);
     _nfNode.addNFValue<IntNFValue, nfUI::ofxTextInputField, int>(tif4->parameters.getName(), _guiParams.getMinorStep(), *tif4, 20, 40, 100, 20, _font);
     _nfNode.addNFValue<StringNFValue, nfUI::ofxTextInputField, std::string>("Project", "nodeFlowUI", *tif5, 20, 40, 100, 20, _font);
+    _nfNode.addNFValue<StringNFValue, nfUI::ofxTextInputField, std::string>("Password", "nodeFlowUI", *tif6, 20, 40, 100, 20, _font);
     _nfNode.addNFValue<StringNFValue, nfUI::Button, std::string>("Button", buttonSetParameters->parameters.getName(), *buttonSetParameters, 20, 80, 100, 20, _font);
 
 

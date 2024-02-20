@@ -274,7 +274,16 @@ void ofxTextInputField::draw() {
         ofPopStyle();
     }
     
-    fontRef->drawString(text, HORIZONTAL_PADDING, fontRef->getLineHeight()+VERTICAL_PADDING);
+    if (parameters.getBool("textIsPassword")) {
+        // Generate a string of asterisks "*" with the same length as `text`
+        std::string password(text.size(), '*');
+        fontRef->drawString(password, HORIZONTAL_PADDING, fontRef->getLineHeight() + VERTICAL_PADDING);
+    } else {
+        // Draw the actual text
+        fontRef->drawString(text, HORIZONTAL_PADDING, fontRef->getLineHeight() + VERTICAL_PADDING);
+    }
+    
+    
     
     ofPopMatrix();
 }

@@ -42,6 +42,7 @@ struct NfUIConfig {
     bool isFocused;
     ofRectangle bounds;
     uint32_t maxTextLength;
+    bool textIsPassword;
     
     NfUIConfig() {
         // Set default values for the config
@@ -66,6 +67,7 @@ struct NfUIConfig {
         isFocused = false;
         bounds = ofRectangle (0,0, 100.0f, 20.0f);
         maxTextLength = 255;
+        textIsPassword = false;
     }
 };
 
@@ -137,6 +139,7 @@ public:
     ofParameter<bool> isVisible;
     std::string text;
     ofParameter<uint32_t> maxTextLength;
+    ofParameter<bool> textIsPassword;
 
     ofRectangle bounds;
     
@@ -170,6 +173,7 @@ public:
         minHeight.set("MinHeight", config.minHeight);
         isFocused.set("IsFocused", config.isFocused);
         maxTextLength.set("maxTextLength", config.maxTextLength);
+        textIsPassword.set("textIsPassword", config.textIsPassword);
         // bounds.set("Bounds", config.bounds);
         
         // Add parameters to the group
@@ -188,6 +192,7 @@ public:
         parameters.add(minHeight);
         parameters.add(isFocused);
         parameters.add(maxTextLength);
+        parameters.add(textIsPassword);
         // parameters.add(bounds);
     }
     
