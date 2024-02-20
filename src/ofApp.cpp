@@ -105,7 +105,15 @@ void ofApp::draw(){
 
 //--------------------------------------------------------------
 void ofApp::exit(){
-    
+    // clean up pointers
+    // TODO make them smartpointers
+    delete tif1;
+    delete tif2;
+    delete tif3;
+    delete tif4;
+    delete tif5;
+    delete tif6;
+    delete tif7;
 }
 
 //--------------------------------------------------------------

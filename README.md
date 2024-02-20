@@ -18,7 +18,7 @@
 - Password (String)
 - Button (String)
 
-## GUI Parameters
+# GUI Parameters
 
 ```(cpp)
 class GUIParams {
@@ -236,3 +236,7 @@ ofParameter<float> left;
 
 ## GUI help pane
 
+# Changelog
+
+- 0.0.1 f0001-textinput: basic text input
+- 0.0.2 f0002-button: buttons, configuration, statusbar
