@@ -64,7 +64,8 @@ public:
     }
     
     template <typename T, typename UIElementType, typename... Args>
-    T* addNFValue(const std::string& label, Args&&... args, UIElementType uiElement, uint32_t x, uint32_t y, uint32_t width, uint32_t height, ofTrueTypeFont& font) {
+    T* addNFValue(const std::string& label, Args&&... args, UIElementType& uiElement, uint32_t x, uint32_t y, uint32_t width, uint32_t height, ofTrueTypeFont& font) {
+    
         // ...
         ofLogVerbose("NFNode::addNFValue");
         T* newNFValue = new T(std::forward<Args>(args)...);
@@ -84,17 +85,13 @@ public:
         // but for educational purposes we use constexpr since it
         // is resolved during compilation
         if constexpr (std::is_same<T, StringNFValue>::value) {
-            uiElement.setValueType(nfAPI::ValueType::String);
-            ofLogVerbose("ValueType set to String");
+            uiElement.typeHandler.setValueType(nfAPI::ValueType::String);
         } else if constexpr (std::is_same<T, DoubleNFValue>::value) {
-            uiElement.setValueType(nfAPI::ValueType::Double);
-            ofLogVerbose("ValueType set to Double");
+            uiElement.typeHandler.setValueType(nfAPI::ValueType::Double);
         } else if constexpr (std::is_same<T, BoolNFValue>::value) {
-            uiElement.setValueType(nfAPI::ValueType::Bool);
-            ofLogVerbose("ValueType set to Bool");
+            uiElement.typeHandler.setValueType(nfAPI::ValueType::Bool);
         } else if constexpr (std::is_same<T, IntNFValue>::value) {
-            uiElement.setValueType(nfAPI::ValueType::Int);
-            ofLogVerbose("ValueType set to Int");
+            uiElement.typeHandler.setValueType(nfAPI::ValueType::Int);
         }
         /*
         } else if constexpr (std::is_same<T, TimepointNFValue>::value) {

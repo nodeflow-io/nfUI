@@ -404,8 +404,8 @@ void ofxTextInputField::keyPressed(ofKeyEventArgs& args) {
     int key = args.key;
     char asciiChar = args.keycode;                  // Convert the key to an ASCII character
     
-    nfAPI::ValueType vt= this->valueType;
-    std::cout << "valueType" <<  getValueTypeString(vt) << "\n";
+    nfAPI::ValueType currentValueType= this->typeHandler.getValueType();
+    std::cout << "valueType" <<  typeHandler.getValueTypeString(currentValueType) << "\n";
     
     lastTimeCursorMoved = ofGetElapsedTimef();
     std::cout << parameters.getName() << " (key pressed): " << key << " (ascii): " << asciiChar << std::endl;
@@ -428,10 +428,10 @@ void ofxTextInputField::keyPressed(ofKeyEventArgs& args) {
     
     if(!isControlKey) {
         // Check if the key is valid for the type
-        if (isValidChar(valueType, static_cast<char>(asciiChar))) {
-            std::cout << "Character '" << asciiChar << "' is valid for " << getValueTypeString(valueType) << "." << std::endl;
+        if (isValidChar(typeHandler.getValueType(), static_cast<char>(asciiChar))) {
+            std::cout << "Character '" << asciiChar << "' is valid for " << typeHandler.getValueTypeString(currentValueType) << "." << std::endl;
         } else {
-            std::cout << "Character '" << asciiChar << "' is NOT valid for " << getValueTypeString(valueType) << "." << std::endl;
+            std::cout << "Character '" << asciiChar << "' is NOT valid for " << typeHandler.getValueTypeString(currentValueType) << "." << std::endl;
             return;
         }
     }
