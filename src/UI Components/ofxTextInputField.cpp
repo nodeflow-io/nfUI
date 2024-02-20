@@ -435,6 +435,12 @@ void ofxTextInputField::keyPressed(ofKeyEventArgs& args) {
             std::cout << "Character '" << asciiChar << "' is NOT valid for " << valueTypeString << "." << std::endl;
             return;
         }
+        // check size of Textfield
+        if (text.size() < parameters.getInt("maxTextLength")) {
+            // add key to text
+        } else {
+            return;
+        }
     }
 
     

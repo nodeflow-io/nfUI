@@ -41,6 +41,7 @@ struct NfUIConfig {
     float minHeight;
     bool isFocused;
     ofRectangle bounds;
+    uint32_t maxTextLength;
     
     NfUIConfig() {
         // Set default values for the config
@@ -64,6 +65,7 @@ struct NfUIConfig {
         minHeight = 20.0f;
         isFocused = false;
         bounds = ofRectangle (0,0, 100.0f, 20.0f);
+        maxTextLength = 255;
     }
 };
 
@@ -134,6 +136,8 @@ public:
     ofParameter<bool> isFocused;
     ofParameter<bool> isVisible;
     std::string text;
+    ofParameter<uint32_t> maxTextLength;
+
     ofRectangle bounds;
     
     // event handling
@@ -165,6 +169,7 @@ public:
         minWidth.set("MinWidth", config.minWidth);
         minHeight.set("MinHeight", config.minHeight);
         isFocused.set("IsFocused", config.isFocused);
+        maxTextLength.set("maxTextLength", config.maxTextLength);
         // bounds.set("Bounds", config.bounds);
         
         // Add parameters to the group
@@ -182,6 +187,7 @@ public:
         parameters.add(minWidth);
         parameters.add(minHeight);
         parameters.add(isFocused);
+        parameters.add(maxTextLength);
         // parameters.add(bounds);
     }
     
@@ -290,6 +296,26 @@ public:
             isFocused = true;
         } else {
             isFocused = false;
+        }
+    }
+    
+    // Event handling for mouse movement
+    virtual void mouseMoved(ofMouseEventArgs& args) {
+        // Check if the mouse is inside the bounds of the text input field
+        if (bounds.inside(args.x, args.y)) {
+            // Optionally, you can change the cursor to indicate the field is interactable
+            // or highlight the field in some manner.
+            // This is just an example and may depend on your specific UI requirements.
+            // For instance:
+            // ofSetCursor(OF_CURSOR_IBEAM);
+            isFocused = true;
+            // Here you can also set a flag that you're hovering over the field
+            // if you have a visual indication for it.
+        } else {
+            // Reset to default cursor if you changed it above
+            // ofSetCursor(OF_CURSOR_ARROW);
+            isFocused = false;
+            // Reset any hover state you might have set
         }
     }
     

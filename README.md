@@ -3,8 +3,9 @@
 # Components 
 
 ## textinput field
-### TODO
 - respect input type (double, int, bool, hex, ...) when entering text
+### TODO
+- add a max length
 - add the multiline feature
 - implement redndering of text selection colors (text, selection)
 - display * for password input
