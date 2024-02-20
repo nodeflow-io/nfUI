@@ -75,7 +75,7 @@ bool Button::getIsEnabled() {
 
 void Button::draw() {
     // Draw border
-    auto pos = ofRectangle(160,160,120,20);
+    auto pos = ofRectangle(160,180,120,20);
     // Get the boolean value
     bool focusedValue = parameters.getBool("IsFocused");
     bounds = pos;

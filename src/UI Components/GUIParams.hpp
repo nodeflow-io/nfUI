@@ -13,8 +13,6 @@
 class GUIParams {
 public:
     
-    // HERE IS A PROBLEM IN THE CONSTRUTOR
-    // IT SAYS: Member initializer '_showStatusBar' does not name a non-static data member or base class
     GUIParams() :
         _showStatusBar(true),
         _statusBarHeight(30),
@@ -25,7 +23,8 @@ public:
         _majorStep(100),
         _minorStep(10),
         _majorGridColor(255),
-        _minorGridColor(200)
+        _minorGridColor(200),
+        _scalingFactor(1.0f)
         
     {}
     
@@ -118,6 +117,14 @@ public:
         _minorGridColor = color;
     }
     
+    const double getScalingFactor() const {
+        return _scalingFactor;
+    }
+    
+    void setScalingFactor(const double& scalingFactor) {
+        _scalingFactor = scalingFactor;
+    }
+    
     // Statusbar parameters
     bool _showStatusBar;
     uint32_t _statusBarHeight;
@@ -131,6 +138,7 @@ public:
     uint32_t _minorStep;
     ofColor _majorGridColor;
     ofColor _minorGridColor;
+    double _scalingFactor;
     
 };
 

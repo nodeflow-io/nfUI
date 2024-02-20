@@ -1,6 +1,16 @@
 # nodeFlowUI v.0.0.2
 
-# Components 
+# Demo UI
+
+## Show Grid (Bool)
+## Grid Size (Int)
+## Major Step (Int)
+## Minor Step (Int)
+## Status Text (String)
+## Password (String)
+## Button (String)
+
+# Supported UI Elements 
 
 ## textinput field
 - respect input type (string, double, int, bool ...) when entering text

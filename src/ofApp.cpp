@@ -50,6 +50,7 @@ void ofApp::setup() {
     auto configPassword = configStatusText;
     configPassword.textIsPassword = true;   // make the text input a password (*****)
     nfUI::ofxTextInputField* tif6 = new nfUI::ofxTextInputField(configPassword, "Password");
+    nfUI::ofxTextInputField* tif7 = new nfUI::ofxTextInputField(configGridSize, "Scaling");
     // define button
     nfUI::Button* buttonSetParameters = new nfUI::Button(config, "Set Params");
     
@@ -63,6 +64,7 @@ void ofApp::setup() {
     _uiElements.emplace_back(tif4);
     _uiElements.emplace_back(tif5);
     _uiElements.emplace_back(tif6);
+    _uiElements.emplace_back(tif7);
     _uiElements.emplace_back(buttonSetParameters);
     
     // Add NFValues to the node with labels and set up UIElements
@@ -73,6 +75,7 @@ void ofApp::setup() {
     _nfNode.addNFValue<IntNFValue, nfUI::ofxTextInputField, int>(tif4->parameters.getName(), _guiParams.getMinorStep(), *tif4, 20, 40, 100, 20, _font);
     _nfNode.addNFValue<StringNFValue, nfUI::ofxTextInputField, std::string>("Project", "nodeFlowUI", *tif5, 20, 40, 100, 20, _font);
     _nfNode.addNFValue<StringNFValue, nfUI::ofxTextInputField, std::string>("Password", "nodeFlowUI", *tif6, 20, 40, 100, 20, _font);
+    _nfNode.addNFValue<DoubleNFValue, nfUI::ofxTextInputField, double>("Scaling", _guiParams.getScalingFactor(), *tif7, 20, 40, 100, 20, _font);
     _nfNode.addNFValue<StringNFValue, nfUI::Button, std::string>("Button", buttonSetParameters->parameters.getName(), *buttonSetParameters, 20, 80, 100, 20, _font);
 
 
