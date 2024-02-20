@@ -21,11 +21,11 @@ public:
         _showGrid(true),
         _gridSize(10),
         _majorStep(100),
-        _minorStep(10),
         _majorGridColor(255),
         _minorGridColor(200),
-        _scalingFactor(1.0f)
-        
+        _scalingFactor(1.2f),
+        _statusBarText1("nodeFlowUI"),
+        _statusBarText2("vx.x.x")
     {}
     
     // Getter and setter for showStatusBar
@@ -91,14 +91,6 @@ public:
         _majorStep = size;
     }
     
-    // Getter and setter for minorStep
-    uint32_t getMinorStep() const {
-        return _minorStep;
-    }
-    
-    void setMinorStep(uint32_t size) {
-        _minorStep = size;
-    }
     
     // Getter and setter for gridColor
     const ofColor& getMajorGridColor() const {
@@ -125,17 +117,35 @@ public:
         _scalingFactor = scalingFactor;
     }
     
+    const std::string& getStatusBarText1() const {
+        return _statusBarText1;
+    }
+    
+    void setStatusBarText1(const std::string& statusBarText) {
+        _statusBarText1 = statusBarText;
+    }
+
+    const std::string& getStatusBarText2() const {
+        return _statusBarText2;
+    }
+    
+    void setStatusBarText2(const std::string& statusBarText) {
+        _statusBarText2 = statusBarText;
+    }
+    
+
     // Statusbar parameters
     bool _showStatusBar;
     uint32_t _statusBarHeight;
     ofColor _statusBarColor;
     ofColor _statusBarTextColor;
+    std::string _statusBarText1;
+    std::string _statusBarText2;
     
     // Grid parameters
     bool _showGrid;
     uint32_t _gridSize;
     uint32_t _majorStep;
-    uint32_t _minorStep;
     ofColor _majorGridColor;
     ofColor _minorGridColor;
     double _scalingFactor;

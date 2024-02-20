@@ -22,12 +22,13 @@ void ofApp::setup() {
     _guiParams.setStatusBarHeight(20);
     _guiParams.setStatusBarColor(ofColor(100, 100, 100, 255));
     _guiParams.setStatusBarTextColor(ofColor(255, 255, 0, 255));
+    _guiParams.setStatusBarText1("nodeFlowUI");
+    _guiParams.setStatusBarText2(_nfGUI.getVersionString());
     
     // Set up grid parameters -------------------------------------------------------------------
     _guiParams.setShowGrid(false);
     _guiParams.setGridSize(20);
     _guiParams.setMajorStep(100);
-    _guiParams.setMinorStep(20);
     _guiParams.setMajorGridColor(ofColor(255, 0, 0, 128)); // Red for major grid lines
     _guiParams.setMinorGridColor(ofColor(255, 0, 0, 50));  // Red dark for minor grid lines
     
@@ -44,9 +45,10 @@ void ofApp::setup() {
                                             // we use the same config for all three integer fields
     tif2 = new nfUI::ofxTextInputField(configGridSize, "Grid Size");
     tif3 = new nfUI::ofxTextInputField(configGridSize, "Major Step");
-    tif4 = new nfUI::ofxTextInputField(configGridSize, "Minor Step");
     auto configStatusText = config;         // make a copy of default config
-    tif5 = new nfUI::ofxTextInputField(configStatusText, "StatusText");
+    configStatusText.maxTextLength=13;      // set maxTextLength to 13
+    tif4 = new nfUI::ofxTextInputField(configStatusText, "ProjectName");
+    tif5 = new nfUI::ofxTextInputField(configStatusText, "Version");
     auto configPassword = configStatusText;
     configPassword.textIsPassword = true;   // make the text input a password (*****)
     tif6 = new nfUI::ofxTextInputField(configPassword, "Password");
@@ -72,8 +74,8 @@ void ofApp::setup() {
     _nfNode.addNFValue<BoolNFValue, nfUI::ofxTextInputField, bool>(tif1->parameters.getName(), _guiParams.getShowGrid(), *tif1, 20, 60, 100, 20, _font);
     _nfNode.addNFValue<IntNFValue, nfUI::ofxTextInputField, int>(tif2->parameters.getName(), _guiParams.getGridSize(), *tif2, 20, 40, 100, 20, _font);
     _nfNode.addNFValue<IntNFValue, nfUI::ofxTextInputField, int>(tif3->parameters.getName(), _guiParams.getMajorStep(), *tif3, 20, 40, 100, 20, _font);
-    _nfNode.addNFValue<IntNFValue, nfUI::ofxTextInputField, int>(tif4->parameters.getName(), _guiParams.getMinorStep(), *tif4, 20, 40, 100, 20, _font);
-    _nfNode.addNFValue<StringNFValue, nfUI::ofxTextInputField, std::string>("Project", "nodeFlowUI", *tif5, 20, 40, 100, 20, _font);
+    _nfNode.addNFValue<StringNFValue, nfUI::ofxTextInputField, std::string>("Project", "nodeFlowUI", *tif4, 20, 40, 100, 20, _font);
+    _nfNode.addNFValue<StringNFValue, nfUI::ofxTextInputField, std::string>("Version", "v.0.0.2", *tif5, 20, 40, 100, 20, _font);
     _nfNode.addNFValue<StringNFValue, nfUI::ofxTextInputField, std::string>("Password", "nodeFlowUI", *tif6, 20, 40, 100, 20, _font);
     _nfNode.addNFValue<DoubleNFValue, nfUI::ofxTextInputField, double>("Scaling", _guiParams.getScalingFactor(), *tif7, 20, 40, 100, 20, _font);
     _nfNode.addNFValue<StringNFValue, nfUI::Button, std::string>("Button", buttonSetParameters->parameters.getName(), *buttonSetParameters, 20, 80, 100, 20, _font);
@@ -138,7 +140,8 @@ void ofApp::onButtonSetParametersClicked(nfUI::UIEventArgs& eventArgs) {
     _guiParams.setShowGrid(nfAPI::toBool(tif1->text));
     _guiParams.setGridSize(nfAPI::toInt(tif2->text));
     _guiParams.setMajorStep(nfAPI::toInt(tif3->text));
-    _guiParams.setMinorStep(nfAPI::toInt(tif4->text));
+    _guiParams.setStatusBarText1(tif4->text);
+    _guiParams.setStatusBarText2(tif5->text);
     // TODO: Status text
     _guiParams.setScalingFactor(nfAPI::toDouble(tif7->text));
 }

@@ -114,7 +114,7 @@ void ofxNodeFlowGUI::drawStatusBar(const GUIParams& guiParams) {
     ofSetColor(guiParams._statusBarTextColor);
 
     // Draw "nodeFlowUI vx.x.x"
-    ofDrawBitmapString("nodeFlowUI v"+this->getVersionString()+"        Nodes: 1    Channels: 3    Connections: 0", 10, (guiParams._statusBarHeight / 2)+4);
+    ofDrawBitmapString(guiParams.getStatusBarText1()+" "+guiParams.getStatusBarText2()+"        Nodes: 1    Channels: 5    Connections: 0", 10, (guiParams._statusBarHeight / 2)+4);
 
     // Draw "FPS: 30"
     std::string fpsText = "FPS: " + ofToString(std::round(ofGetFrameRate()));
