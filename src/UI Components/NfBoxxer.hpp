@@ -13,17 +13,26 @@ namespace nfUI {
 
 class NfBoxxer : public NfUIElement {
 public:
-    float width, height; // Dimensions of the box
-    
-    NfBoxxer(float w, float h) : width(w), height(h) {}
+    float _width, _height; // Dimensions of the box
+    std::string _name;
+    NfBoxxer(float w, float h, std::string name) :
+    _width(w),
+    _height(h),
+    _name(name)
+    {}
     
     void draw() override {
         // Generate a random color
-        ofColor randomColor = ofColor::fromHsb(ofRandom(255), 255, 255);
+        ofColor randomColor = ofColor(_height,0,0); // ofColor::fromHsb(ofRandom(255), 255, 255);
+
+        // std::cout << _name << ": " << _width << "," << _height << std::endl;
 
         // Set the color for drawing
         ofSetColor(randomColor);
-        ofDrawRectangle(0, 0, width, height); // Draw a rectangle representing the box
+        ofDrawRectangle(0, 0, _width, _height); // Draw a rectangle representing the box
+        for (auto& child : children) {
+            child->draw(); // Recursively draw each child
+        }
     }
 };
 

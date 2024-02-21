@@ -13,22 +13,33 @@ void ofApp::setup() {
     ofDisableAntiAliasing();
     ofSetFrameRate(30);
     ofSetVerticalSync(true);
-    // ofTrueTypeFont font;
-    // font.load(OF_TTF_SERIF, 18);
+    
+    // --- setup debug grid configuration
+    // Set up status bar parameters -------------------------------------------------------------
+    _guiParams.setShowStatusBar(true);
+    _guiParams.setStatusBarHeight(20);
+    _guiParams.setStatusBarColor(ofColor(100, 100, 100, 255));
+    _guiParams.setStatusBarTextColor(ofColor(255, 255, 0, 255));
+    _guiParams.setStatusBarText1("nodeFlowUI");
+    _guiParams.setStatusBarText2(_nfGUI.getVersionString());
+    
+    // Set up grid parameters -------------------------------------------------------------------
+    _guiParams.setShowGrid(false);
+    _guiParams.setGridSize(20);
+    _guiParams.setMajorStep(100);
+    _guiParams.setMajorGridColor(ofColor(255, 0, 0, 128)); // Red for major grid lines
+    _guiParams.setMinorGridColor(ofColor(255, 0, 0, 50));  // Red dark for minor grid lines
     
     // Initialize the root Boxxer with dimensions
-    _boxxer = std::make_shared<nfUI::NfBoxxer>(100, 50);
-
+    _boxxer = std::make_shared<nfUI::NfBoxxer>(640, 255, "root");
     // Create child Boxxer elements and add them to the root
-    auto child1 = std::make_shared<nfUI::NfBoxxer>(50, 25);
-    auto child2 = std::make_shared<nfUI::NfBoxxer>(75, 35);
-
-    _boxxer->addChild(child1);
-    _boxxer->addChild(child2);
-
-    // Example: Add a sub-child to child1
-    auto subChild1 = std::make_shared<nfUI::NfBoxxer>(25, 12);
-    child1->addChild(subChild1);
+    auto panel1 = std::make_shared<nfUI::NfBoxxer>(640, 20, "panel");
+    _boxxer->addChild(panel1);
+    auto value1 = std::make_shared<nfUI::NfBoxxer>(640, 40, "value1");
+    auto value2 = std::make_shared<nfUI::NfBoxxer>(640, 40, "value2");
+    // add subchilds to child paneö
+    panel1->addChild(value1);
+    panel1->addChild(value2);
     
 
 }
@@ -137,9 +148,17 @@ void ofApp::draw(){
      */
     // Assume we want to draw the root Boxxer at position (100,100)
     ofPushMatrix(); // Save the current transformation matrix
-    ofTranslate(100, 100); // Move the coordinate system to the desired position
-
-    _boxxer->draw(); // Draw the root Boxxer, which will recursively draw its children
+    // ofTranslate(100, 100); // Move the coordinate system to the desired position
+    // draw the background grid
+    _nfGUI.drawGrid(this->_guiParams);
+    // draw status bar
+    _nfGUI.drawStatusBar(this->_guiParams);
+    // draw UI elements
+     
+    std::cout << "draw\n";
+    if (_boxxer) {
+        _boxxer->draw(); // This starts the recursive drawing process
+    }
 
     ofPopMatrix(); // Restore the transformation matrix
 }
