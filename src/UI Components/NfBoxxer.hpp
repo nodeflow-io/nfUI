@@ -22,7 +22,9 @@ public:
 
     // Constructor to take a NfUIConfig reference and name
     NfBoxxer(NfUIConfig& config, const std::string& name)
-    : _config(config), _name(name) {}
+    : _config(config), _name(name) {
+        this->parameters.setName(name);
+    }
     
     
     void draw() {

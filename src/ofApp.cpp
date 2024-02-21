@@ -33,8 +33,8 @@ void ofApp::setup() {
     // Setup UI Elements -------------------[ DOM configuration / Elements & Styles ]------------
     nfUI::NfUIConfig config;                                            // Create a config object
     config.backgroundColor = ofColor::red;                              // Example customization
-    config.bounds = ofRectangle(100, 100, 100, 40);                       // Set desired position and size
-    _boxxer = std::make_shared<nfUI::NfBoxxer>(config, "Origin");   // Pass the config by reference
+    config.bounds = ofRectangle(100, 100, 100, 40);                     // Set desired position and size
+    _boxxer = std::make_shared<nfUI::NfBoxxer>(config, "Origin");       // Pass the config by reference
     // Create child Boxxer elements and add them to the root
     config.backgroundColor = ofColor(0,255,0,128);
     auto panel1 = std::make_shared<nfUI::NfBoxxer>(config, "Panel");    // Pass the config by reference
