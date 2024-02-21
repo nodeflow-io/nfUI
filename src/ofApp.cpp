@@ -61,16 +61,18 @@ void ofApp::setup() {
       )
     );
     config.backgroundColor = ofColor(255,255,0,128);
-    auto value2 = std::shared_ptr<nfUI::NfBoxxer>(
-          new nfUI::NfBoxxer(
-              config,
-              "Value2",
-              std::unique_ptr<nfUI::NFValue>(new nfUI::IntNFValue(2000))
-          )
-      );
+
+    myButton = std::shared_ptr<nfUI::NfButton>(
+           new nfUI::NfButton(
+               config,
+               "Button Name",
+               std::unique_ptr<nfUI::NFValue>(new nfUI::StringNFValue("Button Label"))
+           )
+       );
+
     // add subchilds to child panel
     panel1->addChild(value1);
-    panel1->addChild(value2);
+    panel1->addChild(myButton);
     _boxxer->addChild(panel1);
 
 }

@@ -6,6 +6,7 @@
 
 #include "nfUIElement.hpp"
 #include "NfBoxxer.hpp"
+#include "NFButton.hpp"
 
 class ofApp : public ofBaseApp{
     
@@ -54,5 +55,8 @@ private:
     // Boxxer
     // Declare root as a member of ofApp
     std::shared_ptr<nfUI::NfBoxxer> _boxxer;
+    
+    // UI Elements
+    std::shared_ptr<nfUI::NfButton> myButton;
     
 };
