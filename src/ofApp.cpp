@@ -57,7 +57,7 @@ void ofApp::setup() {
       new nfUI::NfBoxxer(
           config,
           "Value1",
-          std::unique_ptr<nfUI::NFValue>(new nfUI::StringNFValue("Value1"))
+          std::unique_ptr<nfUI::NFValue>(new nfUI::IntNFValue(1000))
       )
     );
     config.backgroundColor = ofColor(255,255,0,128);
@@ -65,7 +65,7 @@ void ofApp::setup() {
           new nfUI::NfBoxxer(
               config,
               "Value2",
-              std::unique_ptr<nfUI::NFValue>(new nfUI::StringNFValue("Value2"))
+              std::unique_ptr<nfUI::NFValue>(new nfUI::IntNFValue(2000))
           )
       );
     // add subchilds to child panel
