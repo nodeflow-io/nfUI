@@ -62,13 +62,11 @@ void ofApp::setup() {
     );
     config.backgroundColor = ofColor(255,255,0,128);
 
-    myButton = std::shared_ptr<nfUI::NfButton>(
-           new nfUI::NfButton(
-               config,
-               "Button Name",
-               std::unique_ptr<nfUI::NFValue>(new nfUI::StringNFValue("Button Label"))
-           )
-       );
+    auto myButton = nfUI::createUIElement<nfUI::NfButton, nfUI::StringNFValue>(
+        config,
+        "Button Name",
+        "Button Label" // Now passed as an argument to StringNFValue's constructor
+    );
 
     // add subchilds to child panel
     panel1->addChild(value1);
@@ -84,6 +82,7 @@ void ofApp::setupNF() {
     // OF_LOG_WARNING
     // OF_LOG_ERROR
     // OF_LOG_FATAL_ERROR
+    /*
     ofSetLogLevel(OF_LOG_VERBOSE);
     ofDisableAntiAliasing();
     ofSetFrameRate(30);
@@ -157,6 +156,7 @@ void ofApp::setupNF() {
 
     // setup GUI
     _nfGUI.setup(_nfNode, _uiElements);
+     */
 }
 
 
@@ -229,6 +229,7 @@ void ofApp::onButtonSetParametersClicked(nfUI::UIEventArgs& eventArgs) {
     // Handle the UI element click event here
     std::cout << "onButtonSetParametersClicked\n";
     // update our GUI parameters from the UI Elements
+    /*
     _guiParams.setShowGrid(nfAPI::toBool(tif1->text));
     _guiParams.setGridSize(nfAPI::toInt(tif2->text));
     _guiParams.setMajorStep(nfAPI::toInt(tif3->text));
@@ -236,6 +237,7 @@ void ofApp::onButtonSetParametersClicked(nfUI::UIEventArgs& eventArgs) {
     _guiParams.setStatusBarText2(tif5->text);
     // TODO: Status text
     _guiParams.setScalingFactor(nfAPI::toDouble(tif7->text));
+     */
 }
 
 //--------------------------------------------------------------

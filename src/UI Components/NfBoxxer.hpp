@@ -29,7 +29,8 @@ public:
             // Your initialization code here
         }
     
-    
+    // this implements the base class
+    // put out debug infos like paddings and margins
     void draw() {
         if (_firstRender) {
             std::cout << "First render of " << _name << std::endl;
