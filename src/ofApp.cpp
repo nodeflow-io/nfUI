@@ -30,13 +30,21 @@ void ofApp::setup() {
     _guiParams.setMajorGridColor(ofColor(255, 0, 0, 128)); // Red for major grid lines
     _guiParams.setMinorGridColor(ofColor(255, 0, 0, 50));  // Red dark for minor grid lines
     
-    // Initialize the root Boxxer with dimensions
-    _boxxer = std::make_shared<nfUI::NfBoxxer>(640, 255, "root");
+    // Setup UI Elements -------------------[ DOM configuration / Elements & Styles ]------------
+    nfUI::NfUIConfig config;                                            // Create a config object
+    config.backgroundColor = ofColor::red;                              // Example customization
+    config.bounds = ofRectangle(20, 20, 100, 20);                       // Set desired position and size
+    _boxxer = std::make_shared<nfUI::NfBoxxer>(config, "Origin");   // Pass the config by reference
+    
+    
     // Create child Boxxer elements and add them to the root
-    auto panel1 = std::make_shared<nfUI::NfBoxxer>(640, 20, "panel");
+    config.backgroundColor = ofColor::green;
+    auto panel1 = std::make_shared<nfUI::NfBoxxer>(config, "Panel");    // Pass the config by reference
     _boxxer->addChild(panel1);
-    auto value1 = std::make_shared<nfUI::NfBoxxer>(640, 40, "value1");
-    auto value2 = std::make_shared<nfUI::NfBoxxer>(640, 40, "value2");
+    config.backgroundColor = ofColor::blue;
+    auto value1 = std::make_shared<nfUI::NfBoxxer>(config, "Value1");   // Pass the config by reference
+    config.backgroundColor = ofColor::yellow;
+    auto value2 = std::make_shared<nfUI::NfBoxxer>(config, "Value2");   // Pass the config by reference
     // add subchilds to child paneö
     panel1->addChild(value1);
     panel1->addChild(value2);
@@ -155,7 +163,6 @@ void ofApp::draw(){
     _nfGUI.drawStatusBar(this->_guiParams);
     // draw UI elements
      
-    std::cout << "draw\n";
     if (_boxxer) {
         _boxxer->draw(); // This starts the recursive drawing process
     }
@@ -193,7 +200,7 @@ void ofApp::keyPressed(int key) {
 
         default:
             // Default action for other keys
-            cout << "Key pressed: " << key << endl;
+            cout << "Main ey pressed: " << key << endl;
             break;
     }
 }

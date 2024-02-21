@@ -18,7 +18,8 @@ class NfUIElement : public std::enable_shared_from_this<NfUIElement> {
 public:
     std::weak_ptr<NfUIElement> parent; // Weak pointer to the parent element
     std::vector<std::shared_ptr<NfUIElement>> children; // List of children elements
-    
+    NfUIConfig _config; // Hold configuration settings for this UI element
+
     nfAPI::ValueType valueType;
     ofParameterGroup parameters;
     ofParameter<ofColor> backgroundColor;
@@ -55,6 +56,7 @@ public:
                  config.marginBottom,
                  config.marginLeft) {
        
+
         // Set default values from the config
         backgroundColor.set("BackgroundColor", config.backgroundColor);
         textColor.set("TextColor", config.textColor);
