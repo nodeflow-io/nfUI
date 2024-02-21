@@ -240,3 +240,5 @@ ofParameter<float> left;
 
 - 0.0.1 f0001-textinput: basic text input
 - 0.0.2 f0002-button: buttons, configuration, statusbar
+- 0.0.3 f0002-boxxer:
+

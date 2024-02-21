@@ -13,6 +13,37 @@ void ofApp::setup() {
     ofDisableAntiAliasing();
     ofSetFrameRate(30);
     ofSetVerticalSync(true);
+    // ofTrueTypeFont font;
+    // font.load(OF_TTF_SERIF, 18);
+    
+    // Initialize the root Boxxer with dimensions
+    _boxxer = std::make_shared<nfUI::NfBoxxer>(100, 50);
+
+    // Create child Boxxer elements and add them to the root
+    auto child1 = std::make_shared<nfUI::NfBoxxer>(50, 25);
+    auto child2 = std::make_shared<nfUI::NfBoxxer>(75, 35);
+
+    _boxxer->addChild(child1);
+    _boxxer->addChild(child2);
+
+    // Example: Add a sub-child to child1
+    auto subChild1 = std::make_shared<nfUI::NfBoxxer>(25, 12);
+    child1->addChild(subChild1);
+    
+
+}
+
+void ofApp::setupNF() {
+    // set the logging level you can use:
+    // OF_LOG_VERBOSE
+    // OF_LOG_NOTICE
+    // OF_LOG_WARNING
+    // OF_LOG_ERROR
+    // OF_LOG_FATAL_ERROR
+    ofSetLogLevel(OF_LOG_VERBOSE);
+    ofDisableAntiAliasing();
+    ofSetFrameRate(30);
+    ofSetVerticalSync(true);
     ofTrueTypeFont font;
     font.load(OF_TTF_SERIF, 18);
     
@@ -84,6 +115,7 @@ void ofApp::setup() {
     _nfGUI.setup(_nfNode, _uiElements);
 }
 
+
 //--------------------------------------------------------------
 void ofApp::update(){
 
@@ -95,12 +127,21 @@ void ofApp::draw(){
     ofBackground(0);
     ofSetColor(255);
     // draw the background grid
+    /*
     _nfGUI.drawGrid(this->_guiParams);
     // draw status bar
     _nfGUI.drawStatusBar(this->_guiParams);
     // draw UI elements
     _nfGUI.draw(this->_nfNode, this->_uiElements);
     ofSetColor(0);
+     */
+    // Assume we want to draw the root Boxxer at position (100,100)
+    ofPushMatrix(); // Save the current transformation matrix
+    ofTranslate(100, 100); // Move the coordinate system to the desired position
+
+    _boxxer->draw(); // Draw the root Boxxer, which will recursively draw its children
+
+    ofPopMatrix(); // Restore the transformation matrix
 }
 
 //--------------------------------------------------------------
