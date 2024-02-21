@@ -11,6 +11,7 @@
 #include "ofMain.h"
 #include "NfUIConfig.hpp"
 #include "../API/ValueType.hpp"
+#include "NFValue.hpp"
 
 namespace nfUI {
 
@@ -19,7 +20,7 @@ public:
     std::weak_ptr<NfUIElement> parent; // Weak pointer to the parent element
     std::vector<std::shared_ptr<NfUIElement>> children; // List of children elements
     NfUIConfig _config; // Hold configuration settings for this UI element
-
+    
     nfAPI::ValueType valueType;
     ofParameterGroup parameters;
     ofParameter<ofColor> backgroundColor;
@@ -41,22 +42,26 @@ public:
     std::string text;
     ofParameter<uint32_t> maxTextLength;
     ofParameter<bool> textIsPassword;
-
+    
     ofRectangle bounds;
     // Constructor with Config parameter
-    NfUIElement(const NfUIConfig& config = NfUIConfig(), const std::string& elementName = "DefaultName")
-        :   padding(elementName + " Padding",
-                    config.paddingTop,
-                    config.paddingRight,
-                    config.paddingBottom,
-                    config.paddingLeft),
-          margin(elementName + " Margin",
-                 config.marginTop,
-                 config.marginRight,
-                 config.marginBottom,
-                 config.marginLeft) {
-       
-
+    // NfUIElement(std::unique_ptr<NFValue> initialValue)
+    //        : value(std::move(initialValue)) {}
+    
+    NfUIElement(const NfUIConfig& config = NfUIConfig(), std::unique_ptr<NFValue> initialValue = nullptr, const std::string& elementName = "DefaultName")
+    :   value(std::move(initialValue)) ,
+        padding(elementName + " Padding",
+                config.paddingTop,
+                config.paddingRight,
+                config.paddingBottom,
+                config.paddingLeft),
+    margin(elementName + " Margin",
+           config.marginTop,
+           config.marginRight,
+           config.marginBottom,
+           config.marginLeft) {
+        
+        
         // Set default values from the config
         backgroundColor.set("BackgroundColor", config.backgroundColor);
         textColor.set("TextColor", config.textColor);
@@ -100,6 +105,20 @@ public:
     
     // Virtual draw function to be overridden
     virtual void draw() = 0;
+    
+    // Function to set the value with a unique_ptr to NFValue
+    void setValue(std::unique_ptr<NFValue> newValue) {
+        value = std::move(newValue); // Transfer ownership
+    }
+    
+    // Method to retrieve a raw pointer to NFValue for reading or manipulation
+    // Caution: This does not transfer ownership!
+    NFValue* getValue() const {
+        return value.get();
+    }
+    
+private:
+    std::unique_ptr<NFValue> value; // Smart pointer to NFValue
 };
 
 } // nfUI

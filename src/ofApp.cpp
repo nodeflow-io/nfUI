@@ -34,14 +34,40 @@ void ofApp::setup() {
     nfUI::NfUIConfig config;                                            // Create a config object
     config.backgroundColor = ofColor::red;                              // Example customization
     config.bounds = ofRectangle(100, 100, 100, 40);                     // Set desired position and size
-    _boxxer = std::make_shared<nfUI::NfBoxxer>(config, "Origin");       // Pass the config by reference
+    //_boxxer = std::make_shared<nfUI::NfBoxxer>(config, "Origin");       // Pass the config by reference
+    _boxxer = std::shared_ptr<nfUI::NfBoxxer>(
+        new nfUI::NfBoxxer(
+            config,
+            "Origin",
+            std::unique_ptr<nfUI::NFValue>(new nfUI::StringNFValue("Origin"))
+        )
+    );
     // Create child Boxxer elements and add them to the root
     config.backgroundColor = ofColor(0,255,0,128);
-    auto panel1 = std::make_shared<nfUI::NfBoxxer>(config, "Panel");    // Pass the config by reference
+    
+    auto panel1 = std::shared_ptr<nfUI::NfBoxxer>(
+      new nfUI::NfBoxxer(
+          config,
+          "Panel",
+          std::unique_ptr<nfUI::NFValue>(new nfUI::StringNFValue("Panel"))
+      )
+    );
     config.backgroundColor = ofColor(0,0,255,128);
-    auto value1 = std::make_shared<nfUI::NfBoxxer>(config, "Value1");   // Pass the config by reference
+    auto value1 = std::shared_ptr<nfUI::NfBoxxer>(
+      new nfUI::NfBoxxer(
+          config,
+          "Value1",
+          std::unique_ptr<nfUI::NFValue>(new nfUI::StringNFValue("Value1"))
+      )
+    );
     config.backgroundColor = ofColor(255,255,0,128);
-    auto value2 = std::make_shared<nfUI::NfBoxxer>(config, "Value2");   // Pass the config by reference
+    auto value2 = std::shared_ptr<nfUI::NfBoxxer>(
+          new nfUI::NfBoxxer(
+              config,
+              "Value2",
+              std::unique_ptr<nfUI::NFValue>(new nfUI::StringNFValue("Value2"))
+          )
+      );
     // add subchilds to child panel
     panel1->addChild(value1);
     panel1->addChild(value2);

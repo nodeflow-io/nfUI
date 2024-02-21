@@ -21,10 +21,13 @@ public:
     NfUIConfig _config; // Reference to a NfUIConfig object
 
     // Constructor to take a NfUIConfig reference and name
-    NfBoxxer(NfUIConfig& config, const std::string& name)
-    : _config(config), _name(name) {
-        this->parameters.setName(name);
-    }
+    // Updated constructor
+    // Updated constructor
+    NfBoxxer(const NfUIConfig& config, const std::string& name, std::unique_ptr<NFValue> initialValue)
+            : NfUIElement(config, std::move(initialValue), name), // Assuming NfUIElement has a matching constructor
+              _config(config), _name(name) {
+            // Your initialization code here
+        }
     
     
     void draw() {
