@@ -12,6 +12,10 @@
 namespace nfUI {
 
 class NfBoxxer : public NfUIElement {
+    
+private:
+    bool _firstRender = true; // Flag to track if draw() was called for the first time
+
 public:
     std::string _name;
     NfUIConfig _config; // Reference to a NfUIConfig object
@@ -19,12 +23,16 @@ public:
     // Constructor to take a NfUIConfig reference and name
     NfBoxxer(NfUIConfig& config, const std::string& name)
     : _config(config), _name(name) {}
-
+    
+    
     void draw() {
+        if (_firstRender) {
+            std::cout << "First render of " << _name << std::endl;
+        }
         ofSetColor(_config.backgroundColor);
         ofDrawRectangle(_config.bounds); // Draw the current element
 
-        float verticalOffset = _config.paddingTop; // Start with the top padding as the initial offset
+        float verticalOffset = _config.marginTop; // Start with the top padding as the initial offset
 
         // Use the parent's position as the starting point
         float parentY = _config.bounds.y + _config.marginTop;
@@ -36,7 +44,10 @@ public:
 
             // Translate the drawing context down by the vertical offset for each child
             ofTranslate(0, verticalOffset);
-
+            // Perform logging only on the first render of each element
+            if (_firstRender) {
+                std::cout << "  child render of " << child->parameters.getName() << " at vertical offset: " << verticalOffset << std::endl;
+            }
             // Draw the child at the newly translated position
             child->draw();
 
@@ -45,6 +56,10 @@ public:
             verticalOffset += child->_config.height + child->_config.marginBottom + _config.paddingBottom;
 
             ofPopMatrix(); // Restore the drawing context
+        }
+        // After the first render, set the flag to false
+        if (_firstRender) {
+            _firstRender = false;
         }
     }
 

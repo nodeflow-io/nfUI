@@ -35,20 +35,17 @@ void ofApp::setup() {
     config.backgroundColor = ofColor::red;                              // Example customization
     config.bounds = ofRectangle(100, 100, 100, 40);                       // Set desired position and size
     _boxxer = std::make_shared<nfUI::NfBoxxer>(config, "Origin");   // Pass the config by reference
-    
-    
     // Create child Boxxer elements and add them to the root
-    config.backgroundColor = ofColor::green;
+    config.backgroundColor = ofColor(0,255,0,128);
     auto panel1 = std::make_shared<nfUI::NfBoxxer>(config, "Panel");    // Pass the config by reference
-    _boxxer->addChild(panel1);
-    config.backgroundColor = ofColor::blue;
+    config.backgroundColor = ofColor(0,0,255,128);
     auto value1 = std::make_shared<nfUI::NfBoxxer>(config, "Value1");   // Pass the config by reference
-    config.backgroundColor = ofColor::yellow;
+    config.backgroundColor = ofColor(255,255,0,128);
     auto value2 = std::make_shared<nfUI::NfBoxxer>(config, "Value2");   // Pass the config by reference
-    // add subchilds to child paneö
+    // add subchilds to child panel
     panel1->addChild(value1);
     panel1->addChild(value2);
-    
+    _boxxer->addChild(panel1);
 
 }
 
@@ -172,15 +169,7 @@ void ofApp::draw(){
 
 //--------------------------------------------------------------
 void ofApp::exit(){
-    // clean up pointers
-    // TODO make them smartpointers
-    delete tif1;
-    delete tif2;
-    delete tif3;
-    delete tif4;
-    delete tif5;
-    delete tif6;
-    delete tif7;
+
 }
 
 //--------------------------------------------------------------
@@ -200,7 +189,7 @@ void ofApp::keyPressed(int key) {
 
         default:
             // Default action for other keys
-            cout << "Main ey pressed: " << key << endl;
+            cout << "key pressed: " << key << endl;
             break;
     }
 }
