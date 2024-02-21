@@ -33,6 +33,19 @@ public:
     void draw() {
         if (_firstRender) {
             std::cout << "First render of " << _name << std::endl;
+            // Assume boxxer is a shared_ptr to an NfBoxxer or directly an NfBoxxer instance
+            NFValue* valueRawPtr = this->getValue();
+
+            // Attempt to downcast to StringNFValue*
+            StringNFValue* stringValue = dynamic_cast<StringNFValue*>(valueRawPtr);
+
+            if (stringValue != nullptr) {
+                // Successfully downcasted, now you can use stringValue
+                std::cout << "Stored string value: " << stringValue->value.get() << std::endl;
+            } else {
+                // Downcast failed, valueRawPtr was not pointing to a StringNFValue instance
+                std::cout << "The NFValue is not a StringNFValue." << std::endl;
+            }
         }
         ofSetColor(_config.backgroundColor);
         ofDrawRectangle(_config.bounds); // Draw the current element
