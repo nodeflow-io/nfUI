@@ -33,7 +33,7 @@ void ofApp::setup() {
     // Setup UI Elements -------------------[ DOM configuration / Elements & Styles ]------------
     nfUI::NfUIConfig config;                                            // Create a config object
     config.backgroundColor = ofColor::red;                              // Example customization
-    config.bounds = ofRectangle(20, 20, 100, 20);                       // Set desired position and size
+    config.bounds = ofRectangle(100, 100, 100, 40);                       // Set desired position and size
     _boxxer = std::make_shared<nfUI::NfBoxxer>(config, "Origin");   // Pass the config by reference
     
     

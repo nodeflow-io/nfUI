@@ -24,22 +24,30 @@ public:
         ofSetColor(_config.backgroundColor);
         ofDrawRectangle(_config.bounds); // Draw the current element
 
-        float verticalOffset = _config.bounds.y + _config.marginTop + _config.paddingTop;
+        float verticalOffset = _config.paddingTop; // Start with the top padding as the initial offset
+
+        // Use the parent's position as the starting point
+        float parentY = _config.bounds.y + _config.marginTop;
 
         for (auto& child : children) {
-            auto& childConfig = child->_config; // Assuming each child also has a _config
+            // No need to modify child->_config.bounds directly
             
-            // Calculate the child's absolute position based on the parent's offset
-            childConfig.bounds.y = verticalOffset + childConfig.marginTop;
+            ofPushMatrix(); // Save the current drawing context
 
-            // Draw the child
+            // Translate the drawing context down by the vertical offset for each child
+            ofTranslate(0, verticalOffset);
+
+            // Draw the child at the newly translated position
             child->draw();
 
             // Update the verticalOffset for the next child
-            // Include the current child's height, bottom margin, and padding
-            verticalOffset += childConfig.height + childConfig.marginBottom + _config.paddingBottom;
+            // Include the child's height, its bottom margin, and padding
+            verticalOffset += child->_config.height + child->_config.marginBottom + _config.paddingBottom;
+
+            ofPopMatrix(); // Restore the drawing context
         }
     }
+
     
     void drawold()  {
         // Use the colors and dimensions from the config
