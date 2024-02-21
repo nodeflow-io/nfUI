@@ -62,7 +62,7 @@ void ofApp::setup() {
     );
     config.backgroundColor = ofColor(255,255,0,128);
 
-    auto myButton = nfUI::createUIElement<nfUI::NfButton, nfUI::StringNFValue>(
+    myButton = nfUI::createUIElement<nfUI::NfButton, nfUI::StringNFValue>(
         config,
         "Button Name",
         "Button Label" // Now passed as an argument to StringNFValue's constructor
