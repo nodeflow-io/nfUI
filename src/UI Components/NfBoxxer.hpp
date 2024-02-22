@@ -20,8 +20,7 @@ public:
     std::string _name;
     NfUIConfig _config; // Reference to a NfUIConfig object
 
-    // Constructor to take a NfUIConfig reference and name
-    // Updated constructor
+
     // Updated constructor
     NfBoxxer(const NfUIConfig& config, const std::string& name, std::unique_ptr<NFValue> initialValue)
             : NfUIElement(config, std::move(initialValue), name), // Assuming NfUIElement has a matching constructor
@@ -33,13 +32,13 @@ public:
     // put out debug infos like paddings and margins
     void draw() {
         if (_firstRender) {
-            std::cout << "First render of " << _name << std::endl;
+            std::cout << "Boxxer: First render of " << _name << std::endl;
             NFValue* valueRawPtr = this->getValue();
             if (valueRawPtr != nullptr) {
                 std::string valueAsString = valueRawPtr->toString();
-                std::cout << "Value as string: " << valueAsString << std::endl;
+                std::cout << "Boxxer: Value as string: " << valueAsString << std::endl;
             } else {
-                std::cout << "No value available." << std::endl;
+                std::cout << "Boxxer: No value available." << std::endl;
             }
         }
         ofSetColor(_config.backgroundColor);

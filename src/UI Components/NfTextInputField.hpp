@@ -14,6 +14,9 @@
 namespace nfUI {
 
 class NfTextInputField : public NfBoxxer {
+    
+private:
+    bool _firstRender = true; // Flag to track if draw() was called for the first time
 public:
     // Inherit NfBoxxer constructor
     using NfBoxxer::NfBoxxer;
@@ -22,7 +25,10 @@ public:
         NfBoxxer::draw(); // Call base class draw for common drawing code if needed
         
         // Textbox-specific drawing code here
-        std::cout << "Drawing Textbox: " << _name << std::endl;
+        if (_firstRender) {
+            std::cout << "NfTextInputField: " << _name << std::endl;
+            _firstRender=false;
+        }
         // For example, draw the textbox area
         ofSetColor(backgroundColor.get());
         ofDrawRectangle(bounds); // Assuming bounds is accessible

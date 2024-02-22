@@ -14,6 +14,10 @@
 namespace nfUI {
 
 class NfButton : public NfBoxxer {
+    
+private:
+    bool _firstRender = true; // Flag to track if draw() was called for the first time
+    
 public:
     // Inherit NfBoxxer constructor
     using NfBoxxer::NfBoxxer;
@@ -22,7 +26,10 @@ public:
         NfBoxxer::draw(); // Call base class draw for common drawing code if needed
         
         // Button-specific drawing code here
-        std::cout << "Drawing Button: " << _name << std::endl;
+        if (_firstRender) {
+            std::cout << "NfButton: " << _name << std::endl;
+            _firstRender=false;
+        }
         // For example, draw a rectangle with a different color when focused
         if (isFocused.get()) {
             ofSetColor(focusColor.get());
