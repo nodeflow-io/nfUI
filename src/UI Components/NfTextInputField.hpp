@@ -17,12 +17,19 @@ class NfTextInputField : public NfBoxxer {
     
 private:
     bool _firstRender = true; // Flag to track if draw() was called for the first time
+    uint32_t verticalTextOffset; // font size dependant
+    uint32_t horizontalTextOffset;
 public:
     // Inherit NfBoxxer constructor
     using NfBoxxer::NfBoxxer;
     
     void draw() override {
-        NfBoxxer::draw(); // Call base class draw for common drawing code if needed
+        ofPushMatrix(); // Save the current drawing context
+        
+        // set the relative position from bounds
+        ofTranslate(bounds.x, bounds.y);
+        
+        // NfBoxxer::draw(); // Call base class draw for common drawing code if needed
         
         // Textbox-specific drawing code here
         if (_firstRender) {
@@ -35,8 +42,19 @@ public:
         
         // Draw the text inside the textbox
         ofSetColor(textColor.get());
-        // You might need a method to draw text in openFrameworks, like ofDrawBitmapString
-        ofDrawBitmapString(text, bounds.x, bounds.y); // Placeholder for text drawing
+        
+        NFValue* valueRawPtr = this->getValue();
+        if (valueRawPtr != nullptr) {
+            std::string valueAsString = valueRawPtr->toString();
+            // calculate text position 
+            horizontalTextOffset = _config.paddingLeft;
+            verticalTextOffset = BITMAP_FONT_SIZE + _config.paddingTop;
+            ofDrawBitmapString(valueAsString, bounds.x + horizontalTextOffset, bounds.y + verticalTextOffset); // Placeholder for text drawing
+        } else {
+            std::cout << "NfTextInputField: " << _name << ":no value available." << std::endl;
+        }
+        ofPopMatrix(); // Restore the drawing context
+        
     }
     
     // Additional methods specific to textbox, like text input handling

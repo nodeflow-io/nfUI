@@ -2,7 +2,7 @@
 //  nfUIElement.hpp
 //  nodeflowUI
 //
-//  Created by Ulrike Siegl on 21.02.24.
+//  Created by Matthias Strohmaier on 21.02.24.
 //
 
 #ifndef nfUIElement_hpp
@@ -16,6 +16,9 @@
 namespace nfUI {
 
 class NfUIElement : public std::enable_shared_from_this<NfUIElement> {
+    
+private:
+    std::unique_ptr<NFValue> value; // Smart pointer to NFValue
 public:
     std::weak_ptr<NfUIElement> parent; // Weak pointer to the parent element
     std::vector<std::shared_ptr<NfUIElement>> children; // List of children elements
@@ -61,7 +64,7 @@ public:
            config.marginBottom,
            config.marginLeft) {
         
-        
+        _config = config;
         // Set default values from the config
         backgroundColor.set("BackgroundColor", config.backgroundColor);
         textColor.set("TextColor", config.textColor);
@@ -76,7 +79,7 @@ public:
         isFocused.set("IsFocused", config.isFocused);
         maxTextLength.set("maxTextLength", config.maxTextLength);
         textIsPassword.set("textIsPassword", config.textIsPassword);
-        // bounds.set("Bounds", config.bounds);
+        bounds = config.bounds;
         
         // Add parameters to the group
         parameters.setName(elementName);
@@ -117,8 +120,7 @@ public:
         return value.get();
     }
     
-private:
-    std::unique_ptr<NFValue> value; // Smart pointer to NFValue
+
 };
 
 } // nfUI

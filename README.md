@@ -175,17 +175,18 @@ public:
 
 # Supported UI Elements 
 
-## textinput field
+## NfTextInputField
 - respect input type (string, double, int, bool ...) when entering text
 - added checking of maxTextLength 
 - display asterisks for password input
 ### TODO
+- isReadonly
 - add the multiline feature
 - implement rendering of text selection colors (text, selection)
 - add type hint (optional)
 - tab handler (optiona)
 
-## button
+## NfButton
 ### TODO
 - focus onMouseover (instead of click and release)
 
@@ -193,6 +194,9 @@ public:
 ## UI Element Properties
 ### implemeted a DOM like representation
 ```(cpp)
+private:
+    std::unique_ptr<NFValue> value; // Smart pointer to NFValue
+public:
 ofParameterGroup parameters;
 ofParameter<ofColor> backgroundColor;
 ofParameter<ofColor> textColor;
