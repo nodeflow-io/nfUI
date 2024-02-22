@@ -20,7 +20,7 @@
 		5D90DECF2B85D2250016E6DA /* NfBoxxer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5D90DECD2B85D2250016E6DA /* NfBoxxer.cpp */; };
 		5D90DED22B85D6600016E6DA /* NfUIConfig.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5D90DED02B85D6600016E6DA /* NfUIConfig.cpp */; };
 		5D90DED62B868E850016E6DA /* NFValue.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5D90DED42B868E850016E6DA /* NFValue.cpp */; };
-		5D90DED92B86B0250016E6DA /* NFButton.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5D90DED72B86B0250016E6DA /* NFButton.cpp */; };
+		5D90DED92B86B0250016E6DA /* NfButton.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5D90DED72B86B0250016E6DA /* NfButton.cpp */; };
 		5D90DEDC2B86C0490016E6DA /* NfDom.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5D90DEDA2B86C0490016E6DA /* NfDom.cpp */; };
 		5D90DEDF2B8716DD0016E6DA /* NfTextInputField.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5D90DEDD2B8716DD0016E6DA /* NfTextInputField.cpp */; };
 		5DD601442B7F9F8C00A9C3E5 /* UIElement.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5DD601422B7F9F8C00A9C3E5 /* UIElement.cpp */; };
@@ -87,8 +87,8 @@
 		5D90DED32B85DD570016E6DA /* NFConstants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NFConstants.h; sourceTree = "<group>"; };
 		5D90DED42B868E850016E6DA /* NFValue.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = NFValue.cpp; sourceTree = "<group>"; };
 		5D90DED52B868E850016E6DA /* NFValue.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = NFValue.hpp; sourceTree = "<group>"; };
-		5D90DED72B86B0250016E6DA /* NFButton.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = NFButton.cpp; sourceTree = "<group>"; };
-		5D90DED82B86B0250016E6DA /* NFButton.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = NFButton.hpp; sourceTree = "<group>"; };
+		5D90DED72B86B0250016E6DA /* NfButton.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = NfButton.cpp; sourceTree = "<group>"; };
+		5D90DED82B86B0250016E6DA /* NfButton.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = NfButton.hpp; sourceTree = "<group>"; };
 		5D90DEDA2B86C0490016E6DA /* NfDom.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = NfDom.cpp; sourceTree = "<group>"; };
 		5D90DEDB2B86C0490016E6DA /* NfDom.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = NfDom.hpp; sourceTree = "<group>"; };
 		5D90DEDD2B8716DD0016E6DA /* NfTextInputField.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = NfTextInputField.cpp; sourceTree = "<group>"; };
@@ -213,8 +213,8 @@
 				5D90DED32B85DD570016E6DA /* NFConstants.h */,
 				5D90DED42B868E850016E6DA /* NFValue.cpp */,
 				5D90DED52B868E850016E6DA /* NFValue.hpp */,
-				5D90DED72B86B0250016E6DA /* NFButton.cpp */,
-				5D90DED82B86B0250016E6DA /* NFButton.hpp */,
+				5D90DED72B86B0250016E6DA /* NfButton.cpp */,
+				5D90DED82B86B0250016E6DA /* NfButton.hpp */,
 				5D90DEDA2B86C0490016E6DA /* NfDom.cpp */,
 				5D90DEDB2B86C0490016E6DA /* NfDom.hpp */,
 				5D90DEDD2B8716DD0016E6DA /* NfTextInputField.cpp */,
@@ -395,7 +395,7 @@
 				"7CC0E72D-C77A-4B7B-8141-41D4CF9DC8BD" /* ofxLabel.cpp in Sources */,
 				5D90DED62B868E850016E6DA /* NFValue.cpp in Sources */,
 				"AF0E4EEE-C5E0-4DD6-A9A8-71B3A3AE188C" /* ofxPanel.cpp in Sources */,
-				5D90DED92B86B0250016E6DA /* NFButton.cpp in Sources */,
+				5D90DED92B86B0250016E6DA /* NfButton.cpp in Sources */,
 				5D90DEDF2B8716DD0016E6DA /* NfTextInputField.cpp in Sources */,
 				"E6DBB454-7D22-4E80-B808-206839B4729E" /* ofxSlider.cpp in Sources */,
 				5D74DF392B7CDF16001935EF /* ofxTextInputField.cpp in Sources */,

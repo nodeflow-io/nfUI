@@ -1,12 +1,12 @@
 //
-//  NFButton.hpp
+//  NfButton.hpp
 //  nodeflowUI
 //
-//  Created by Ulrike Siegl on 21.02.24.
+//  Created by Matthias Strohmaie on 21.02.24.
 //
 
-#ifndef NFButton_hpp
-#define NFButton_hpp
+#ifndef NfButton_hpp
+#define NfButton_hpp
 
 #include "ofMain.h"
 #include "NfBoxxer.hpp"
@@ -36,4 +36,4 @@ public:
 
 }
 
-#endif /* NFButton_hpp */
+#endif /* NfButton_hpp */
