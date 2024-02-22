@@ -7,6 +7,7 @@
 #include "nfUIElement.hpp"
 #include "NfBoxxer.hpp"
 #include "NFButton.hpp"
+#include "NfTextInputField.hpp"
 #include "NfDom.hpp"
 
 class ofApp : public ofBaseApp{

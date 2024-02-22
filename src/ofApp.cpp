@@ -35,37 +35,32 @@ void ofApp::setup() {
     config.backgroundColor = ofColor::red;                              // Example customization
     config.bounds = ofRectangle(100, 100, 100, 40);                     // Set desired position and size
     //_boxxer = std::make_shared<nfUI::NfBoxxer>(config, "Origin");       // Pass the config by reference
-    _boxxer = std::shared_ptr<nfUI::NfBoxxer>(
-        new nfUI::NfBoxxer(
-            config,
-            "Origin",
-            std::unique_ptr<nfUI::NFValue>(new nfUI::StringNFValue("Origin"))
-        )
+    _boxxer = nfUI::createUIElement<nfUI::NfBoxxer, nfUI::StringNFValue>(
+        config,
+        "Origin",
+        "Root Element"
     );
-    // Create child Boxxer elements and add them to the root
+   
     config.backgroundColor = ofColor(0,255,0,128);
+    auto panel1 = nfUI::createUIElement<nfUI::NfButton, nfUI::StringNFValue>(
+        config,
+        "Panel1",
+        "UI Parameters"
+    );
     
-    auto panel1 = std::shared_ptr<nfUI::NfBoxxer>(
-      new nfUI::NfBoxxer(
-          config,
-          "Panel",
-          std::unique_ptr<nfUI::NFValue>(new nfUI::StringNFValue("Panel"))
-      )
-    );
     config.backgroundColor = ofColor(0,0,255,128);
-    auto value1 = std::shared_ptr<nfUI::NfBoxxer>(
-      new nfUI::NfBoxxer(
-          config,
-          "Value1",
-          std::unique_ptr<nfUI::NFValue>(new nfUI::IntNFValue(1000))
-      )
+    auto value1 = nfUI::createUIElement<nfUI::NfTextInputField, nfUI::IntNFValue>(
+        config,
+        "Value1",
+        1000
     );
+
     config.backgroundColor = ofColor(255,255,0,128);
 
     myButton = nfUI::createUIElement<nfUI::NfButton, nfUI::StringNFValue>(
         config,
         "Button Name",
-        "Button Label" // Now passed as an argument to StringNFValue's constructor
+        "Button Label"
     );
 
     // add subchilds to child panel

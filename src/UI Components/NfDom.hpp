@@ -15,6 +15,9 @@
 #include "NFValue.hpp"
 
 namespace nfUI {
+
+    // TODO: investigate why this does not work with st::make_shared
+    // it would be more performant and we are on c++17
     template<typename UIElementType, typename ValueType, typename... Args>
     std::shared_ptr<UIElementType> createUIElement(
         const NfUIConfig& config,
