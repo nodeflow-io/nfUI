@@ -63,7 +63,7 @@ void ofApp::setup() {
         "Button Label"
     );
 
-    // add subchilds to child panel
+    // The rendering tree is specified here
     panel1->addChild(value1);
     panel1->addChild(myButton);
     _boxxer->addChild(panel1);
