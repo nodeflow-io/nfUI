@@ -48,6 +48,7 @@ public:
     ofParameter<bool> isAbsolutePosition;
     
     ofRectangle bounds;
+    ofRectangle boundsMouse;
     // Constructor with Config parameter
     // NfUIElement(std::unique_ptr<NFValue> initialValue)
     //        : value(std::move(initialValue)) {}
@@ -89,6 +90,8 @@ public:
         textIsPassword.set("textIsPassword", config.textIsPassword);
         isAbsolutePosition.set("textIsPassword", config.isAbsolutePosition);
         bounds = config.bounds;
+        // screen position is altered using ofTranslate / Push & Pop - so we need to track this
+        boundsMouse = config.bounds;
         
         // Add parameters to the group
         parameters.setName(elementName);
@@ -178,6 +181,11 @@ public:
         child->_config.marginBottom << std::endl;
          */
         
+    }
+    
+    void translateBounds(ofRectangle& bounds, float x, float y) {
+        bounds.x += x;
+        bounds.y += y;
     }
     
 };

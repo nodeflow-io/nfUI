@@ -151,6 +151,7 @@ void NfTextInputField::draw() {
     // decide wheter we need to translate
     if (_config.isAbsolutePosition) {
         ofTranslate(bounds.x, bounds.y);
+        translateBounds(boundsMouse, bounds.x, bounds.y);
     }
     
     // NfBoxxer::draw(); // Call base class draw for common drawing code if needed
@@ -183,12 +184,6 @@ void NfTextInputField::draw() {
 }
 
 void NfTextInputField::drawText() {
-    // ofPushMatrix();
-    // ofTranslate(bounds.x, bounds.y);
-    float horizontalTextOffset = _config.paddingLeft;
-    // float verticalTextOffset = BITMAP_FONT_SIZE + _config.paddingTop;
-    float verticalTextOffset = BITMAP_FONT_SIZE + _config.paddingTop;
-    
     if(selecting) {
         ofPushStyle();
         // argh, splitting all the time.
@@ -275,10 +270,7 @@ void NfTextInputField::drawText() {
         // vertical was fontRef->getLineHeight() + VERTICAL_PADDING
         fontRef->drawString(text, horizontalTextOffset, _config.paddingTop + fontRef->getLineHeight());
     }
-    
-    
-    
-    // ofPopMatrix();
+    std::cout << bounds.x << " " << bounds.y << std::endl;
 }
 
 void NfTextInputField::getCursorCoords(int pos, int &cursorX, int &cursorY) {
@@ -332,7 +324,7 @@ int NfTextInputField::getCursorPositionFromMouse(int x, int y) {
 
 
 void NfTextInputField::mousePressed(ofMouseEventArgs& args){
-    mouseDownInRect = bounds.inside(args.x, args.y);
+    mouseDownInRect = boundsMouse.inside(args.x, args.y);
     if(mouseDownInRect) {
         cursorPosition = getCursorPositionFromMouse(args.x, args.y);
         lastTimeCursorMoved = ofGetElapsedTimef();
@@ -342,7 +334,7 @@ void NfTextInputField::mousePressed(ofMouseEventArgs& args){
 
 
 void NfTextInputField::mouseDragged(ofMouseEventArgs& args) {
-    if(bounds.inside(args.x, args.y)) {
+    if(boundsMouse.inside(args.x, args.y)) {
         int pos = getCursorPositionFromMouse(args.x, args.y);
         if(pos!=cursorPosition) {
             selecting = true;
@@ -357,7 +349,7 @@ void NfTextInputField::mouseDragged(ofMouseEventArgs& args) {
 
 void NfTextInputField::mouseReleased(ofMouseEventArgs& args){
     
-    if(bounds.inside(args.x, args.y)) {
+    if(boundsMouse.inside(args.x, args.y)) {
         if(!isEditing && mouseDownInRect){
             beginEditing();
         }

@@ -39,6 +39,7 @@ public:
         // decide wheter we need to translate
         if (_config.isAbsolutePosition) {
             ofTranslate(bounds.x, bounds.y);
+            translateBounds(boundsMouse, bounds.x, bounds.y);
         }
         
         // get Dimensions children requires
