@@ -131,12 +131,12 @@ public:
             child->_config.paddingLeft +
             child->_config.marginRight +
             child->_config.paddingRight +
-            child->_config.bounds.width;
+            child->bounds.width;
             childrenHeight += child->_config.marginTop +
             child->_config.paddingTop +
             child->_config.marginBottom +
             child->_config.paddingBottom +
-            child->_config.bounds.height;
+            child->bounds.height;
         }
         width = childrenWidth + this->_config.paddingLeft + this->_config.paddingRight;
         height = childrenHeight + this->_config.paddingTop + this->_config.paddingBottom;
@@ -149,12 +149,12 @@ public:
         child->_config.paddingLeft +
         child->_config.marginRight +
         child->_config.paddingRight +
-        child->_config.bounds.width;
+        child->bounds.width;
         childrenHeight += child->_config.marginTop +
         child->_config.paddingTop +
         child->_config.marginBottom +
         child->_config.paddingBottom +
-        child->_config.bounds.height;
+        child->bounds.height;
         width = childrenWidth + this->_config.paddingLeft + this->_config.paddingRight;
         height = childrenHeight + this->_config.paddingTop + this->_config.paddingBottom;
     }
