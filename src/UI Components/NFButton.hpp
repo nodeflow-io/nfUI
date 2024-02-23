@@ -23,7 +23,7 @@ public:
     using NfBoxxer::NfBoxxer;
     
     void draw() override {
-        NfBoxxer::draw(); // Call base class draw for common drawing code if needed
+        // NfBoxxer::draw(); // Call base class draw for common drawing code if needed
         
         // Button-specific drawing code here
         if (_firstRender) {
@@ -36,7 +36,7 @@ public:
         } else {
             ofSetColor(backgroundColor.get());
         }
-        ofDrawRectangle(bounds); // Assuming bounds is accessible
+        ofDrawRectangle(0, 0, bounds.width, bounds.height); // Assuming bounds is accessible
         // Draw the label/text of the button
     }
 };

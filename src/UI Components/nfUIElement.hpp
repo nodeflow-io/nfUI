@@ -54,11 +54,11 @@ public:
     
     NfUIElement(const NfUIConfig& config = NfUIConfig(), std::unique_ptr<NFValue> initialValue = nullptr, const std::string& elementName = "DefaultName")
     :   value(std::move(initialValue)) ,
-        padding(elementName + " Padding",
-                config.paddingTop,
-                config.paddingRight,
-                config.paddingBottom,
-                config.paddingLeft),
+    padding(elementName + " Padding",
+            config.paddingTop,
+            config.paddingRight,
+            config.paddingBottom,
+            config.paddingLeft),
     margin(elementName + " Margin",
            config.marginTop,
            config.marginRight,
@@ -122,7 +122,43 @@ public:
         return value.get();
     }
     
-
+    // Bounding
+    void getDimensions(float& width, float& height) {
+        float childrenWidth = 0;
+        float childrenHeight = 0;
+        for (auto& child : this->children) {
+            childrenWidth = child->_config.marginLeft +
+            child->_config.paddingLeft +
+            child->_config.marginRight +
+            child->_config.paddingRight +
+            child->_config.bounds.width;
+            childrenHeight += child->_config.marginTop +
+            child->_config.paddingTop +
+            child->_config.marginBottom +
+            child->_config.paddingBottom +
+            child->_config.bounds.height;
+        }
+        width = childrenWidth + this->_config.paddingLeft + this->_config.paddingRight;
+        height = childrenHeight + this->_config.paddingTop + this->_config.paddingBottom;
+    }
+    
+    void getChildDimensions(const std::shared_ptr<NfUIElement>& child, float& width, float& height) {
+        float childrenWidth = 0;
+        float childrenHeight = 0;
+        childrenWidth = child->_config.marginLeft +
+        child->_config.paddingLeft +
+        child->_config.marginRight +
+        child->_config.paddingRight +
+        child->_config.bounds.width;
+        childrenHeight += child->_config.marginTop +
+        child->_config.paddingTop +
+        child->_config.marginBottom +
+        child->_config.paddingBottom +
+        child->_config.bounds.height;
+        width = childrenWidth + this->_config.paddingLeft + this->_config.paddingRight;
+        height = childrenHeight + this->_config.paddingTop + this->_config.paddingBottom;
+    }
+    
 };
 
 } // nfUI

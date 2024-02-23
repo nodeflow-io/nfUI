@@ -23,7 +23,8 @@ public:
     using NfBoxxer::NfBoxxer;
     
     void draw() override {
-        NfBoxxer::draw(); // Call base class draw for common drawing code if needed
+        ofPushMatrix();
+        // NfBoxxer::draw(); // Call base class draw for common drawing code if needed
         
         // Button-specific drawing code here
         if (_firstRender) {
@@ -36,8 +37,34 @@ public:
         } else {
             ofSetColor(backgroundColor.get());
         }
-        ofDrawRectangle(bounds); // Assuming bounds is accessible
-        // Draw the label/text of the panel
+        // decide wheter we need to translate
+        if (_config.isAbsolutePosition) {
+            ofTranslate(bounds.x, bounds.y);
+        }
+        
+        // get subchildren width, height
+        this->getDimensions(_config.width, _config.height);
+        // draw own content
+        ofDrawRectangle(0, 0, _config.width, _config.height);
+        
+        // translate paddings
+        ofPushMatrix();
+        ofTranslate(_config.paddingLeft, _config.paddingTop);
+        
+        // render children
+        for (size_t i = 0; i < children.size(); ++i) {
+            auto& child = children[i];
+            if (i) {
+                auto& lastChild = children[i-1];
+                float width, height;
+                this->getChildDimensions(lastChild, width, height);
+                ofTranslate(0, height);
+            }
+            child->draw();
+        }
+        ofPopMatrix();
+        
+        ofPopMatrix(); // Restore the drawing context
     }
 };
 

@@ -25,9 +25,10 @@ public:
     
     void draw() override {
         ofPushMatrix(); // Save the current drawing context
-        if (_firstRender) std::cout << "pushM\n";
-        // set the relative position from bounds
-        ofTranslate(bounds.x, bounds.y);
+        // decide wheter we need to translate
+        if (_config.isAbsolutePosition) {
+            ofTranslate(bounds.x, bounds.y);
+        }
         
         // NfBoxxer::draw(); // Call base class draw for common drawing code if needed
         
@@ -38,7 +39,7 @@ public:
         }
         // For example, draw the textbox area
         ofSetColor(backgroundColor.get());
-        ofDrawRectangle(bounds); // Assuming bounds is accessible
+        ofDrawRectangle(0,0, bounds.width, bounds.height); // Assuming bounds is accessible
         
         // Draw the text inside the textbox
         ofSetColor(textColor.get());
@@ -49,12 +50,11 @@ public:
             // calculate text position 
             horizontalTextOffset = _config.paddingLeft;
             verticalTextOffset = BITMAP_FONT_SIZE + _config.paddingTop;
-            ofDrawBitmapString(valueAsString, bounds.x + horizontalTextOffset, bounds.y + verticalTextOffset); // Placeholder for text drawing
+            ofDrawBitmapString(valueAsString, horizontalTextOffset, verticalTextOffset); // Placeholder for text drawing
         } else {
             std::cout << "NfTextInputField: " << _name << ":no value available." << std::endl;
         }
         ofPopMatrix(); // Restore the drawing context
-        if (_firstRender) std::cout << "popM\n";
     }
     
     // Additional methods specific to textbox, like text input handling

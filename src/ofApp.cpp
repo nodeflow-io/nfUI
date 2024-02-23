@@ -33,7 +33,7 @@ void ofApp::setup() {
     // Setup UI Elements -------------------[ DOM configuration / Elements & Styles ]------------
     nfUI::NfUIConfig config;                                            // Create a config object
     config.backgroundColor = ofColor::red;                              // Example customization
-    config.bounds = ofRectangle(100, 100, 100, 40);                     // Set desired position and size
+    config.bounds = ofRectangle(100, 100, 100, 20);                     // Set desired position and size
     config.isAbsolutePosition = true;
     
     _boxxer = nfUI::createUIElement<nfUI::NfPanel, nfUI::StringNFValue>(
@@ -44,13 +44,14 @@ void ofApp::setup() {
    
     config.isAbsolutePosition = false;
     config.backgroundColor = ofColor(0,255,0,128);
+    config.marginBottom = 5.0f;
     auto value1 = nfUI::createUIElement<nfUI::NfTextInputField, nfUI::IntNFValue>(
         config,
         "GridSize",
         1000
     );
     
-    config.backgroundColor = ofColor(0,255,0,128);
+    config.backgroundColor = ofColor(0,0,255,128);
     auto value2 = nfUI::createUIElement<nfUI::NfTextInputField, nfUI::IntNFValue>(
         config,
         "MajorStep",
@@ -58,7 +59,7 @@ void ofApp::setup() {
     );
 
     config.backgroundColor = ofColor(255,255,0,128);
-
+    config.marginBottom = 0.0f;
     myButton = nfUI::createUIElement<nfUI::NfButton, nfUI::StringNFValue>(
         config,
         "Button",
