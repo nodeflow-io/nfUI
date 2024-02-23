@@ -108,7 +108,7 @@ public:
     ofRectangle position;
     
     void draw() override;
-    void drawText(std::string text);
+    void drawText();
     void clear();
     
     

@@ -159,6 +159,15 @@ void NfTextInputField::draw() {
     if (_firstRender) {
         this->init();
         std::cout << "NfTextInputField: " << _name << std::endl;
+        // Init text as string from value
+        NFValue* valueRawPtr = this->getValue();
+        if (valueRawPtr != nullptr) {
+            std::string valueAsString = valueRawPtr->toString();
+            this->text = valueAsString;
+        } else {
+            this->text = "";
+            std::cout << "NfTextInputField: " << _name << ":no value available." << std::endl;
+        }
         _firstRender=false;
     }
     // For example, draw the textbox area
@@ -167,22 +176,13 @@ void NfTextInputField::draw() {
     
     // Draw the text inside the textbox
     ofSetColor(textColor.get());
-    
-    NFValue* valueRawPtr = this->getValue();
-    if (valueRawPtr != nullptr) {
-        std::string valueAsString = valueRawPtr->toString();
-        // calculate text position
-        horizontalTextOffset = _config.paddingLeft;
-        verticalTextOffset = BITMAP_FONT_SIZE + _config.paddingTop;
-        // ofDrawBitmapString(valueAsString, horizontalTextOffset, verticalTextOffset); // Placeholder for text drawing
-        this->drawText(valueAsString);
-    } else {
-        std::cout << "NfTextInputField: " << _name << ":no value available." << std::endl;
-    }
+
+        this->drawText();
+
     ofPopMatrix(); // Restore the drawing context
 }
 
-void NfTextInputField::drawText(std::string text) {
+void NfTextInputField::drawText() {
     // ofPushMatrix();
     // ofTranslate(bounds.x, bounds.y);
     
@@ -260,14 +260,18 @@ void NfTextInputField::drawText(std::string text) {
                    cursorPos, cursorBottom);
         ofPopStyle();
     }
-    
+    // TODO: move to draw text
+    float horizontalTextOffset = _config.paddingLeft;
+    float verticalTextOffset = BITMAP_FONT_SIZE + _config.paddingTop;
     if (parameters.getBool("textIsPassword")) {
         // Generate a string of asterisks "*" with the same length as `text`
         std::string password(text.size(), '*');
-        fontRef->drawString(password, HORIZONTAL_PADDING, fontRef->getLineHeight() + VERTICAL_PADDING);
+        fontRef->drawString(password, horizontalTextOffset, verticalTextOffset);
     } else {
         // Draw the actual text
-        fontRef->drawString(text, HORIZONTAL_PADDING, fontRef->getLineHeight() + VERTICAL_PADDING);
+        
+        // vertical was fontRef->getLineHeight() + VERTICAL_PADDING
+        fontRef->drawString(text, horizontalTextOffset, verticalTextOffset);
     }
     
     
