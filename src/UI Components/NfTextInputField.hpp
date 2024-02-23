@@ -25,7 +25,7 @@ public:
     
     void draw() override {
         ofPushMatrix(); // Save the current drawing context
-        
+        if (_firstRender) std::cout << "pushM\n";
         // set the relative position from bounds
         ofTranslate(bounds.x, bounds.y);
         
@@ -54,7 +54,7 @@ public:
             std::cout << "NfTextInputField: " << _name << ":no value available." << std::endl;
         }
         ofPopMatrix(); // Restore the drawing context
-        
+        if (_firstRender) std::cout << "popM\n";
     }
     
     // Additional methods specific to textbox, like text input handling

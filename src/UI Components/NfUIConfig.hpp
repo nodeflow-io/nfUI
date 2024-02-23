@@ -38,6 +38,7 @@ struct NfUIConfig {
     ofRectangle bounds;
     uint32_t maxTextLength;
     bool textIsPassword;
+    bool isAbsolutePosition;
     
     NfUIConfig() {
         // Set default values for the config
@@ -63,6 +64,7 @@ struct NfUIConfig {
         bounds = ofRectangle (0,0, 100.0f, 20.0f);
         maxTextLength = 255;
         textIsPassword = false;
+        isAbsolutePosition = false;
     }
 };
 

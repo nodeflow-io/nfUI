@@ -34,39 +34,42 @@ void ofApp::setup() {
     nfUI::NfUIConfig config;                                            // Create a config object
     config.backgroundColor = ofColor::red;                              // Example customization
     config.bounds = ofRectangle(100, 100, 100, 40);                     // Set desired position and size
-    //_boxxer = std::make_shared<nfUI::NfBoxxer>(config, "Origin");       // Pass the config by reference
-    _boxxer = nfUI::createUIElement<nfUI::NfBoxxer, nfUI::StringNFValue>(
-        config,
-        "Origin",
-        "Root Element"
-    );
-   
-    config.backgroundColor = ofColor(0,255,0,128);
-    auto panel1 = nfUI::createUIElement<nfUI::NfButton, nfUI::StringNFValue>(
+    config.isAbsolutePosition = true;
+    
+    _boxxer = nfUI::createUIElement<nfUI::NfPanel, nfUI::StringNFValue>(
         config,
         "Panel1",
         "UI Parameters"
     );
-    
-    config.backgroundColor = ofColor(0,0,255,128);
+   
+    config.isAbsolutePosition = false;
+    config.backgroundColor = ofColor(0,255,0,128);
     auto value1 = nfUI::createUIElement<nfUI::NfTextInputField, nfUI::IntNFValue>(
         config,
-        "Value1",
+        "GridSize",
         1000
+    );
+    
+    config.backgroundColor = ofColor(0,255,0,128);
+    auto value2 = nfUI::createUIElement<nfUI::NfTextInputField, nfUI::IntNFValue>(
+        config,
+        "MajorStep",
+        2000
     );
 
     config.backgroundColor = ofColor(255,255,0,128);
 
     myButton = nfUI::createUIElement<nfUI::NfButton, nfUI::StringNFValue>(
         config,
-        "Button Name",
-        "Button Label"
+        "Button",
+        "Set Params"
     );
 
     // The rendering tree is specified here
-    panel1->addChild(value1);
-    panel1->addChild(myButton);
-    _boxxer->addChild(panel1);
+    _boxxer->addChild(value1);
+    _boxxer->addChild(value2);
+    _boxxer->addChild(myButton);
+    
 
 }
 

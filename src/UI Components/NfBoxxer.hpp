@@ -53,9 +53,9 @@ public:
             // No need to modify child->_config.bounds directly
             
             ofPushMatrix(); // Save the current drawing context
-
+            if (_firstRender) std::cout << "pushM\n";
             // Translate the drawing context down by the vertical offset for each child
-            ofTranslate(0, verticalOffset);
+            // ofTranslate(0, verticalOffset);
             // Perform logging only on the first render of each element
             if (_firstRender) {
                 std::cout << "  child render of " << child->parameters.getName() << " at vertical offset: " << verticalOffset << std::endl;
@@ -68,6 +68,7 @@ public:
             verticalOffset += child->_config.height + child->_config.marginBottom + _config.paddingBottom;
 
             ofPopMatrix(); // Restore the drawing context
+            if (_firstRender) std::cout << "popM\n";
         }
         // After the first render, set the flag to false
         if (_firstRender) {

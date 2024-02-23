@@ -45,6 +45,7 @@ public:
     std::string text;
     ofParameter<uint32_t> maxTextLength;
     ofParameter<bool> textIsPassword;
+    ofParameter<bool> isAbsolutePosition;
     
     ofRectangle bounds;
     // Constructor with Config parameter
@@ -79,6 +80,7 @@ public:
         isFocused.set("IsFocused", config.isFocused);
         maxTextLength.set("maxTextLength", config.maxTextLength);
         textIsPassword.set("textIsPassword", config.textIsPassword);
+        isAbsolutePosition.set("textIsPassword", config.isAbsolutePosition);
         bounds = config.bounds;
         
         // Add parameters to the group

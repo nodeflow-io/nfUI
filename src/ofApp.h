@@ -6,6 +6,7 @@
 
 #include "nfUIElement.hpp"
 #include "NfBoxxer.hpp"
+#include "NfPanel.hpp"
 #include "NfButton.hpp"
 #include "NfTextInputField.hpp"
 #include "NfDom.hpp"
