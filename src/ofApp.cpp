@@ -43,6 +43,15 @@ void ofApp::setup() {
     );
    
     config.isAbsolutePosition = false;
+    
+    config.backgroundColor = ofColor(0,0,0,50);
+    config.marginBottom = 0.0f;
+    auto label = nfUI::createUIElement<nfUI::NfLabel, nfUI::StringNFValue>(
+        config,
+        "Label",
+        "Gui Config"
+    );
+    
     config.backgroundColor = ofColor(0,255,0,128);
     config.marginBottom = 5.0f;
     auto value1 = nfUI::createUIElement<nfUI::NfTextInputField, nfUI::IntNFValue>(
@@ -67,6 +76,7 @@ void ofApp::setup() {
     );
 
     // The rendering tree is specified here
+    _boxxer->addChild(label);
     _boxxer->addChild(value1);
     _boxxer->addChild(value2);
     _boxxer->addChild(myButton);
