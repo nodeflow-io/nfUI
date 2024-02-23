@@ -26,12 +26,11 @@ public:
         ofPushMatrix();
         // NfBoxxer::draw(); // Call base class draw for common drawing code if needed
         
-        // Button-specific drawing code here
         if (_firstRender) {
             std::cout << "NfPanel: " << _name << std::endl;
             _firstRender=false;
         }
-        // For example, draw a rectangle with a different color when focused
+
         if (isFocused.get()) {
             ofSetColor(focusColor.get());
         } else {
@@ -42,27 +41,13 @@ public:
             ofTranslate(bounds.x, bounds.y);
         }
         
-        // get subchildren width, height
+        // get Dimensions children requires
         this->getDimensions(_config.width, _config.height);
         // draw own content
         ofDrawRectangle(0, 0, _config.width, _config.height);
         
-        // translate paddings
-        ofPushMatrix();
-        ofTranslate(_config.paddingLeft, _config.paddingTop);
-        
-        // render children
-        for (size_t i = 0; i < children.size(); ++i) {
-            auto& child = children[i];
-            if (i) {
-                auto& lastChild = children[i-1];
-                float width, height;
-                this->getChildDimensions(lastChild, width, height);
-                ofTranslate(0, height);
-            }
-            child->draw();
-        }
-        ofPopMatrix();
+        // call drawChildren with the current paddings
+        drawChildren(_config.paddingLeft, _config.paddingTop);
         
         ofPopMatrix(); // Restore the drawing context
     }

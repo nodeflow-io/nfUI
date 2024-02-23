@@ -77,19 +77,19 @@ public:
     }
 
     
-    void drawold()  {
-        // Use the colors and dimensions from the config
-        ofSetColor(_config.backgroundColor);
-        ofDrawRectangle(_config.bounds); // Use the bounds from the config
-
-        // Move the drawing context to the rectangle's position for drawing children
+    void drawChildren (const float& paddingLeft, const float& paddingRight) {
         ofPushMatrix();
-        ofTranslate(_config.bounds.getPosition());
-        for (auto& child : children) {
-            child->draw(); // Recursively draw each child
+        ofTranslate(paddingLeft, paddingRight);
+        for (size_t i = 0; i < children.size(); ++i) {
+            auto& child = children[i];
+            if (i) {
+                auto& lastChild = children[i-1];
+                float width, height;
+                this->getChildDimensions(lastChild, width, height);
+                ofTranslate(0, height);
+            }
+            child->draw();
         }
-
-        
         ofPopMatrix();
     }
 };

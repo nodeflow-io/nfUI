@@ -163,11 +163,13 @@ public:
         width = childrenWidth;// + this->_config.paddingLeft + this->_config.paddingRight;
         height = childrenHeight; // + this->_config.paddingTop + this->_config.paddingBottom;
         
+        /*
         std::cout << child->_config.marginTop << " " <<
         child->_config.paddingTop << " " <<
         (child->bounds.height -(_config.paddingTop + _config.paddingBottom)) << " " <<
         child->_config.paddingBottom << " " <<
         child->_config.marginBottom << std::endl;
+         */
         
     }
     
