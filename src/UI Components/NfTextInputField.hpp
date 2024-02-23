@@ -2,7 +2,7 @@
 //  NfTextInputField.hpp
 //  nodeflowUI
 //
-//  Created by Ulrike Siegl on 22.02.24.
+//  Created by Matthias Strohmaier on 22.02.24.
 //
 
 #ifndef NfTextInputField_hpp
@@ -11,51 +11,122 @@
 #include "ofMain.h"
 #include "NfBoxxer.hpp"
 
+//For lack of a type abstraction, this lets you #define a font renderer so
+//(like ofxFTGL or ofxFont)
+//to use ofxFTGL use somethinglike this:
+//#define OFX_TEXTFIELD_FONT_RENDERER ofxFTGLFont
+//#define OFX_TEXTFIELD_FONT_RENDERER "ofxFTGLFont.h"
+
+#ifndef OFX_TEXTFIELD_FONT_RENDERER
+#define OFX_TEXTFIELD_FONT_RENDERER ofTrueTypeFont
+#endif
+
+#ifdef OFX_TEXTFIELD_FONT_INCLUDE
+#include OFX_TEXTFIELD_FONT_INCLUDE
+#endif
+
+#define TEXTFIELD_IS_ACTIVE "textfieldIsActive"
+#define TEXTFIELD_IS_INACTIVE "textfieldIsInactive"
+
+#ifdef OF_VERSION_MINOR
+#if OF_VERSION_MINOR>=8 || OF_VERSION_MAJOR>0
+#define USE_GLFW_CLIPBOARD
+
+#endif
+#endif
+// TODO: wrapping
+#include "ofxTextInputFieldFontRenderer.h"
+#include <unordered_map>
+#include <unordered_set>  // Make sure to include this header
+
 namespace nfUI {
 
 class NfTextInputField : public NfBoxxer {
     
-private:
+protected:
     bool _firstRender = true; // Flag to track if draw() was called for the first time
     uint32_t verticalTextOffset; // font size dependant
     uint32_t horizontalTextOffset;
+    
+    // from ofxTextinput -------------------
+    float lastTimeCursorMoved;
+    int VERTICAL_PADDING;
+    int HORIZONTAL_PADDING;
+    ofxTextInput::FontRenderer* fontRef;
+    
+    bool     isEnabled;
+    bool    isEditing;
+    bool    mouseDownInRect;
+    void    mousePressed(ofMouseEventArgs& args);
+    void    mouseDragged(ofMouseEventArgs& args);
+    void    mouseReleased(ofMouseEventArgs& args);
+    
+    
+    //int getLineForPosition(int pos);
+    
+    //void setCursorPositionFromXY();
+    //void setCursorFromMouse(int x, int y);
+    //void setCursorXYFromPosition();
+    void getCursorCoords(int pos, int &cursorX, int &cursorY);
+    int getCursorPositionFromMouse(int x, int y);
+    
+    bool isShifted, isCommand;
+    map<int, char> shiftMap;
+    ofColor colorBackground = {255,0,0,255};
+    
 public:
     // Inherit NfBoxxer constructor
     using NfBoxxer::NfBoxxer;
+   
+    // ...
+virtual ~NfTextInputField();
+//swap in a font!
+void setFont(OFX_TEXTFIELD_FONT_RENDERER& font);
+void init();
+void setup();
+
+void enable();
+void disable();
+bool getIsEnabled();
+
+bool getIsEditing();
+void beginEditing();
+void endEditing();
+
+//can be set manually or otherwise is controlled by enable/disable
+bool drawCursor;
+
+// ofRectangle bounds;
+ofRectangle position;
+
+void draw() override;
+void drawText(std::string text);
+void clear();
+
+
+int cursorPosition;
+
+int selectionBegin;
+int selectionEnd;
+bool selecting;
+
+ofEvent<string> textChanged;
+void keyPressed(ofKeyEventArgs &a);
+void keyReleased(ofKeyEventArgs &a);
+
+bool autoClear;
+bool autoTab;
+
+bool multiline;
+
+#ifdef USE_GLFW_CLIPBOARD
+void setClipboard(string clippy);
+string getClipboard();
+#endif
     
-    void draw() override {
-        ofPushMatrix(); // Save the current drawing context
-        // decide wheter we need to translate
-        if (_config.isAbsolutePosition) {
-            ofTranslate(bounds.x, bounds.y);
-        }
-        
-        // NfBoxxer::draw(); // Call base class draw for common drawing code if needed
-        
-        // Textbox-specific drawing code here
-        if (_firstRender) {
-            std::cout << "NfTextInputField: " << _name << std::endl;
-            _firstRender=false;
-        }
-        // For example, draw the textbox area
-        ofSetColor(backgroundColor.get());
-        ofDrawRectangle(0,0, bounds.width, bounds.height); // Assuming bounds is accessible
-        
-        // Draw the text inside the textbox
-        ofSetColor(textColor.get());
-        
-        NFValue* valueRawPtr = this->getValue();
-        if (valueRawPtr != nullptr) {
-            std::string valueAsString = valueRawPtr->toString();
-            // calculate text position 
-            horizontalTextOffset = _config.paddingLeft;
-            verticalTextOffset = BITMAP_FONT_SIZE + _config.paddingTop;
-            ofDrawBitmapString(valueAsString, horizontalTextOffset, verticalTextOffset); // Placeholder for text drawing
-        } else {
-            std::cout << "NfTextInputField: " << _name << ":no value available." << std::endl;
-        }
-        ofPopMatrix(); // Restore the drawing context
-    }
+    bool isValidChar(nfAPI::ValueType valueType, char inputChar);
+    
+    
     
     // Additional methods specific to textbox, like text input handling
 };
