@@ -131,12 +131,14 @@ public:
             child->_config.paddingLeft +
             child->_config.marginRight +
             child->_config.paddingRight +
-            child->bounds.width;
+            child->bounds.width - (_config.paddingLeft + _config.paddingRight);
+            
             childrenHeight += child->_config.marginTop +
             child->_config.paddingTop +
-            child->_config.marginBottom +
+            child->_config.marginTop +
             child->_config.paddingBottom +
-            child->bounds.height;
+            child->_config.marginBottom +
+            child->bounds.height - (_config.paddingTop + _config.paddingBottom);
         }
         width = childrenWidth + this->_config.paddingLeft + this->_config.paddingRight;
         height = childrenHeight + this->_config.paddingTop + this->_config.paddingBottom;
