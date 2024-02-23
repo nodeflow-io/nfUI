@@ -2,8 +2,16 @@
 //  NfTextInputField.cpp
 //  nodeflowUI
 //
-//  Created by Matthias Strohmaier on 22.02.24.
+//  Co-Created by Matthias Strohmaier on 22.02.24.
+//  originally Created by Elliot Woods on 09/12/2011.
+//  Copyright 2011 Kimchi and Chips.
 //
+//  modified by James George 12/2/2011
+//  modified by Momo the Monster 7/10/2012
+//  swappable fonts added by James George 9/11/2012
+//  removed some depreceated drawing calls - Matthias Strohmaier 2/14/2024
+//  added input filtering for keys - Matthias Strohmaier 2/19/2024
+//  TODO: plattform agnostic keys - shift mapps
 
 #include "NfTextInputField.hpp"
 
@@ -137,6 +145,8 @@ bool NfTextInputField::getIsEnabled(){
 }
 
 void NfTextInputField::draw() {
+    this->setup();
+    // this->setBounds(valuePosition);
     ofPushMatrix(); // Save the current drawing context
     // decide wheter we need to translate
     if (_config.isAbsolutePosition) {
@@ -391,7 +401,6 @@ void NfTextInputField::keyPressed(ofKeyEventArgs& args) {
     char asciiChar = args.keycode;                  // Convert the key to an ASCII character
     
     std::string valueTypeString = getValueTypeString(valueType);
-    // std::cout << "valueType" <<  typeHandler.getValueTypeString(currentValueType) << "\n";
     
     lastTimeCursorMoved = ofGetElapsedTimef();
     std::cout << parameters.getName() << " (key pressed): " << key << " (ascii): " << asciiChar << std::endl;

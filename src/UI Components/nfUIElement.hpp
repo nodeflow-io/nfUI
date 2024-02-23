@@ -65,6 +65,13 @@ public:
            config.marginBottom,
            config.marginLeft) {
         
+        // Check if value is not nullptr and then get its type
+        if (value) {
+            valueType = value->getType();
+        } else {
+            valueType = nfAPI::ValueType::NotSet;
+        }
+        
         _config = config;
         // Set default values from the config
         backgroundColor.set("BackgroundColor", config.backgroundColor);

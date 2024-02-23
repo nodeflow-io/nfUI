@@ -2,8 +2,16 @@
 //  NfTextInputField.hpp
 //  nodeflowUI
 //
-//  Created by Matthias Strohmaier on 22.02.24.
+//  Created by Matthias Strohmaier on 22.02.24 using ofxTextInputFiel as a base
+//  Created by Elliot Woods on 09/12/2011.
+//  Copyright 2011 Kimchi and Chips.
 //
+//  modified by James George 12/2/2011
+//  modified by Momo the Monster 7/10/2012
+//  swappable fonts added by James George 9/11/2012
+//
+//    MIT license
+//    http://www.opensource.org/licenses/mit-license.php
 
 #ifndef NfTextInputField_hpp
 #define NfTextInputField_hpp
@@ -54,7 +62,7 @@ protected:
     int HORIZONTAL_PADDING;
     ofxTextInput::FontRenderer* fontRef;
     
-    bool     isEnabled;
+    bool    isEnabled;
     bool    isEditing;
     bool    mouseDownInRect;
     void    mousePressed(ofMouseEventArgs& args);
@@ -77,58 +85,55 @@ protected:
 public:
     // Inherit NfBoxxer constructor
     using NfBoxxer::NfBoxxer;
-   
+    
     // ...
-virtual ~NfTextInputField();
-//swap in a font!
-void setFont(OFX_TEXTFIELD_FONT_RENDERER& font);
-void init();
-void setup();
-
-void enable();
-void disable();
-bool getIsEnabled();
-
-bool getIsEditing();
-void beginEditing();
-void endEditing();
-
-//can be set manually or otherwise is controlled by enable/disable
-bool drawCursor;
-
-// ofRectangle bounds;
-ofRectangle position;
-
-void draw() override;
-void drawText(std::string text);
-void clear();
-
-
-int cursorPosition;
-
-int selectionBegin;
-int selectionEnd;
-bool selecting;
-
-ofEvent<string> textChanged;
-void keyPressed(ofKeyEventArgs &a);
-void keyReleased(ofKeyEventArgs &a);
-
-bool autoClear;
-bool autoTab;
-
-bool multiline;
-
+    virtual ~NfTextInputField();
+    //swap in a font!
+    void setFont(OFX_TEXTFIELD_FONT_RENDERER& font);
+    void init();
+    void setup();
+    
+    void enable();
+    void disable();
+    bool getIsEnabled();
+    
+    bool getIsEditing();
+    void beginEditing();
+    void endEditing();
+    
+    //can be set manually or otherwise is controlled by enable/disable
+    bool drawCursor;
+    
+    // ofRectangle bounds;
+    ofRectangle position;
+    
+    void draw() override;
+    void drawText(std::string text);
+    void clear();
+    
+    
+    int cursorPosition;
+    
+    int selectionBegin;
+    int selectionEnd;
+    bool selecting;
+    
+    ofEvent<string> textChanged;
+    void keyPressed(ofKeyEventArgs &a);
+    void keyReleased(ofKeyEventArgs &a);
+    
+    bool autoClear;
+    bool autoTab;
+    
+    bool multiline;
+    
 #ifdef USE_GLFW_CLIPBOARD
-void setClipboard(string clippy);
-string getClipboard();
+    void setClipboard(string clippy);
+    string getClipboard();
 #endif
     
     bool isValidChar(nfAPI::ValueType valueType, char inputChar);
     
-    
-    
-    // Additional methods specific to textbox, like text input handling
 };
 
 }

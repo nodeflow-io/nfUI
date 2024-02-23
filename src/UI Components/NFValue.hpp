@@ -9,26 +9,33 @@
 #define NFValue_hpp
 
 #include "ofMain.h"
+#include "../API/ValueType.hpp"
 
 namespace nfUI {
 
 class NFValue {
 public:
     virtual ~NFValue() {}
-
+    
     // Virtual function to return value as string
     virtual std::string toString() const = 0;
+    
+    virtual nfAPI::ValueType getType() const = 0;
 };
 
 // Example NFValues using ofParameter types
 class StringNFValue : public NFValue {
 public:
     ofParameter<std::string> value;
-
+    
     StringNFValue(const std::string& initialValue) : value(initialValue) {}
-
+    
     std::string toString() const override {
         return value.get();
+    }
+    
+    nfAPI::ValueType getType() const override {
+        return nfAPI::ValueType::String;
     }
 };
 
@@ -36,33 +43,45 @@ public:
 class DoubleNFValue : public NFValue {
 public:
     ofParameter<double> value;
-
+    
     DoubleNFValue(double initialValue) : value(initialValue) {}
-
+    
     std::string toString() const override {
         return std::to_string(value.get());
+    }
+    
+    nfAPI::ValueType getType() const override {
+        return nfAPI::ValueType::Double;
     }
 };
 
 class BoolNFValue : public NFValue {
 public:
     ofParameter<bool> value;
-
+    
     BoolNFValue(bool initialValue) : value(initialValue) {}
-
+    
     std::string toString() const override {
         return value.get() ? "true" : "false";
+    }
+    
+    nfAPI::ValueType getType() const override {
+        return nfAPI::ValueType::Bool;
     }
 };
 
 class IntNFValue : public NFValue {
 public:
     ofParameter<int> value;
-
+    
     IntNFValue(int initialValue) : value(initialValue) {}
-
+    
     std::string toString() const override {
         return std::to_string(value.get());
+    }
+    
+    nfAPI::ValueType getType() const override {
+        return nfAPI::ValueType::Int;
     }
 };
 

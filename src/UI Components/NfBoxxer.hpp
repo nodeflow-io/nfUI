@@ -23,7 +23,7 @@ public:
 
     // Updated constructor
     NfBoxxer(const NfUIConfig& config, const std::string& name, std::unique_ptr<NFValue> initialValue)
-            : NfUIElement(config, std::move(initialValue), name), // Assuming NfUIElement has a matching constructor
+            : NfUIElement(config, std::move(initialValue), name), 
               _config(config), _name(name) {
             // Your initialization code here
         }
