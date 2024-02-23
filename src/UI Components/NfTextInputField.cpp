@@ -185,6 +185,9 @@ void NfTextInputField::draw() {
 void NfTextInputField::drawText() {
     // ofPushMatrix();
     // ofTranslate(bounds.x, bounds.y);
+    float horizontalTextOffset = _config.paddingLeft;
+    // float verticalTextOffset = BITMAP_FONT_SIZE + _config.paddingTop;
+    float verticalTextOffset = BITMAP_FONT_SIZE + _config.paddingTop;
     
     if(selecting) {
         ofPushStyle();
@@ -203,26 +206,26 @@ void NfTextInputField::drawText() {
         
         if(beginCursorY==endCursorY) {
             // single line selection
-            ofDrawRectangle(HORIZONTAL_PADDING + startX, VERTICAL_PADDING + fontRef->getLineHeight()*beginCursorY,
+            ofDrawRectangle(_config.paddingLeft + startX, _config.paddingTop + fontRef->getLineHeight()*beginCursorY,
                             endX - startX, fontRef->getLineHeight());
         } else {
             
             // multiline selection.
             // do first line to the end
-            ofDrawRectangle(HORIZONTAL_PADDING + startX, VERTICAL_PADDING + fontRef->getLineHeight()*beginCursorY,
+            ofDrawRectangle(_config.paddingLeft + startX, _config.paddingTop + fontRef->getLineHeight()*beginCursorY,
                             fontRef->stringWidth(lines[beginCursorY]) - startX,
                             fontRef->getLineHeight()
                             );
             
             // loop through entirely selected lines
             for(int i = beginCursorY + 1; i < endCursorY; i++) {
-                ofDrawRectangle(HORIZONTAL_PADDING, VERTICAL_PADDING + fontRef->getLineHeight()*i,
+                ofDrawRectangle(_config.paddingLeft, _config.paddingTop + fontRef->getLineHeight()*i,
                                 fontRef->stringWidth(lines[i]),
                                 fontRef->getLineHeight()
                                 );
             }
             // do last line up to endX
-            ofDrawRectangle(HORIZONTAL_PADDING, VERTICAL_PADDING + fontRef->getLineHeight()*endCursorY,
+            ofDrawRectangle(_config.paddingLeft, _config.paddingTop + fontRef->getLineHeight()*endCursorY,
                             endX, fontRef->getLineHeight()
                             );
         }
@@ -248,10 +251,10 @@ void NfTextInputField::drawText() {
         int cursorX, cursorY;
         getCursorCoords(cursorPosition, cursorX, cursorY);
         //    printf("Pos: %d    X: %d   Y: %d\n", cursorPosition, cursorX, cursorY);
-        int cursorPos = HORIZONTAL_PADDING + fontRef->stringWidth(lines[cursorY].substr(0,cursorX));
+        int cursorPos = _config.paddingLeft + fontRef->stringWidth(lines[cursorY].substr(0,cursorX));
         
         
-        int cursorTop = VERTICAL_PADDING + fontRef->getLineHeight()*cursorY;
+        int cursorTop = _config.paddingTop + fontRef->getLineHeight()*cursorY;
         int cursorBottom = cursorTop + fontRef->getLineHeight();
         
         ofSetLineWidth(1.0f);
@@ -261,17 +264,16 @@ void NfTextInputField::drawText() {
         ofPopStyle();
     }
     // TODO: move to draw text
-    float horizontalTextOffset = _config.paddingLeft;
-    float verticalTextOffset = BITMAP_FONT_SIZE + _config.paddingTop;
+    
     if (parameters.getBool("textIsPassword")) {
         // Generate a string of asterisks "*" with the same length as `text`
         std::string password(text.size(), '*');
-        fontRef->drawString(password, horizontalTextOffset, verticalTextOffset);
+        fontRef->drawString(password, _config.paddingLeft, _config.paddingTop + fontRef->getLineHeight());
     } else {
         // Draw the actual text
         
         // vertical was fontRef->getLineHeight() + VERTICAL_PADDING
-        fontRef->drawString(text, horizontalTextOffset, verticalTextOffset);
+        fontRef->drawString(text, horizontalTextOffset, _config.paddingTop + fontRef->getLineHeight());
     }
     
     
