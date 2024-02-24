@@ -46,6 +46,7 @@ public:
         if (this->isRoot()) {
             this->boundsMouse=bounds;
         }
+        std::cout << "Boxxer: " << _name << " mB: " << boundsMouse.x << " " << boundsMouse.y << std::endl;
         // After the first render, set the flag to false
         if (_firstRender) {
             _firstRender = false;

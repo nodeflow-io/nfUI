@@ -184,6 +184,14 @@ void NfTextInputField::draw() {
 }
 
 void NfTextInputField::drawText() {
+    
+    // visual debugging of hot area
+    ofPushStyle();
+    ofSetHexColor(0x6988db);
+    ofFill();
+    ofDrawRectangle(boundsMouse);
+    ofPopStyle();
+    
     if(selecting) {
         ofPushStyle();
         // argh, splitting all the time.
@@ -270,7 +278,7 @@ void NfTextInputField::drawText() {
         // vertical was fontRef->getLineHeight() + VERTICAL_PADDING
         fontRef->drawString(text, horizontalTextOffset, _config.paddingTop + fontRef->getLineHeight());
     }
-    std::cout << boundsMouse.x << " " << boundsMouse.y << std::endl;
+    
 }
 
 void NfTextInputField::getCursorCoords(int pos, int &cursorX, int &cursorY) {
