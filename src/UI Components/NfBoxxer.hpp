@@ -32,13 +32,15 @@ public:
     // put out debug infos like paddings and margins
     void draw() {
         if (_firstRender) {
-            std::cout << "Boxxer: First render of " << _name << std::endl;
-            NFValue* valueRawPtr = this->getValue();
-            if (valueRawPtr != nullptr) {
-                std::string valueAsString = valueRawPtr->toString();
-                std::cout << "Boxxer: Value as string: " << valueAsString << std::endl;
-            } else {
-                std::cout << "Boxxer: No value available." << std::endl;
+            if (_config.isDebug) {
+                std::cout << "Boxxer: First render of " << _name << std::endl;
+                NFValue* valueRawPtr = this->getValue();
+                if (valueRawPtr != nullptr) {
+                    std::string valueAsString = valueRawPtr->toString();
+                    std::cout << "Boxxer: Value as string: " << valueAsString << std::endl;
+                } else {
+                    std::cout << "Boxxer: No value available." << std::endl;
+                }
             }
         }
         // this is used for keeping track of the bounds for mouse interactions
@@ -51,18 +53,23 @@ public:
         if (_config.isAbsolutePosition) {
             ofTranslate(bounds.x, bounds.y);
             translateBounds(boundsMouse, bounds.x, bounds.y);
-            std::cout << "Boxxer: " << _name << " absolute position: " << bounds.x << "," << bounds.y << std::endl;
+            if (_config.isDebug) {
+                std::cout << "Boxxer: " << _name << " absolute position: " << bounds.x << "," << bounds.y << std::endl;
+            }
         }
         
         // decide wheter we need to translate the margins
         if (_config.marginTop || _config.marginLeft) {
             ofTranslate(_config.marginLeft, _config.marginTop);
             translateBounds(boundsMouse, _config.marginLeft, _config.marginTop);
-            std::cout << "Boxxer: " << _name << " margin: " << _config.marginLeft << "," << _config.marginTop << std::endl;
+            if (_config.isDebug) {
+                std::cout << "Boxxer: " << _name << " margin: " << _config.marginLeft << "," << _config.marginTop << std::endl;
+            }
         }
         
-        // TODO: remove this
-        std::cout << "Boxxer: " << _name << " mB: " << boundsMouse.x << " " << boundsMouse.y << std::endl;
+        if (_config.isDebug) {
+            std::cout << "Boxxer: " << _name << " mB: " << boundsMouse.x << " " << boundsMouse.y << std::endl;
+        }
         // After the first render, set the flag to false
         if (_firstRender) {
             _firstRender = false;

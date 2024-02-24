@@ -34,11 +34,14 @@ struct NfUIConfig {
     float height;
     float minWidth;
     float minHeight;
+    float contentWidth;
+    float contentHeight;
     bool isFocused;
     ofRectangle bounds;
     uint32_t maxTextLength;
     bool textIsPassword;
     bool isAbsolutePosition;
+    bool isDebug;
     
     NfUIConfig() {
         // Set default values for the config
@@ -58,13 +61,44 @@ struct NfUIConfig {
         borderSize = 1.0f;
         width = 100.0f;
         height = 20.0f;
-        minWidth = 50.0f;
-        minHeight = 20.0f;
+        contentWidth = 0;
+        contentHeight = 0;
+        minWidth = 0;
+        minHeight = 0;
         isFocused = false;
         bounds = ofRectangle (0,0, 100.0f, 20.0f);
         maxTextLength = 255;
         textIsPassword = false;
         isAbsolutePosition = false;
+        isDebug = false;
+    }
+    
+    void setMargin(float top, float right, float bottom, float left) {
+        marginTop = top;
+        marginRight = right;
+        marginBottom = bottom;
+        marginLeft = left;
+    }
+    
+    void setMargin(float margin) {
+        marginTop = margin;
+        marginRight = margin;
+        marginBottom = margin;
+        marginLeft = margin;
+    }
+    
+    void setPadding(float top, float right, float bottom, float left) {
+        paddingTop = top;
+        paddingRight = right;
+        paddingBottom = bottom;
+        paddingLeft = left;
+    }
+    
+    void setPadding(float padding) {
+        paddingTop = padding;
+        paddingRight = padding;
+        paddingBottom = padding;
+        paddingLeft = padding;
     }
 };
 

@@ -18,7 +18,7 @@
 namespace nfUI {
 // init variables
 void NfTextInputField::init() {
-    ofLogVerbose("NfTextInputField(config)");
+    ofLogVerbose("NfTextInputField::init()");
 
     shiftMap[44] = '<';
     shiftMap[45] = '_';
@@ -52,7 +52,7 @@ void NfTextInputField::init() {
     fontRef = NULL;
     isEnabled = false;
     isEditing = false;
-    bounds = ofRectangle(0,0,100,22);
+    // bounds = ofRectangle(0,0,100,22);
     
     drawCursor = false;
     autoClear = false;
@@ -153,7 +153,9 @@ void NfTextInputField::draw() {
     // Textbox-specific drawing code here
     if (_firstRender) {
         this->init();
-        std::cout << "NfTextInputField: " << _name << std::endl;
+        if (_config.isDebug) {
+            std::cout << "NfTextInputField: " << _name << std::endl;
+        }
         // Init text as string from value
         NFValue* valueRawPtr = this->getValue();
         if (valueRawPtr != nullptr) {

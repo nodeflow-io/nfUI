@@ -27,7 +27,9 @@ public:
         NfBoxxer::draw(); // Call base class draw for common drawing
         
         if (_firstRender) {
-            std::cout << "NfPanel: " << _name << std::endl;
+            if (_config.isDebug) {
+                std::cout << "NfPanel: " << _name << std::endl;
+            }
             _firstRender=false;
         }
 

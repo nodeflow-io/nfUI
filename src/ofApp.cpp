@@ -31,31 +31,29 @@ void ofApp::setup() {
     _guiParams.setMinorGridColor(ofColor(255, 0, 0, 50));  // Red dark for minor grid lines
     
     // Setup UI Elements -------------------[ DOM configuration / Elements & Styles ]------------
-    nfUI::NfUIConfig config;                                            // Create a config object
-    config.backgroundColor = ofColor(35,38,42);                         // background color of pannel
-    config.bounds = ofRectangle(100, 100, 100, 20);                     // Set desired position and size
-    config.isAbsolutePosition = true;                                   // coordinates are absolute position
     
-    config.paddingTop = 0;
-    config.paddingRight = 0;
-    config.paddingBottom = 0;
-    config.paddingLeft = 0;
+    
+    nfUI::NfUIConfig config;                                            // Create a config object
+    float width = 200;
+    float margin = 10;
+    config.backgroundColor = ofColor(35,38,42);                         // background color of pannel
+    config.bounds = ofRectangle(100, 100, width, 20);                   // Set desired position and size
+    config.isAbsolutePosition = true;                                   // coordinates are absolute position
+    config.setPadding(0);                                               // sets Top, Right, Bottom and Left
+    config.contentHeight = 5;                                           // -1 sets to auto (children content height)
+    config.contentWidth = width-2*margin;                               // width
     _boxxer = nfUI::createUIElement<nfUI::NfPanel, nfUI::StringNFValue>(
         config,
         "Pannel",
         "UI Parameters"
     );
    
-    config.isAbsolutePosition = false;                                  // relative positionin from now on
+    config.isAbsolutePosition = false;                                  // relative positioning from now on
     config.backgroundColor = ofColor(56,62,66);                         // background color of label
-    config.marginTop = 0;
-    config.marginRight = 0;
-    config.marginBottom = 0;
-    config.marginLeft = 0;
-    config.paddingTop = 5;
-    config.paddingRight = 10;
-    config.paddingBottom = 5;
-    config.paddingLeft = 10;
+    config.bounds = ofRectangle(100, 100, width, 30);
+    config.setMargin(0);
+    config.setPadding(10);
+    config.contentHeight = 5;
     auto label = nfUI::createUIElement<nfUI::NfLabel, nfUI::StringNFValue>(
         config,
         "Label",
@@ -63,14 +61,9 @@ void ofApp::setup() {
     );
     
     config.backgroundColor = ofColor(30,30,30);
-    config.marginTop = 10;
-    config.marginRight = 10;
-    config.marginBottom = 10;
-    config.marginLeft = 10;
-    config.paddingTop = 5;
-    config.paddingRight = 10;
-    config.paddingBottom = 5;
-    config.paddingLeft = 10;
+    config.bounds = ofRectangle(100, 100, width-2*margin, 20);
+    config.setMargin(8, 10, 0, 8);
+    config.setPadding(5, 10, 5, 10);
     config.maxTextLength = 1;
     _showGrid = nfUI::createUIElement<nfUI::NfTextInputField, nfUI::BoolNFValue>(
         config,
@@ -78,6 +71,7 @@ void ofApp::setup() {
          _guiParams.getShowGrid()
     );
     
+
     config.maxTextLength = 4;
     auto value1 = nfUI::createUIElement<nfUI::NfTextInputField, nfUI::IntNFValue>(
         config,
@@ -90,13 +84,31 @@ void ofApp::setup() {
         "MajorStep",
         _guiParams.getMajorStep()
     );
+    
+    auto _project = nfUI::createUIElement<nfUI::NfTextInputField, nfUI::StringNFValue>(
+        config,
+        "Project",
+        "nodeFlowUI"
+    );
+    
+    auto _version = nfUI::createUIElement<nfUI::NfTextInputField, nfUI::StringNFValue>(
+        config,
+        "Version",
+        "v0.0.3"
+    );
+    
+    auto _password = nfUI::createUIElement<nfUI::NfTextInputField, nfUI::StringNFValue>(
+        config,
+        "Password",
+        "nodeFlow"
+    );
 
     config.backgroundColor = ofColor(46, 80, 117);
     config.marginBottom = 0.0f;
     myButton = nfUI::createUIElement<nfUI::NfButton, nfUI::StringNFValue>(
         config,
         "Button",
-        "Set Params"
+        "Set Parameters"
     );
 
     // The UI rendering tree is specified here
@@ -105,6 +117,9 @@ void ofApp::setup() {
     _boxxer->addChild(_showGrid);
     _boxxer->addChild(value1);
     _boxxer->addChild(value2);
+    _boxxer->addChild(_project);
+    _boxxer->addChild(_version);
+    _boxxer->addChild(_password);
     _boxxer->addChild(myButton);
     
 

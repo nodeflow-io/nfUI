@@ -29,7 +29,9 @@ public:
         NfBoxxer::draw(); // Call base class draw for common drawing code if needed
         
         if (_firstRender) {
-            std::cout << "NfButton: " << _name << std::endl;
+            if (_config.isDebug) {
+                std::cout << "NfLabel: " << _name << std::endl;
+            }
             _firstRender=false;
         }
 

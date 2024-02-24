@@ -141,16 +141,21 @@ public:
         return value.get();
     }
     
+    
+    
     // Bounding
     void getDimensions(float& width, float& height) {
         float childrenWidth = 0;
         float childrenHeight = 0;
+        float childrenWidthMax = 0;
         for (auto& child : this->children) {
             float childHeight;
-            this->getChildDimensions(child, childrenWidth, childHeight);
+            float childWidth;
+            this->getChildDimensions(child, childWidth, childHeight);
+            childrenWidthMax = std::max(childrenWidthMax, childWidth);
             childrenHeight += childHeight;
         }
-        width = childrenWidth + this->_config.paddingLeft + this->_config.paddingRight;
+        width = childrenWidthMax + this->_config.paddingLeft + this->_config.paddingRight;
         height = childrenHeight + this->_config.paddingTop + this->_config.paddingBottom;
     }
     
@@ -158,18 +163,20 @@ public:
         float childWidth = 0;
         float childHeight = 0;
         // TODO: add content width and min, max
-        childWidth = child->_config.marginLeft +
-        child->_config.paddingLeft +
+        childWidth =
+        child->_config.marginLeft +
+        // child->_config.paddingLeft +
         child->_config.marginRight +
-        child->_config.paddingRight +
-        child->bounds.width - (_config.paddingLeft + _config.paddingRight);
+        // child->_config.paddingRight +
+        child->_config.contentWidth;
         
-        childHeight += child->_config.marginTop +
+        childHeight +=
+        child->_config.marginTop +
         child->_config.paddingTop +
         child->_config.marginTop +
         child->_config.paddingBottom +
         child->_config.marginBottom +
-        child->bounds.height - (_config.paddingTop + _config.paddingBottom);
+        child->_config.contentHeight;
         
         width = childWidth;// + this->_config.paddingLeft + this->_config.paddingRight;
         height = childHeight; // + this->_config.paddingTop + this->_config.paddingBottom;
