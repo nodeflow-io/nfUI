@@ -54,13 +54,14 @@ void ofApp::setup() {
     
     config.backgroundColor = ofColor(30,30,30);
     config.marginBottom = 5.0f;
-    
+    config.maxTextLength = 1;
     _showGrid = nfUI::createUIElement<nfUI::NfTextInputField, nfUI::BoolNFValue>(
         config,
         "Show Grid",
          _guiParams.getShowGrid()
     );
     
+    config.maxTextLength = 4;
     auto value1 = nfUI::createUIElement<nfUI::NfTextInputField, nfUI::IntNFValue>(
         config,
         "GridSize",
