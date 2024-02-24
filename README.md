@@ -1,4 +1,4 @@
-# nodeFlowUI v.0.0.3
+# nodeFlowUI v.0.0.3 - boxxer
 
 # Demo UI
 
@@ -170,10 +170,22 @@ public:
 
 - Key: F1 -> toggle grid display
 - Key: F2 -> toggle StatusBar display
-- Button SetParams -> update GUI Parameters
+- Button Set GUI-Parameters -> update GUI Parameters
 
 
 # Supported UI Elements 
+
+## NfDom
+### to create an elelement
+
+## NfPannel
+### TODO
+- make it dragable
+
+## NfLabel
+### TODO
+- make it dragable
+
 
 ## NfTextInputField
 - respect input type (string, double, int, bool ...) when entering text
@@ -189,6 +201,8 @@ public:
 ## NfButton
 ### TODO
 - focus onMouseover (instead of click and release)
+
+
 
 
 ## UI Element Properties
@@ -244,5 +258,5 @@ ofParameter<float> left;
 
 - 0.0.1 f0001-textinput: basic text input
 - 0.0.2 f0002-button: buttons, configuration, statusbar
-- 0.0.3 f0002-boxxer:
+- 0.0.3 f0003-boxxer: a simple box rendering engine
 
