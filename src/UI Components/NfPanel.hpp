@@ -36,11 +36,6 @@ public:
         } else {
             ofSetColor(backgroundColor.get());
         }
-        // decide wheter we need to translate
-        if (_config.isAbsolutePosition) {
-            ofTranslate(bounds.x, bounds.y);
-            translateBounds(boundsMouse, bounds.x, bounds.y);
-        }
         
         // get Dimensions children requires
         this->getDimensions(_config.width, _config.height);

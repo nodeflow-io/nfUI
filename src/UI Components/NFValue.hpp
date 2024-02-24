@@ -62,7 +62,7 @@ public:
     BoolNFValue(bool initialValue) : value(initialValue) {}
     
     std::string toString() const override {
-        return value.get() ? "true" : "false";
+        return value.get() ? "1" : "0";
     }
     
     nfAPI::ValueType getType() const override {

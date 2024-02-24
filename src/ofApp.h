@@ -45,14 +45,14 @@ private:
     NFNode _nfNode;
 
     // define a vector of UI Elements
-    std::vector<nfUI::UIElement*> _uiElements;
+    // std::vector<nfUI::UIElement*> _uiElements;
     
     
-    // Boxxer
-    // Declare root as a member of ofApp
+    // define UI Elements that require event h
     std::shared_ptr<nfUI::NfBoxxer> _boxxer;
+    std::shared_ptr<nfUI::NfBoxxer> _showGrid;
     
-    // define UI Elements
+    
     std::shared_ptr<nfUI::NfButton> myButton;
     
 };

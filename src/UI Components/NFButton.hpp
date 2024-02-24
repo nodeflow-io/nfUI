@@ -26,7 +26,7 @@ public:
     
     void draw() override {
         ofPushMatrix();
-        // NfBoxxer::draw(); // Call base class draw for common drawing code if needed
+        NfBoxxer::draw(); // Call base class draw for common drawing code if needed
         
         if (_firstRender) {
             std::cout << "NfButton: " << _name << std::endl;
@@ -38,10 +38,7 @@ public:
         } else {
             ofSetColor(backgroundColor.get());
         }
-        // decide wheter we need to translate
-        if (_config.isAbsolutePosition) {
-            ofTranslate(bounds.x, bounds.y);
-        }
+
         
         // get Dimensions children requires
         // this->getDimensions(_config.width, _config.height);

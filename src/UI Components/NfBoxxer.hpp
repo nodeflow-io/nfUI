@@ -46,6 +46,13 @@ public:
         if (this->isRoot()) {
             this->boundsMouse=bounds;
         }
+        
+        // decide wheter we need to translate
+        if (_config.isAbsolutePosition) {
+            ofTranslate(bounds.x, bounds.y);
+            translateBounds(boundsMouse, bounds.x, bounds.y);
+        }
+        
         std::cout << "Boxxer: " << _name << " mB: " << boundsMouse.x << " " << boundsMouse.y << std::endl;
         // After the first render, set the flag to false
         if (_firstRender) {

@@ -24,7 +24,7 @@ void ofApp::setup() {
     _guiParams.setStatusBarText2(_nfGUI.getVersionString());
     
     // Set up grid parameters -------------------------------------------------------------------
-    _guiParams.setShowGrid(false);
+    _guiParams.setShowGrid(true);
     _guiParams.setGridSize(20);
     _guiParams.setMajorStep(100);
     _guiParams.setMajorGridColor(ofColor(255, 0, 0, 128)); // Red for major grid lines
@@ -54,17 +54,24 @@ void ofApp::setup() {
     
     config.backgroundColor = ofColor(0,255,0,128);
     config.marginBottom = 5.0f;
+    
+    _showGrid = nfUI::createUIElement<nfUI::NfTextInputField, nfUI::IntNFValue>(
+        config,
+        "Show Grid",
+         _guiParams.getShowGrid()
+    );
+    
     auto value1 = nfUI::createUIElement<nfUI::NfTextInputField, nfUI::IntNFValue>(
         config,
         "GridSize",
-        1000
+        _guiParams.getGridSize()
     );
     
     config.backgroundColor = ofColor(0,0,255,128);
     auto value2 = nfUI::createUIElement<nfUI::NfTextInputField, nfUI::IntNFValue>(
         config,
         "MajorStep",
-        2000
+        _guiParams.getMajorStep()
     );
 
     config.backgroundColor = ofColor(255,255,0,128);
@@ -77,6 +84,7 @@ void ofApp::setup() {
 
     // The rendering tree is specified here
     _boxxer->addChild(label);
+    _boxxer->addChild(_showGrid);
     _boxxer->addChild(value1);
     _boxxer->addChild(value2);
     _boxxer->addChild(myButton);

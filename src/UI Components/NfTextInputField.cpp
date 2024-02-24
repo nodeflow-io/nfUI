@@ -148,12 +148,6 @@ void NfTextInputField::draw() {
     this->setup();
     // this->setBounds(valuePosition);
     ofPushMatrix(); // Save the current drawing context
-    // decide wheter we need to translate
-    if (_config.isAbsolutePosition) {
-        ofTranslate(bounds.x, bounds.y);
-        translateBounds(boundsMouse, bounds.x, bounds.y);
-    }
-    
     NfBoxxer::draw(); // Call base class draw for common drawing code if needed
     
     // Textbox-specific drawing code here
