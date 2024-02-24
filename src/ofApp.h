@@ -1,7 +1,7 @@
 #pragma once
 
 #include "ofMain.h"
-#include "ofxTextInputField.h"
+
 #include "ofxNodeFlowGUI.hpp"
 
 #include "nfUIElement.hpp"
@@ -15,14 +15,13 @@
 class ofApp : public ofBaseApp{
     
 public:
-    void setupNF();
     void setup() override;
     void update() override;
     void draw() override;
     void drawTxt() ;
     void exit() override;
     
-    // your ownn eventhandlers
+    // your ownn eventhandlers - TODO: reimplement
     void onButtonSetParametersClicked(nfUI::UIEventArgs& eventArgs);
     
     void keyPressed(int key) override;

@@ -6,7 +6,6 @@
 //
 
 #include "ofxNodeFlowGUI.hpp"
-#include "UIElement.hpp"
 
 // constructor
 ofxNodeFlowGUI::ofxNodeFlowGUI() {
@@ -16,94 +15,6 @@ ofxNodeFlowGUI::ofxNodeFlowGUI() {
 ofxNodeFlowGUI::~ofxNodeFlowGUI()  {
 }
 
-
-void ofxNodeFlowGUI::update(NFNode& _nfNode, std::vector<nfUI::UIElement*>& _uiElements) {
-    
-}
-
-void ofxNodeFlowGUI::drawPanel(uint32_t x, uint32_t y, uint32_t width, uint32_t height) {
-    // x = x - (width+10); // TODO -> padding
-    // Set color to backgroundcolor000 (filled)
-    ofSetColor(_nfuiConfig.backgroundColor);
-    // Draw a filled rectangle at position (100, 100) with a width of 200 and height of 150
-    ofDrawRectangle(x, y, width, height);
-    // Set color to black (outline)
-    ofSetColor(_nfuiConfig.borderColor);
-    // Draw the same rectangle with no fill to create the outline
-    ofNoFill();
-    ofDrawRectangle(x, y, width, height);
-    ofDrawRectangle(x + width, y, width, height);
-    ofFill(); // Restore fill mode for subsequent drawings
-}
-
-
-void ofxNodeFlowGUI::drawValue(NFNode& _nfNode, std::vector<nfUI::UIElement*>& _uiElements) {
-    // ofBackground(0);
-    ofSetColor(_nfuiConfig.textColor);
-    ofPushStyle();
-    // uint32_t py = 20;
-    // uint32_t x = 10;
-    // uint32_t y = 430;
-    auto pos = ofRectangle(40,40,120,20);
-    uint32_t channelSpacing = _nfuiConfig.height;
-    uint32_t paddingHorizontal = _nfuiConfig.paddingTop;
-
-    // Access and modify NFValues in the order they were added
-    const std::vector<NFValue*>& drawOrder = _nfNode.getDrawOrder();
-    size_t indexCounter = 0;
-    std::string name;
-    std::string value;
-    
-    // iterate over all name / value pairs
-    for (const auto& nfValue : drawOrder) {
-        // ofRectangle initialPosition = pos; // ofRect(400,40,120,20); //_uiElements[indexCounter]->getBounds();
-        ofRectangle labelPosition = pos;
-        ofRectangle valuePosition = pos;
-
-        this->drawPanel(pos.x, pos.y, pos.width, _nfuiConfig.height);
-        ofSetColor(_nfuiConfig.textColor);
-
-        // adjust label position for font rendering
-        // y = py + (indexCounter * channelSpacing);
-        labelPosition.x = pos.x;
-        labelPosition.y = pos.y + 14;
-        valuePosition.x = pos.x + valuePosition.width + 7;
-        valuePosition.y = pos.y;
-
-        // get name and value as strings for display
-        if (typeid(StringNFValue) == typeid(*nfValue)) {
-            StringNFValue* strNFValue = dynamic_cast<StringNFValue*>(nfValue);
-            name = strNFValue->value.getName();
-            value = strNFValue->value.get();
-        } else if (typeid(DoubleNFValue) == typeid(*nfValue)) {
-            DoubleNFValue* doubleNFValue = dynamic_cast<DoubleNFValue*>(nfValue);
-            name = doubleNFValue->value.getName();
-            value = ofToString(doubleNFValue->value.get());
-        } else if (typeid(BoolNFValue) == typeid(*nfValue)) {
-            BoolNFValue* boolNFValue = dynamic_cast<BoolNFValue*>(nfValue);
-            name = boolNFValue->value.getName();
-            value = ofToString(boolNFValue->value.get());
-        } else if (typeid(IntNFValue) == typeid(*nfValue)) {
-            IntNFValue* intNFValue = dynamic_cast<IntNFValue*>(nfValue);
-            name = intNFValue->value.getName();
-            value = ofToString(intNFValue->value.get());
-        }
-
-        // draw input field
-        // glPushMatrix();
-        ofDrawBitmapString(name, labelPosition.x, labelPosition.y);
-        glTranslatef(0, -2, 0);
-        _uiElements[indexCounter]->setup();
-        _uiElements[indexCounter]->setBounds(valuePosition);
-        _uiElements[indexCounter]->draw();
-        // glTranslatef(0, 20, 0);
-        // glPopMatrix();
-        pos.y +=20;
-        indexCounter++;
-    }
-
-    ofPopStyle();
-}
 void ofxNodeFlowGUI::drawStatusBar(const GUIParams& guiParams) {
     if (!guiParams._showStatusBar) return;
     // Draw the status bar rectangle
@@ -114,7 +25,7 @@ void ofxNodeFlowGUI::drawStatusBar(const GUIParams& guiParams) {
     ofSetColor(guiParams._statusBarTextColor);
 
     // Draw "nodeFlowUI vx.x.x"
-    ofDrawBitmapString(guiParams.getStatusBarText1()+" "+guiParams.getStatusBarText2()+"        Nodes: 1    Channels: 5    Connections: 0", 10, (guiParams._statusBarHeight / 2)+4);
+    ofDrawBitmapString(guiParams.getStatusBarText1()+" "+guiParams.getStatusBarText2()+"        Nodes: 1    Channels: 6    Connections: 0", 10, (guiParams._statusBarHeight / 2)+4);
 
     // Draw "FPS: 30"
     std::string fpsText = "FPS: " + ofToString(std::round(ofGetFrameRate()));
@@ -150,8 +61,4 @@ void ofxNodeFlowGUI::drawGrid(const GUIParams& guiParams) {
             ofDrawLine(0, y, ofGetWidth(), y);
         }
     }
-}
-
-void ofxNodeFlowGUI::draw(NFNode& _nfNode, std::vector<nfUI::UIElement*>& _uiElements) {
-    this->drawValue(_nfNode, _uiElements);
 }

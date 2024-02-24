@@ -15,6 +15,13 @@
 
 namespace nfUI {
 
+// TODO: break this out into its own header
+class UIEventArgs : public ofEventArgs {
+    // Add any data members if needed
+public:
+    UIEventArgs() {}  // Default constructor
+};
+
 class NfUIElement : public std::enable_shared_from_this<NfUIElement> {
     
 private:
