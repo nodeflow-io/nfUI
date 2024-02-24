@@ -32,9 +32,9 @@ void ofApp::setup() {
     
     // Setup UI Elements -------------------[ DOM configuration / Elements & Styles ]------------
     nfUI::NfUIConfig config;                                            // Create a config object
-    config.backgroundColor = ofColor::red;                              // Example customization
+    config.backgroundColor = ofColor(35,38,42);                         // Example customization
     config.bounds = ofRectangle(100, 100, 100, 20);                     // Set desired position and size
-    config.isAbsolutePosition = true;
+    config.isAbsolutePosition = true;                                   // coordinates are absolute position
     
     _boxxer = nfUI::createUIElement<nfUI::NfPanel, nfUI::StringNFValue>(
         config,
@@ -44,7 +44,7 @@ void ofApp::setup() {
    
     config.isAbsolutePosition = false;
     
-    config.backgroundColor = ofColor(0,0,0,50);
+    config.backgroundColor = ofColor(56,62,66);
     config.marginBottom = 0.0f;
     auto label = nfUI::createUIElement<nfUI::NfLabel, nfUI::StringNFValue>(
         config,
@@ -52,10 +52,10 @@ void ofApp::setup() {
         "Gui Config"
     );
     
-    config.backgroundColor = ofColor(0,255,0,128);
+    config.backgroundColor = ofColor(30,30,30);
     config.marginBottom = 5.0f;
     
-    _showGrid = nfUI::createUIElement<nfUI::NfTextInputField, nfUI::IntNFValue>(
+    _showGrid = nfUI::createUIElement<nfUI::NfTextInputField, nfUI::BoolNFValue>(
         config,
         "Show Grid",
          _guiParams.getShowGrid()
@@ -67,14 +67,13 @@ void ofApp::setup() {
         _guiParams.getGridSize()
     );
     
-    config.backgroundColor = ofColor(0,0,255,128);
     auto value2 = nfUI::createUIElement<nfUI::NfTextInputField, nfUI::IntNFValue>(
         config,
         "MajorStep",
         _guiParams.getMajorStep()
     );
 
-    config.backgroundColor = ofColor(255,255,0,128);
+    config.backgroundColor = ofColor(46, 80, 117);
     config.marginBottom = 0.0f;
     myButton = nfUI::createUIElement<nfUI::NfButton, nfUI::StringNFValue>(
         config,
