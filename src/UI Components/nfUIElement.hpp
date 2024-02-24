@@ -146,41 +146,33 @@ public:
         float childrenWidth = 0;
         float childrenHeight = 0;
         for (auto& child : this->children) {
-            childrenWidth = child->_config.marginLeft +
-            child->_config.paddingLeft +
-            child->_config.marginRight +
-            child->_config.paddingRight +
-            child->bounds.width - (_config.paddingLeft + _config.paddingRight);
-            
-            childrenHeight += child->_config.marginTop +
-            child->_config.paddingTop +
-            child->_config.marginTop +
-            child->_config.paddingBottom +
-            child->_config.marginBottom +
-            child->bounds.height - (_config.paddingTop + _config.paddingBottom);
+            float childHeight;
+            this->getChildDimensions(child, childrenWidth, childHeight);
+            childrenHeight += childHeight;
         }
         width = childrenWidth + this->_config.paddingLeft + this->_config.paddingRight;
         height = childrenHeight + this->_config.paddingTop + this->_config.paddingBottom;
     }
     
     void getChildDimensions(const std::shared_ptr<NfUIElement>& child, float& width, float& height) {
-        float childrenWidth = 0;
-        float childrenHeight = 0;
-        childrenWidth = child->_config.marginLeft +
+        float childWidth = 0;
+        float childHeight = 0;
+        // TODO: add content width and min, max
+        childWidth = child->_config.marginLeft +
         child->_config.paddingLeft +
         child->_config.marginRight +
         child->_config.paddingRight +
         child->bounds.width - (_config.paddingLeft + _config.paddingRight);
         
-        childrenHeight += child->_config.marginTop +
+        childHeight += child->_config.marginTop +
         child->_config.paddingTop +
         child->_config.marginTop +
         child->_config.paddingBottom +
         child->_config.marginBottom +
         child->bounds.height - (_config.paddingTop + _config.paddingBottom);
         
-        width = childrenWidth;// + this->_config.paddingLeft + this->_config.paddingRight;
-        height = childrenHeight; // + this->_config.paddingTop + this->_config.paddingBottom;
+        width = childWidth;// + this->_config.paddingLeft + this->_config.paddingRight;
+        height = childHeight; // + this->_config.paddingTop + this->_config.paddingBottom;
         
         /*
         std::cout << child->_config.marginTop << " " <<

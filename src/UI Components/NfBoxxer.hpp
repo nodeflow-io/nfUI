@@ -51,12 +51,14 @@ public:
         if (_config.isAbsolutePosition) {
             ofTranslate(bounds.x, bounds.y);
             translateBounds(boundsMouse, bounds.x, bounds.y);
+            std::cout << "Boxxer: " << _name << " absolute position: " << bounds.x << "," << bounds.y << std::endl;
         }
         
-        // decide wheter we need to translate to an absolute position
+        // decide wheter we need to translate the margins
         if (_config.marginTop || _config.marginLeft) {
             ofTranslate(_config.marginLeft, _config.marginTop);
             translateBounds(boundsMouse, _config.marginLeft, _config.marginTop);
+            std::cout << "Boxxer: " << _name << " margin: " << _config.marginLeft << "," << _config.marginTop << std::endl;
         }
         
         // TODO: remove this

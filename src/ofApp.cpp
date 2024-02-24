@@ -48,10 +48,10 @@ void ofApp::setup() {
    
     config.isAbsolutePosition = false;                                  // relative positionin from now on
     config.backgroundColor = ofColor(56,62,66);                         // background color of label
-    config.marginTop = 5;
-    config.marginRight = 10;
-    config.marginBottom = 5;
-    config.marginLeft = 10;
+    config.marginTop = 0;
+    config.marginRight = 0;
+    config.marginBottom = 0;
+    config.marginLeft = 0;
     config.paddingTop = 5;
     config.paddingRight = 10;
     config.paddingBottom = 5;
@@ -63,7 +63,14 @@ void ofApp::setup() {
     );
     
     config.backgroundColor = ofColor(30,30,30);
-    config.marginBottom = 5.0f;
+    config.marginTop = 10;
+    config.marginRight = 10;
+    config.marginBottom = 10;
+    config.marginLeft = 10;
+    config.paddingTop = 5;
+    config.paddingRight = 10;
+    config.paddingBottom = 5;
+    config.paddingLeft = 10;
     config.maxTextLength = 1;
     _showGrid = nfUI::createUIElement<nfUI::NfTextInputField, nfUI::BoolNFValue>(
         config,
@@ -92,7 +99,8 @@ void ofApp::setup() {
         "Set Params"
     );
 
-    // The rendering tree is specified here
+    // The UI rendering tree is specified here
+    // boxer is our root element here (which is a Pannel)
     _boxxer->addChild(label);
     _boxxer->addChild(_showGrid);
     _boxxer->addChild(value1);
