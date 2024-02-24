@@ -18,8 +18,8 @@ void ofApp::setup() {
     // Set up status bar parameters -------------------------------------------------------------
     _guiParams.setShowStatusBar(true);
     _guiParams.setStatusBarHeight(20);
-    _guiParams.setStatusBarColor(ofColor(100, 100, 100, 255));
-    _guiParams.setStatusBarTextColor(ofColor(255, 255, 0, 255));
+    _guiParams.setStatusBarColor(ofColor(35,38,42));
+    _guiParams.setStatusBarTextColor(ofColor(41, 225, 255, 255));
     _guiParams.setStatusBarText1("nodeFlowUI");
     _guiParams.setStatusBarText2(_nfGUI.getVersionString());
     
@@ -31,10 +31,8 @@ void ofApp::setup() {
     _guiParams.setMinorGridColor(ofColor(255, 0, 0, 50));  // Red dark for minor grid lines
     
     // Setup UI Elements -------------------[ DOM configuration / Elements & Styles ]------------
-    
-    
     nfUI::NfUIConfig config;                                            // Create a config object
-    float width = 200;
+    float width = 220;
     float margin = 10;
     config.backgroundColor = ofColor(35,38,42);                         // background color of pannel
     config.bounds = ofRectangle(100, 100, width, 20);                   // Set desired position and size
@@ -65,6 +63,7 @@ void ofApp::setup() {
     config.setMargin(8, 10, 0, 8);
     config.setPadding(5, 10, 5, 10);
     config.maxTextLength = 1;
+    config.showLabel = true;
     _showGrid = nfUI::createUIElement<nfUI::NfTextInputField, nfUI::BoolNFValue>(
         config,
         "Show Grid",
@@ -85,6 +84,7 @@ void ofApp::setup() {
         _guiParams.getMajorStep()
     );
     
+    config.maxTextLength = 255;
     auto _project = nfUI::createUIElement<nfUI::NfTextInputField, nfUI::StringNFValue>(
         config,
         "Project",
@@ -106,10 +106,11 @@ void ofApp::setup() {
 
     config.backgroundColor = ofColor(46, 80, 117);
     config.textIsPassword = true;
+    config.marginBottom = 8;  // TODO: this should not be necessary
     myButton = nfUI::createUIElement<nfUI::NfButton, nfUI::StringNFValue>(
         config,
         "Button",
-        "Set Parameters"
+        "Set GUI-Parameters"
     );
 
     // The UI rendering tree is specified here
@@ -122,8 +123,6 @@ void ofApp::setup() {
     _boxxer->addChild(_version);
     _boxxer->addChild(_password);
     _boxxer->addChild(myButton);
-    
-
 }
 
 void ofApp::setupNF() {

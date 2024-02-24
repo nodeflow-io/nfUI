@@ -2,8 +2,8 @@
 //  NfTextInputField.hpp
 //  nodeflowUI
 //
-//  Created by Matthias Strohmaier on 22.02.24 using ofxTextInputFiel as a base
-//  Created by Elliot Woods on 09/12/2011.
+//  modified by Matthias Strohmaier on 22.02.24 using ofxTextInputField as a base
+//  ofxTextInputField was created by Elliot Woods on 09/12/2011.
 //  Copyright 2011 Kimchi and Chips.
 //
 //  modified by James George 12/2/2011

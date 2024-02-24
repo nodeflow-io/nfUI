@@ -167,14 +167,29 @@ void NfTextInputField::draw() {
         }
         _firstRender=false;
     }
-    // For example, draw the textbox area
-    ofSetColor(backgroundColor.get());
-    ofDrawRectangle(0,0, bounds.width, bounds.height); // Assuming bounds is accessible
     
-    // Draw the text inside the textbox
+    
+    
+    float textfieldWith = bounds.width;
+    // Draw the label text
     ofSetColor(textColor.get());
-
-        this->drawText();
+    // ofDrawBitmapString(_name, _config.paddingLeft, _config.paddingTop + fontRef->getLineHeight());
+    if (_config.showLabel) {
+        fontRef->drawString(_name, 0, _config.paddingTop + fontRef->getLineHeight());
+        textfieldWith /= 2;
+    }
+    
+    // draw the background text pannel
+    if (_config.showLabel) {
+        ofTranslate(textfieldWith, 0);
+        translateBounds(boundsMouse, textfieldWith, 0);
+    }
+    ofSetColor(backgroundColor.get());
+    ofDrawRectangle(0,0, textfieldWith, bounds.height);
+    
+    ofSetColor(textColor.get());
+    // Draw the text inside the textbox
+    this->drawText();
 
     ofPopMatrix(); // Restore the drawing context
 }
@@ -262,8 +277,7 @@ void NfTextInputField::drawText() {
                    cursorPos, cursorBottom);
         ofPopStyle();
     }
-    // TODO: move to draw text
-    
+
     if (parameters.getBool("textIsPassword")) {
         // Generate a string of asterisks "*" with the same length as `text`
         std::string password(text.size(), '*');
@@ -272,7 +286,7 @@ void NfTextInputField::drawText() {
         // Draw the actual text
         
         // vertical was fontRef->getLineHeight() + VERTICAL_PADDING
-        fontRef->drawString(text, horizontalTextOffset, _config.paddingTop + fontRef->getLineHeight());
+        fontRef->drawString(text, _config.paddingLeft, _config.paddingTop + fontRef->getLineHeight());
     }
     
 }
