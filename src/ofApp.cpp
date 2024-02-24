@@ -57,7 +57,7 @@ void ofApp::setup() {
     auto label = nfUI::createUIElement<nfUI::NfLabel, nfUI::StringNFValue>(
         config,
         "Label",
-        "GUI Config"
+        "GUI CONFIGURATION"
     );
     
     config.backgroundColor = ofColor(30,30,30);
@@ -97,6 +97,7 @@ void ofApp::setup() {
         "v0.0.3"
     );
     
+    config.textIsPassword = true;
     auto _password = nfUI::createUIElement<nfUI::NfTextInputField, nfUI::StringNFValue>(
         config,
         "Password",
@@ -104,7 +105,8 @@ void ofApp::setup() {
     );
 
     config.backgroundColor = ofColor(46, 80, 117);
-    config.marginBottom = 0.0f;
+    config.marginBottom = 8;
+    config.textIsPassword = true;
     myButton = nfUI::createUIElement<nfUI::NfButton, nfUI::StringNFValue>(
         config,
         "Button",
