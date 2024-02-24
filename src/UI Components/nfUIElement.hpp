@@ -112,6 +112,15 @@ public:
         parameters.add(textIsPassword);
         // parameters.add(bounds);
     }
+    
+    // This method returns true if parent is expired, which indicates that
+    // there is no parent, making this element the root of the tree.
+     // It returns false if parent is not expired, meaning this element
+    // has a parent and therefore is not the root.
+    bool isRoot() const {
+        return parent.expired();
+    }
+    
     // Function to add a child element
     void addChild(const std::shared_ptr<NfUIElement>& child) {
         children.push_back(child);
@@ -183,9 +192,9 @@ public:
         
     }
     
-    void translateBounds(ofRectangle& bounds, float x, float y) {
-        bounds.x += x;
-        bounds.y += y;
+    void translateBounds(ofRectangle& boundsref, float x, float y) {
+        boundsref.x += x;
+        boundsref.y += y;
     }
     
 };

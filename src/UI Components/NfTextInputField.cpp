@@ -154,7 +154,7 @@ void NfTextInputField::draw() {
         translateBounds(boundsMouse, bounds.x, bounds.y);
     }
     
-    // NfBoxxer::draw(); // Call base class draw for common drawing code if needed
+    NfBoxxer::draw(); // Call base class draw for common drawing code if needed
     
     // Textbox-specific drawing code here
     if (_firstRender) {
@@ -270,7 +270,7 @@ void NfTextInputField::drawText() {
         // vertical was fontRef->getLineHeight() + VERTICAL_PADDING
         fontRef->drawString(text, horizontalTextOffset, _config.paddingTop + fontRef->getLineHeight());
     }
-    std::cout << bounds.x << " " << bounds.y << std::endl;
+    std::cout << boundsMouse.x << " " << boundsMouse.y << std::endl;
 }
 
 void NfTextInputField::getCursorCoords(int pos, int &cursorX, int &cursorY) {

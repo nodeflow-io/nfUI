@@ -24,7 +24,7 @@ public:
     
     void draw() override {
         ofPushMatrix();
-        // NfBoxxer::draw(); // Call base class draw for common drawing code if needed
+        NfBoxxer::draw(); // Call base class draw for common drawing
         
         if (_firstRender) {
             std::cout << "NfPanel: " << _name << std::endl;

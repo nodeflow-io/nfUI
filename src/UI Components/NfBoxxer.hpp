@@ -41,34 +41,10 @@ public:
                 std::cout << "Boxxer: No value available." << std::endl;
             }
         }
-        ofSetColor(_config.backgroundColor);
-        ofDrawRectangle(_config.bounds); // Draw the current element
-
-        float verticalOffset = _config.marginTop; // Start with the top padding as the initial offset
-
-        // Use the parent's position as the starting point
-        float parentY = _config.bounds.y + _config.marginTop;
-
-        for (auto& child : children) {
-            // No need to modify child->_config.bounds directly
-            
-            ofPushMatrix(); // Save the current drawing context
-            if (_firstRender) std::cout << "pushM\n";
-            // Translate the drawing context down by the vertical offset for each child
-            // ofTranslate(0, verticalOffset);
-            // Perform logging only on the first render of each element
-            if (_firstRender) {
-                std::cout << "  child render of " << child->parameters.getName() << " at vertical offset: " << verticalOffset << std::endl;
-            }
-            // Draw the child at the newly translated position
-            child->draw();
-
-            // Update the verticalOffset for the next child
-            // Include the child's height, its bottom margin, and padding
-            verticalOffset += child->_config.height + child->_config.marginBottom + _config.paddingBottom;
-
-            ofPopMatrix(); // Restore the drawing context
-            if (_firstRender) std::cout << "popM\n";
+        // this is used for keeping track of the bounds for mouse interactions
+        // we only do this if our element is the parent element
+        if (this->isRoot()) {
+            this->boundsMouse=bounds;
         }
         // After the first render, set the flag to false
         if (_firstRender) {
@@ -80,6 +56,7 @@ public:
     void drawChildren (const float& paddingLeft, const float& paddingRight) {
         ofPushMatrix();
         ofTranslate(paddingLeft, paddingRight);
+        translateBounds(boundsMouse, paddingLeft, paddingRight);
         for (size_t i = 0; i < children.size(); ++i) {
             auto& child = children[i];
             if (i) {
@@ -87,6 +64,7 @@ public:
                 float width, height;
                 this->getChildDimensions(lastChild, width, height);
                 ofTranslate(0, height);
+                translateBounds(boundsMouse, 0, height);
             }
             child->draw();
         }
