@@ -54,7 +54,7 @@ void ofApp::setup() {
     config.setMargin(0);
     config.setPadding(10);
     config.contentHeight = 5;
-    auto label = nfUI::createUIElement<nfUI::NfLabel, nfUI::StringNFValue>(
+    auto _label = nfUI::createUIElement<nfUI::NfLabel, nfUI::StringNFValue>(
         config,
         "Label",
         "GUI CONFIGURATION"
@@ -73,13 +73,13 @@ void ofApp::setup() {
     
 
     config.maxTextLength = 4;
-    auto value1 = nfUI::createUIElement<nfUI::NfTextInputField, nfUI::IntNFValue>(
+    auto _gridSize = nfUI::createUIElement<nfUI::NfTextInputField, nfUI::IntNFValue>(
         config,
         "GridSize",
         _guiParams.getGridSize()
     );
     
-    auto value2 = nfUI::createUIElement<nfUI::NfTextInputField, nfUI::IntNFValue>(
+    auto _majorStep = nfUI::createUIElement<nfUI::NfTextInputField, nfUI::IntNFValue>(
         config,
         "MajorStep",
         _guiParams.getMajorStep()
@@ -105,7 +105,6 @@ void ofApp::setup() {
     );
 
     config.backgroundColor = ofColor(46, 80, 117);
-    config.marginBottom = 8;
     config.textIsPassword = true;
     myButton = nfUI::createUIElement<nfUI::NfButton, nfUI::StringNFValue>(
         config,
@@ -115,10 +114,10 @@ void ofApp::setup() {
 
     // The UI rendering tree is specified here
     // boxer is our root element here (which is a Pannel)
-    _boxxer->addChild(label);
+    _boxxer->addChild(_label);
     _boxxer->addChild(_showGrid);
-    _boxxer->addChild(value1);
-    _boxxer->addChild(value2);
+    _boxxer->addChild(_gridSize);
+    _boxxer->addChild(_majorStep);
     _boxxer->addChild(_project);
     _boxxer->addChild(_version);
     _boxxer->addChild(_password);

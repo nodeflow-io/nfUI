@@ -42,6 +42,7 @@ struct NfUIConfig {
     bool textIsPassword;
     bool isAbsolutePosition;
     bool isDebug;
+    bool showLabel;
     
     NfUIConfig() {
         // Set default values for the config
@@ -71,6 +72,7 @@ struct NfUIConfig {
         textIsPassword = false;
         isAbsolutePosition = false;
         isDebug = false;
+        showLabel = false;
     }
     
     void setMargin(float top, float right, float bottom, float left) {
