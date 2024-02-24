@@ -32,24 +32,34 @@ void ofApp::setup() {
     
     // Setup UI Elements -------------------[ DOM configuration / Elements & Styles ]------------
     nfUI::NfUIConfig config;                                            // Create a config object
-    config.backgroundColor = ofColor(35,38,42);                         // Example customization
+    config.backgroundColor = ofColor(35,38,42);                         // background color of pannel
     config.bounds = ofRectangle(100, 100, 100, 20);                     // Set desired position and size
     config.isAbsolutePosition = true;                                   // coordinates are absolute position
     
+    config.paddingTop = 0;
+    config.paddingRight = 0;
+    config.paddingBottom = 0;
+    config.paddingLeft = 0;
     _boxxer = nfUI::createUIElement<nfUI::NfPanel, nfUI::StringNFValue>(
         config,
-        "Panel1",
+        "Pannel",
         "UI Parameters"
     );
    
-    config.isAbsolutePosition = false;
-    
-    config.backgroundColor = ofColor(56,62,66);
-    config.marginBottom = 0.0f;
+    config.isAbsolutePosition = false;                                  // relative positionin from now on
+    config.backgroundColor = ofColor(56,62,66);                         // background color of label
+    config.marginTop = 5;
+    config.marginRight = 10;
+    config.marginBottom = 5;
+    config.marginLeft = 10;
+    config.paddingTop = 5;
+    config.paddingRight = 10;
+    config.paddingBottom = 5;
+    config.paddingLeft = 10;
     auto label = nfUI::createUIElement<nfUI::NfLabel, nfUI::StringNFValue>(
         config,
         "Label",
-        "Gui Config"
+        "GUI Config"
     );
     
     config.backgroundColor = ofColor(30,30,30);

@@ -39,20 +39,14 @@ public:
     
     // ofxTextInputField monoLineTextInput, multilineTextInput;
 private:
-    ofTrueTypeFont _font;
+    // ofTrueTypeFont _font;
     ofxNodeFlowGUI _nfGUI;
     GUIParams _guiParams;
-    NFNode _nfNode;
+    // NFNode _nfNode;
 
-    // define a vector of UI Elements
-    // std::vector<nfUI::UIElement*> _uiElements;
-    
-    
-    // define UI Elements that require event h
+    // define UI Elements that require global event handling
     std::shared_ptr<nfUI::NfBoxxer> _boxxer;
     std::shared_ptr<nfUI::NfBoxxer> _showGrid;
-    
-    
     std::shared_ptr<nfUI::NfButton> myButton;
     
 };
