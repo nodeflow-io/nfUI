@@ -59,7 +59,7 @@ public:
         }
         
         // call drawChildren with the current paddings
-        drawChildren(_config.paddingLeft, _config.paddingTop);
+        // drawChildren(_config.paddingLeft, _config.paddingTop);
         
         ofPopMatrix(); // Restore the drawing context
     }

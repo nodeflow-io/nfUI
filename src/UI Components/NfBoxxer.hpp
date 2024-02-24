@@ -47,12 +47,19 @@ public:
             this->boundsMouse=bounds;
         }
         
-        // decide wheter we need to translate
+        // decide wheter we need to translate to an absolute position
         if (_config.isAbsolutePosition) {
             ofTranslate(bounds.x, bounds.y);
             translateBounds(boundsMouse, bounds.x, bounds.y);
         }
         
+        // decide wheter we need to translate to an absolute position
+        if (_config.marginTop || _config.marginLeft) {
+            ofTranslate(_config.marginLeft, _config.marginTop);
+            translateBounds(boundsMouse, _config.marginLeft, _config.marginTop);
+        }
+        
+        // TODO: remove this
         std::cout << "Boxxer: " << _name << " mB: " << boundsMouse.x << " " << boundsMouse.y << std::endl;
         // After the first render, set the flag to false
         if (_firstRender) {

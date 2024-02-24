@@ -22,6 +22,7 @@ public:
     void drawTxt() ;
     void exit() override;
     
+    // your ownn eventhandlers
     void onButtonSetParametersClicked(nfUI::UIEventArgs& eventArgs);
     
     void keyPressed(int key) override;
@@ -37,12 +38,9 @@ public:
     void dragEvent(ofDragInfo dragInfo) override;
     void gotMessage(ofMessage msg) override;
     
-    // ofxTextInputField monoLineTextInput, multilineTextInput;
 private:
-    // ofTrueTypeFont _font;
     ofxNodeFlowGUI _nfGUI;
     GUIParams _guiParams;
-    // NFNode _nfNode;
 
     // define UI Elements that require global event handling
     std::shared_ptr<nfUI::NfBoxxer> _boxxer;
