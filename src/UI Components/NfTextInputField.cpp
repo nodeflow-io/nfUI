@@ -328,7 +328,7 @@ void NfTextInputField::getCursorCoords(int pos, int &cursorX, int &cursorY) {
 int NfTextInputField::getCursorPositionFromMouse(int x, int y) {
     int cursorX = 0;
     int cursorY = 0;
-    float pos = y - bounds.y - VERTICAL_PADDING;
+    float pos = y - boundsMouse.y - VERTICAL_PADDING;
     pos /= fontRef->getLineHeight();
     int line = pos;
     cursorY = line;
@@ -336,7 +336,7 @@ int NfTextInputField::getCursorPositionFromMouse(int x, int y) {
     vector<string> lines = ofSplitString(text, "\n");
     if(cursorY>=lines.size()-1) cursorY = lines.size()-1;
     if(lines.size()>0) {
-        cursorX = fontRef->getPosition(lines[cursorY], x - HORIZONTAL_PADDING - bounds.x);
+        cursorX = fontRef->getPosition(lines[cursorY], x - HORIZONTAL_PADDING - boundsMouse.x);
     }
     int c = 0;
     for(int i = 0; i < cursorY; i++) {

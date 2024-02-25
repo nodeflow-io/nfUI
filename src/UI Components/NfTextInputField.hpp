@@ -104,8 +104,8 @@ public:
     //can be set manually or otherwise is controlled by enable/disable
     bool drawCursor;
     
-    // ofRectangle bounds;
-    ofRectangle position;
+
+    // ofRectangle position;
     
     void draw() override;
     void drawText();
