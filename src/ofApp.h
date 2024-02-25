@@ -43,7 +43,12 @@ private:
 
     // define UI Elements that require global event handling
     std::shared_ptr<nfUI::NfBoxxer> _boxxer;
-    std::shared_ptr<nfUI::NfBoxxer> _showGrid;
+    std::shared_ptr<nfUI::NfTextInputField> _showGrid;
+    std::shared_ptr<nfUI::NfTextInputField> _gridSize;
+    std::shared_ptr<nfUI::NfTextInputField> _majorStep;
+    std::shared_ptr<nfUI::NfTextInputField> _project;
+    std::shared_ptr<nfUI::NfTextInputField> _version;
+    std::shared_ptr<nfUI::NfTextInputField> _password;
     std::shared_ptr<nfUI::NfButton> myButton;
     
 };

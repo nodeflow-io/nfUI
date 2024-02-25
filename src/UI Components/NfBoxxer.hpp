@@ -90,7 +90,7 @@ public:
         float accumulatedHeight;
         for (size_t i = 0; i < children.size(); ++i) {
             auto& child = children[i];
-            auto& childsParent = children[i]->parent;
+            // auto& childsParent = children[i]->parent;
             if (i) {
                 auto& lastChild = children[i-1];
                 float width, height;

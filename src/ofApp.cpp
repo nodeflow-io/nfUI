@@ -41,7 +41,7 @@ void ofApp::setup() {
     config.setPadding(0);                                               // sets Top, Right, Bottom and Left
     config.contentHeight = 5;                                           // -1 sets to auto (children content height)
     config.contentWidth = width-2*margin;                               // width
-    config.isDebug = true;
+    config.isDebug = false;                                             // wether to log debug infos to the console
     _boxxer = nfUI::createUIElement<nfUI::NfPanel, nfUI::StringNFValue>(
         config,
         "Pannel",
@@ -74,38 +74,39 @@ void ofApp::setup() {
     
 
     config.maxTextLength = 4;
-    auto _gridSize = nfUI::createUIElement<nfUI::NfTextInputField, nfUI::IntNFValue>(
+    _gridSize = nfUI::createUIElement<nfUI::NfTextInputField, nfUI::IntNFValue>(
         config,
         "GridSize",
         _guiParams.getGridSize()
     );
     
-    auto _majorStep = nfUI::createUIElement<nfUI::NfTextInputField, nfUI::IntNFValue>(
+    _majorStep = nfUI::createUIElement<nfUI::NfTextInputField, nfUI::IntNFValue>(
         config,
         "MajorStep",
         _guiParams.getMajorStep()
     );
     
     config.maxTextLength = 255;
-    auto _project = nfUI::createUIElement<nfUI::NfTextInputField, nfUI::StringNFValue>(
+    _project = nfUI::createUIElement<nfUI::NfTextInputField, nfUI::StringNFValue>(
         config,
         "Project",
         "nodeFlowUI"
     );
     
-    auto _version = nfUI::createUIElement<nfUI::NfTextInputField, nfUI::StringNFValue>(
+    _version = nfUI::createUIElement<nfUI::NfTextInputField, nfUI::StringNFValue>(
         config,
         "Version",
         "v0.0.3"
     );
     
     config.textIsPassword = true;
-    auto _password = nfUI::createUIElement<nfUI::NfTextInputField, nfUI::StringNFValue>(
+    _password = nfUI::createUIElement<nfUI::NfTextInputField, nfUI::StringNFValue>(
         config,
         "Password",
         "nodeFlow"
     );
-
+    
+    
     config.backgroundColor = ofColor(46, 80, 117);
     config.textIsPassword = true;
     config.marginBottom = 8;  // TODO: this should not be necessary
@@ -114,7 +115,8 @@ void ofApp::setup() {
         "Button",
         "Set GUI-Parameters"
     );
-
+    
+    ofAddListener(myButton->clicked, this, &ofApp::onButtonSetParametersClicked);
     // The UI rendering tree is specified here
     // boxer is our root element here (which is a Pannel)
     _boxxer->addChild(_label);
@@ -137,28 +139,14 @@ void ofApp::update(){
 void ofApp::draw(){
     ofBackground(0);
     ofSetColor(255);
-    // draw the background grid
-    /*
-    _nfGUI.drawGrid(this->_guiParams);
-    // draw status bar
-    _nfGUI.drawStatusBar(this->_guiParams);
-    // draw UI elements
-    _nfGUI.draw(this->_nfNode, this->_uiElements);
-    ofSetColor(0);
-     */
-    // Assume we want to draw the root Boxxer at position (100,100)
     ofPushMatrix(); // Save the current transformation matrix
-    // ofTranslate(100, 100); // Move the coordinate system to the desired position
-    // draw the background grid
     _nfGUI.drawGrid(this->_guiParams);
     // draw status bar
     _nfGUI.drawStatusBar(this->_guiParams);
     // draw UI elements
-     
     if (_boxxer) {
         _boxxer->draw(); // This starts the recursive drawing process
     }
-
     ofPopMatrix(); // Restore the transformation matrix
 }
 
@@ -196,15 +184,15 @@ void ofApp::onButtonSetParametersClicked(nfUI::UIEventArgs& eventArgs) {
     // Handle the UI element click event here
     std::cout << "onButtonSetParametersClicked\n";
     // update our GUI parameters from the UI Elements
-    /*
-    _guiParams.setShowGrid(nfAPI::toBool(tif1->text));
-    _guiParams.setGridSize(nfAPI::toInt(tif2->text));
-    _guiParams.setMajorStep(nfAPI::toInt(tif3->text));
-    _guiParams.setStatusBarText1(tif4->text);
-    _guiParams.setStatusBarText2(tif5->text);
-    // TODO: Status text
-    _guiParams.setScalingFactor(nfAPI::toDouble(tif7->text));
-     */
+
+    _guiParams.setShowGrid(nfAPI::toBool(_showGrid->text));
+    _guiParams.setGridSize(nfAPI::toInt(_gridSize->text));
+    _guiParams.setMajorStep(nfAPI::toInt(_majorStep->text));
+    _guiParams.setStatusBarText1(_project->text);
+    _guiParams.setStatusBarText2(_version->text);
+
+    // _guiParams.setScalingFactor(nfAPI::toDouble(tif7->text));
+
 }
 
 //--------------------------------------------------------------

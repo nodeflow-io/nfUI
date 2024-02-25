@@ -15,20 +15,25 @@ namespace nfUI {
 
 class NfButton : public NfBoxxer {
     
-private:
+protected:
     bool _firstRender = true; // Flag to track if draw() was called for the first time
     uint32_t verticalTextOffset; // font size dependant
     uint32_t horizontalTextOffset;
+    bool mouseDownInRect;
     
 public:
     // Inherit NfBoxxer constructor
     using NfBoxxer::NfBoxxer;
+    
+    // Event declaration
+    ofEvent<UIEventArgs> clicked;
     
     void draw() override {
         ofPushMatrix();
         NfBoxxer::draw(); // Call base class draw for common drawing code if needed
         
         if (_firstRender) {
+            ofRegisterMouseEvents(this);
             if (_config.isDebug) {
                 std::cout << "NfButton: " << _name << std::endl;
             }
@@ -65,6 +70,39 @@ public:
         // drawChildren(_config.paddingLeft, _config.paddingTop);
         
         ofPopMatrix(); // Restore the drawing context
+    }
+    
+    void mouseDragged(ofMouseEventArgs& args) {
+    }
+    
+    void mousePressed(ofMouseEventArgs& args) {
+        // Handle mouse pressed event for the button, if needed
+        mouseDownInRect = boundsMouse.inside(args.x, args.y);
+        if(mouseDownInRect) {
+            parameters.getBool("IsFocused") = true; // Set to true
+        }
+    }
+    
+    void mouseMoved(ofMouseEventArgs& args) {
+    }
+    
+    void mouseScrolled(ofMouseEventArgs& args) {
+    }
+    
+    void mouseEntered(ofMouseEventArgs& args) {
+    }
+    
+    void mouseExited(ofMouseEventArgs& args) {
+    }
+
+    void mouseReleased(ofMouseEventArgs& args) {
+        // Handle mouse released event for the button, if needed
+        mouseDownInRect = boundsMouse.inside(args.x, args.y);
+        if (mouseDownInRect) {
+            UIEventArgs eventArgs;
+            ofNotifyEvent(clicked, eventArgs, this);
+            parameters.getBool("IsFocused") = false; // Set to true
+        }
     }
 };
 
