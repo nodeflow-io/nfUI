@@ -81,10 +81,10 @@ public:
     }
 
     
-    void drawChildren (const float& paddingLeft, const float& paddingRight) {
+    void drawChildren (const float& paddingLeft, const float& paddingTop) {
         ofPushMatrix();
-        ofTranslate(paddingLeft, paddingRight);
-        translateBounds(boundsMouse, paddingLeft, paddingRight, _name);
+        ofTranslate(paddingLeft, paddingTop);
+        translateBounds(boundsMouse, paddingLeft, paddingTop, _name);
         for (size_t i = 0; i < children.size(); ++i) {
             auto& child = children[i];
             if (i) {

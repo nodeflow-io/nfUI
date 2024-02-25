@@ -202,7 +202,7 @@ public:
         boundsref.x += deltaX;
         boundsref.y += deltaY;
         if (_config.isDebug) {
-            std::cout << "translateBounds (" << name << "): New boundsMouse = (" << boundsref.x << ", " << boundsref.y << ")" << std::endl;
+            std::cout << "translateBounds (" << name << "->" << deltaX << "," << deltaY << "): New boundsMouse = (" << boundsref.x << ", " << boundsref.y << ")" << std::endl;
         }
     }
     
