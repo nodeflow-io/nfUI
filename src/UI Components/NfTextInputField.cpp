@@ -439,6 +439,7 @@ void NfTextInputField::keyPressed(ofKeyEventArgs& args) {
         case OF_KEY_DOWN:
         case OF_KEY_LEFT:
         case OF_KEY_RIGHT:
+        case 3686:                      // OS X cmd-key
             isControlKey = true;
             break;
         // Add more cases for other control keys if needed
