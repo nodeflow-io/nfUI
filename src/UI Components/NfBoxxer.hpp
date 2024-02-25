@@ -44,9 +44,13 @@ public:
             }
         }
         // this is used for keeping track of the bounds for mouse interactions
-        // we only do this if our element is the parent element
+        // If we are drawing the root element we reset it for all children too
         if (this->isRoot()) {
             this->boundsMouse=bounds;
+            for (size_t i = 0; i < children.size(); ++i) {
+                auto& child = children[i];
+                child->boundsMouse=child->bounds;
+            }
         }
         
         // decide wheter we need to translate to an absolute position

@@ -196,11 +196,14 @@ void NfTextInputField::draw() {
 
 void NfTextInputField::drawText() {
     
-    // visual debugging of hot area
+    // visual debugging of hot area for the mouse
     ofPushStyle();
     ofSetHexColor(0x6988db);
     ofFill();
     ofDrawRectangle(boundsMouse);
+    ofSetColor(ofColor(0,255,255));
+    std::string position = ofToString(boundsMouse.x) +","+ ofToString(boundsMouse.y);
+    fontRef->drawString(position, _config.paddingLeft, _config.paddingTop + fontRef->getLineHeight());
     ofPopStyle();
     
     if(selecting) {
