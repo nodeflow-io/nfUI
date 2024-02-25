@@ -82,17 +82,23 @@ public:
 
     
     void drawChildren (const float& paddingLeft, const float& paddingTop) {
+        std::string name;
         ofPushMatrix();
         ofTranslate(paddingLeft, paddingTop);
+        name = "padding: "+_name;
         translateBounds(boundsMouse, paddingLeft, paddingTop, _name);
+        float accumulatedHeight;
         for (size_t i = 0; i < children.size(); ++i) {
             auto& child = children[i];
+            auto& childsParent = children[i]->parent;
             if (i) {
                 auto& lastChild = children[i-1];
                 float width, height;
                 this->getChildDimensions(lastChild, width, height);
                 ofTranslate(0, height);
-                translateBounds(child->boundsMouse, 0, height, child->_name);
+                name = "cd: "+child->_name;
+                accumulatedHeight+=height;
+                translateBounds(child->boundsMouse, 0, accumulatedHeight, name);
             }
             child->draw();
         }

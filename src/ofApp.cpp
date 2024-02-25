@@ -37,6 +37,7 @@ void ofApp::setup() {
     config.backgroundColor = ofColor(35,38,42);                         // background color of pannel
     config.bounds = ofRectangle(100, 100, width, 20);                   // Set desired position and size
     config.isAbsolutePosition = true;                                   // coordinates are absolute position
+    config.setMargin(0);                                               // sets Top, Right, Bottom and Left
     config.setPadding(0);                                               // sets Top, Right, Bottom and Left
     config.contentHeight = 5;                                           // -1 sets to auto (children content height)
     config.contentWidth = width-2*margin;                               // width
