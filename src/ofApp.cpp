@@ -40,6 +40,7 @@ void ofApp::setup() {
     config.setPadding(0);                                               // sets Top, Right, Bottom and Left
     config.contentHeight = 5;                                           // -1 sets to auto (children content height)
     config.contentWidth = width-2*margin;                               // width
+    config.isDebug = true;
     _boxxer = nfUI::createUIElement<nfUI::NfPanel, nfUI::StringNFValue>(
         config,
         "Pannel",

@@ -56,7 +56,7 @@ public:
         // decide wheter we need to translate to an absolute position
         if (_config.isAbsolutePosition) {
             ofTranslate(bounds.x, bounds.y);
-            translateBounds(boundsMouse, bounds.x, bounds.y);
+            translateBounds(boundsMouse, bounds.x, bounds.y, _name);
             if (_config.isDebug) {
                 std::cout << "Boxxer: " << _name << " absolute position: " << bounds.x << "," << bounds.y << std::endl;
             }
@@ -65,7 +65,7 @@ public:
         // decide wheter we need to translate the margins
         if (_config.marginTop || _config.marginLeft) {
             ofTranslate(_config.marginLeft, _config.marginTop);
-            translateBounds(boundsMouse, _config.marginLeft, _config.marginTop);
+            translateBounds(boundsMouse, _config.marginLeft, _config.marginTop, _name);
             if (_config.isDebug) {
                 std::cout << "Boxxer: " << _name << " margin: " << _config.marginLeft << "," << _config.marginTop << std::endl;
             }
@@ -84,7 +84,7 @@ public:
     void drawChildren (const float& paddingLeft, const float& paddingRight) {
         ofPushMatrix();
         ofTranslate(paddingLeft, paddingRight);
-        translateBounds(boundsMouse, paddingLeft, paddingRight);
+        translateBounds(boundsMouse, paddingLeft, paddingRight, _name);
         for (size_t i = 0; i < children.size(); ++i) {
             auto& child = children[i];
             if (i) {
@@ -92,7 +92,7 @@ public:
                 float width, height;
                 this->getChildDimensions(lastChild, width, height);
                 ofTranslate(0, height);
-                translateBounds(boundsMouse, 0, height);
+                translateBounds(child->boundsMouse, 0, height, child->_name);
             }
             child->draw();
         }

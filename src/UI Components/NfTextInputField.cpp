@@ -177,12 +177,13 @@ void NfTextInputField::draw() {
     if (_config.showLabel) {
         fontRef->drawString(_name, 0, _config.paddingTop + fontRef->getLineHeight());
         textfieldWith /= 2;
+        boundsMouse.width /= 2;
     }
     
     // draw the background text pannel
     if (_config.showLabel) {
         ofTranslate(textfieldWith, 0);
-        translateBounds(boundsMouse, textfieldWith, 0);
+        translateBounds(boundsMouse, textfieldWith, 0, _name);
     }
     ofSetColor(backgroundColor.get());
     ofDrawRectangle(0,0, textfieldWith, bounds.height);

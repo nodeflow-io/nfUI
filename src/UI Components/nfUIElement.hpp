@@ -30,7 +30,7 @@ public:
     std::weak_ptr<NfUIElement> parent; // Weak pointer to the parent element
     std::vector<std::shared_ptr<NfUIElement>> children; // List of children elements
     NfUIConfig _config; // Hold configuration settings for this UI element
-    
+    std::string _name;
     nfAPI::ValueType valueType;
     ofParameterGroup parameters;
     ofParameter<ofColor> backgroundColor;
@@ -79,7 +79,7 @@ public:
         } else {
             valueType = nfAPI::ValueType::NotSet;
         }
-        
+        _name = elementName;
         _config = config;
         // Set default values from the config
         backgroundColor.set("BackgroundColor", config.backgroundColor);
@@ -198,9 +198,12 @@ public:
         
     }
     
-    void translateBounds(ofRectangle& boundsref, float x, float y) {
-        boundsref.x += x;
-        boundsref.y += y;
+    void translateBounds(ofRectangle& boundsref, float deltaX, float deltaY, std::string name = "") {
+        boundsref.x += deltaX;
+        boundsref.y += deltaY;
+        if (_config.isDebug) {
+            std::cout << "translateBounds (" << name << "): New boundsMouse = (" << boundsref.x << ", " << boundsref.y << ")" << std::endl;
+        }
     }
     
 };
