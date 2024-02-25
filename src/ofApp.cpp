@@ -74,6 +74,18 @@ void ofApp::setup() {
     
 
     config.maxTextLength = 4;
+    _posX = nfUI::createUIElement<nfUI::NfTextInputField, nfUI::IntNFValue>(
+        config,
+        "Position X",
+        config.bounds.x
+    );
+    
+    _posY = nfUI::createUIElement<nfUI::NfTextInputField, nfUI::IntNFValue>(
+        config,
+        "Position Y",
+        config.bounds.x
+    );
+    
     _gridSize = nfUI::createUIElement<nfUI::NfTextInputField, nfUI::IntNFValue>(
         config,
         "GridSize",
@@ -120,6 +132,8 @@ void ofApp::setup() {
     // The UI rendering tree is specified here
     // boxer is our root element here (which is a Pannel)
     _boxxer->addChild(_label);
+    _boxxer->addChild(_posX);
+    _boxxer->addChild(_posY);
     _boxxer->addChild(_showGrid);
     _boxxer->addChild(_gridSize);
     _boxxer->addChild(_majorStep);
@@ -184,7 +198,7 @@ void ofApp::onButtonSetParametersClicked(nfUI::UIEventArgs& eventArgs) {
     // Handle the UI element click event here
     std::cout << "onButtonSetParametersClicked\n";
     // update our GUI parameters from the UI Elements
-
+    _boxxer->setPosition(ofPoint(nfAPI::toInt(_posX->text),nfAPI::toInt(_posY->text)));
     _guiParams.setShowGrid(nfAPI::toBool(_showGrid->text));
     _guiParams.setGridSize(nfAPI::toInt(_gridSize->text));
     _guiParams.setMajorStep(nfAPI::toInt(_majorStep->text));
