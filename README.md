@@ -1,4 +1,4 @@
-# nodeFlowUI v.0.0.3 - boxxer
+# nodeFlowUI v.0.0.4 - inspector
 
 # Demo UI
 
@@ -8,7 +8,7 @@
 - Hints - TODO add to config
 - FPS - TODO add to config
 
-## Components Panel
+## UI Components Pannel
 
 - Show Grid (Bool)
 - Grid Size (Int)
@@ -17,6 +17,16 @@
 - Status Text2 (String)
 - Password (String)
 - Button (String)
+
+## UI Components Inspector
+### shows more details about the components
+
+- switch visibility of UI components in the pannels
+- define colors
+- switch the type
+- switch read only
+- will need to be scrollable
+
 
 # GUI Parameters
 
@@ -166,7 +176,7 @@ public:
 };
 ```
 
-## Event handlers
+## Event handlers for GUI
 
 - Key: F1 -> toggle grid display
 - Key: F2 -> toggle StatusBar display
@@ -192,6 +202,7 @@ public:
 - added checking of maxTextLength 
 - display asterisks for password input
 ### TODO
+- make copy & paste work again
 - isReadonly
 - add the multiline feature
 - implement rendering of text selection colors (text, selection)
@@ -202,7 +213,13 @@ public:
 ### TODO
 - focus onMouseover (instead of click and release)
 
+# Upcoming UI Elements
 
+## NfToggleSwitch
+### can toggle two states of a Type
+
+## NfColorPicker
+### TODO
 
 
 ## UI Element Properties
@@ -247,10 +264,16 @@ ofParameter<float> left;
 - implement configuration of text selection color
 - in inspect view render margins and paddings like in a browser inspect view
 
-# Features Roadmap
 
 ## Boxxer - the box rendering engine
-### a recursive box render model
+### TODO
+- fix rendering glitches (margin on first element)
+- horizontal rendering
+- UI manager for setting absolute coordinates for root-UI elements
+- borders for all elements
+
+
+# Features Roadmap
 
 ## GUI help pane
 
@@ -259,4 +282,5 @@ ofParameter<float> left;
 - 0.0.1 f0001-textinput: basic text input
 - 0.0.2 f0002-button: buttons, configuration, statusbar
 - 0.0.3 f0003-boxxer: a simple box rendering engine
+- 0.0.4 f0004-inspector: a property inspector widget
 
