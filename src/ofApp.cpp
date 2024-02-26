@@ -98,7 +98,7 @@ void ofApp::setup() {
     _guiParamsVersion = nfUI::createUIElement<nfUI::NfTextInputField, nfUI::StringNFValue>(
         config,
         "Version",
-        "v0.0.3"
+        "v"+_nfGUI.getVersionString()
     );
     
     config.textIsPassword = true;
