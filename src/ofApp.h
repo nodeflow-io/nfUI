@@ -5,12 +5,17 @@
 #include "ofxNodeFlowGUI.hpp"
 
 #include "nfUIElement.hpp"
+
+#include "NfNodeManager.hpp"
+
 #include "NfBoxxer.hpp"
 #include "NfPanel.hpp"
 #include "NfLabel.hpp"
 #include "NfButton.hpp"
 #include "NfTextInputField.hpp"
 #include "NfDom.hpp"
+
+
 
 class ofApp : public ofBaseApp{
     
@@ -40,9 +45,11 @@ public:
 private:
     ofxNodeFlowGUI _nfGUI;
     GUIParams _guiParams;
-
+    
+    nfUI::NfNodeManager _nodeManager;
+    
     // define UI Elements that require global event handling
-    std::shared_ptr<nfUI::NfBoxxer> _boxxer;
+    std::shared_ptr<nfUI::NfBoxxer> _guiParamsNode;
     std::shared_ptr<nfUI::NfTextInputField> _posX;
     std::shared_ptr<nfUI::NfTextInputField> _posY;
     std::shared_ptr<nfUI::NfTextInputField> _showGrid;
@@ -53,7 +60,7 @@ private:
     std::shared_ptr<nfUI::NfTextInputField> _password;
     std::shared_ptr<nfUI::NfButton> myButton;
     // inspector widget
-    std::shared_ptr<nfUI::NfBoxxer> _inspector;
+    std::shared_ptr<nfUI::NfBoxxer> _inspectorNode;
     std::shared_ptr<nfUI::NfBoxxer> _inspectorLabel;
     
 };

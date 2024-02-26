@@ -24,6 +24,7 @@
 		5D90DEDF2B8716DD0016E6DA /* NfTextInputField.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5D90DEDD2B8716DD0016E6DA /* NfTextInputField.cpp */; };
 		5D90DEE22B885BB90016E6DA /* NfPanel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5D90DEE02B885BB90016E6DA /* NfPanel.cpp */; };
 		5D90DEE52B88D5160016E6DA /* NfLabel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5D90DEE32B88D5160016E6DA /* NfLabel.cpp */; };
+		5DA873CE2B8C758E0030FCA5 /* NfNodeManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5DA873CC2B8C758E0030FCA5 /* NfNodeManager.cpp */; };
 		"755CE2A2-A8C6-4A60-BC18-AA005EC0D96E" /* ofxButton.cpp in Sources */ = {isa = PBXBuildFile; fileRef = "59D0C829-39E7-4538-813E-4CE8D5EC6EE7" /* ofxButton.cpp */; };
 		"7CC0E72D-C77A-4B7B-8141-41D4CF9DC8BD" /* ofxLabel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = "BBD140E0-F750-401D-ADF4-8D9AED02121F" /* ofxLabel.cpp */; };
 		"7EDCA8DD-8230-4398-B934-3CE32E303D92" /* ofxToggle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = "D433846F-8CE2-4830-80AB-1C51281CF622" /* ofxToggle.cpp */; };
@@ -94,6 +95,8 @@
 		5D90DEE12B885BB90016E6DA /* NfPanel.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = NfPanel.hpp; sourceTree = "<group>"; };
 		5D90DEE32B88D5160016E6DA /* NfLabel.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = NfLabel.cpp; sourceTree = "<group>"; };
 		5D90DEE42B88D5160016E6DA /* NfLabel.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = NfLabel.hpp; sourceTree = "<group>"; };
+		5DA873CC2B8C758E0030FCA5 /* NfNodeManager.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = NfNodeManager.cpp; sourceTree = "<group>"; };
+		5DA873CD2B8C758E0030FCA5 /* NfNodeManager.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = NfNodeManager.hpp; sourceTree = "<group>"; };
 		"66FF57F2-426A-4353-940F-4E8DCCFB5C1F" /* ofxColorPicker.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 4; name = ofxColorPicker.cpp; path = ../../../addons/ofxGui/src/ofxColorPicker.cpp; sourceTree = SOURCE_ROOT; };
 		"674EB0DA-BFE5-4364-8274-1F829323EF9F" /* ofxPanel.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 4; name = ofxPanel.h; path = ../../../addons/ofxGui/src/ofxPanel.h; sourceTree = SOURCE_ROOT; };
 		"7027E284-B6E3-4692-B076-FB1A379B4C08" /* ofxInputField.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 4; name = ofxInputField.cpp; path = ../../../addons/ofxGui/src/ofxInputField.cpp; sourceTree = SOURCE_ROOT; };
@@ -214,6 +217,8 @@
 				5D90DEDE2B8716DD0016E6DA /* NfTextInputField.hpp */,
 				5D90DEE32B88D5160016E6DA /* NfLabel.cpp */,
 				5D90DEE42B88D5160016E6DA /* NfLabel.hpp */,
+				5DA873CC2B8C758E0030FCA5 /* NfNodeManager.cpp */,
+				5DA873CD2B8C758E0030FCA5 /* NfNodeManager.hpp */,
 			);
 			path = "UI Components";
 			sourceTree = "<group>";
@@ -401,6 +406,7 @@
 				"DB73863F-0383-4F2D-9B13-32A849890DEC" /* tinyxmlerror.cpp in Sources */,
 				5D90DEE22B885BB90016E6DA /* NfPanel.cpp in Sources */,
 				"C94444C0-7E7D-4E76-BE7B-27F62ED5E5DC" /* tinyxmlparser.cpp in Sources */,
+				5DA873CE2B8C758E0030FCA5 /* NfNodeManager.cpp in Sources */,
 				"50D4FD30-6E8D-4E1D-8306-EB472CD63A6E" /* ofxXmlSettings.cpp in Sources */,
 				5D90DED22B85D6600016E6DA /* NfUIConfig.cpp in Sources */,
 			);

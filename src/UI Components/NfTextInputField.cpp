@@ -18,8 +18,7 @@
 namespace nfUI {
 // init variables
 void NfTextInputField::init() {
-    ofLogVerbose("NfTextInputField::init()");
-
+    // ofLogVerbose("NfTextInputField::init()");
     shiftMap[44] = '<';
     shiftMap[45] = '_';
     shiftMap[46] = '>';

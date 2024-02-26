@@ -35,14 +35,14 @@ void ofApp::setup() {
     float width = 220;
     float margin = 10;
     config.backgroundColor = ofColor(35,38,42);                         // background color of pannel
-    config.bounds = ofRectangle(100, 100, width, 20);                   // Set desired position and size
+    config.bounds = ofRectangle(300, 100, width, 20);                   // Set desired position and size
     config.isAbsolutePosition = true;                                   // coordinates are absolute position
-    config.setMargin(0);                                               // sets Top, Right, Bottom and Left
+    config.setMargin(0);                                                // sets Top, Right, Bottom and Left
     config.setPadding(0);                                               // sets Top, Right, Bottom and Left
     config.contentHeight = 5;                                           // -1 sets to auto (children content height)
     config.contentWidth = width-2*margin;                               // width
     config.isDebug = false;                                             // wether to log debug infos to the console
-    _boxxer = nfUI::createUIElement<nfUI::NfPanel, nfUI::StringNFValue>(
+    _guiParamsNode = nfUI::createUIElement<nfUI::NfPanel, nfUI::StringNFValue>(
         config,
         "Pannel",
         "UI Parameters"
@@ -128,17 +128,17 @@ void ofApp::setup() {
         "Set GUI-Parameters"
     );
     
-    // Setup the inspector widget
+    // Setup the inspector widget ----------------------------------------
 
     config.backgroundColor = ofColor(35,38,42);                         // background color of pannel
-    config.bounds = ofRectangle(0, 20, width, 20);                   // Set desired position and size
+    config.bounds = ofRectangle(0, 20, width, 20);                      // Set desired position and size
     config.isAbsolutePosition = true;                                   // coordinates are absolute position
-    config.setMargin(0);                                               // sets Top, Right, Bottom and Left
+    config.setMargin(0);                                                // sets Top, Right, Bottom and Left
     config.setPadding(0);                                               // sets Top, Right, Bottom and Left
     config.contentHeight = 5;                                           // -1 sets to auto (children content height)
     config.contentWidth = width-2*margin;                               // width
     config.isDebug = false;                                             // wether to log debug infos to the console
-    _inspector = nfUI::createUIElement<nfUI::NfPanel, nfUI::StringNFValue>(
+    _inspectorNode = nfUI::createUIElement<nfUI::NfPanel, nfUI::StringNFValue>(
         config,
         "Pannel",
         "Inspector"
@@ -153,25 +153,30 @@ void ofApp::setup() {
     auto _inspectorLabel = nfUI::createUIElement<nfUI::NfLabel, nfUI::StringNFValue>(
         config,
         "Label",
-        "GUI CONFIGURATION"
+        "INSPECTOR"
     );
     
     
     ofAddListener(myButton->clicked, this, &ofApp::onButtonSetParametersClicked);
     // The UI rendering tree is specified here
     // boxer is our root element here (which is a Pannel)
-    _boxxer->addChild(_label);
-    _boxxer->addChild(_posX);
-    _boxxer->addChild(_posY);
-    _boxxer->addChild(_showGrid);
-    _boxxer->addChild(_gridSize);
-    _boxxer->addChild(_majorStep);
-    _boxxer->addChild(_project);
-    _boxxer->addChild(_version);
-    _boxxer->addChild(_password);
-    _boxxer->addChild(myButton);
+    _guiParamsNode->addChild(_label);
+    _guiParamsNode->addChild(_posX);
+    _guiParamsNode->addChild(_posY);
+    _guiParamsNode->addChild(_showGrid);
+    _guiParamsNode->addChild(_gridSize);
+    _guiParamsNode->addChild(_majorStep);
+    _guiParamsNode->addChild(_project);
+    _guiParamsNode->addChild(_version);
+    _guiParamsNode->addChild(_password);
+    _guiParamsNode->addChild(myButton);
     
     // adding childs to inspector here
+    _inspectorNode->addChild(_inspectorLabel);
+    
+    // adding Widget to NodeManager
+    _nodeManager.addNode(_guiParamsNode); // Add the panel to the node manager
+    _nodeManager.addNode(_inspectorNode); // Add the inspector to the node manager
 }
 
 //--------------------------------------------------------------
@@ -188,10 +193,10 @@ void ofApp::draw(){
     _nfGUI.drawGrid(this->_guiParams);
     // draw status bar
     _nfGUI.drawStatusBar(this->_guiParams);
-    // draw UI elements
-    if (_boxxer) {
-        _boxxer->draw(); // This starts the recursive drawing process
-    }
+    
+    // draw nodes
+    _nodeManager.drawNodes(); // This starts the recursive drawing process
+    
     ofPopMatrix(); // Restore the transformation matrix
 }
 
@@ -229,7 +234,7 @@ void ofApp::onButtonSetParametersClicked(nfUI::UIEventArgs& eventArgs) {
     // Handle the UI element click event here
     std::cout << "onButtonSetParametersClicked\n";
     // update our GUI parameters from the UI Elements
-    _boxxer->setPosition(ofPoint(nfAPI::toInt(_posX->text),nfAPI::toInt(_posY->text)));
+    _guiParamsNode->setPosition(ofPoint(nfAPI::toInt(_posX->text),nfAPI::toInt(_posY->text)));
     _guiParams.setShowGrid(nfAPI::toBool(_showGrid->text));
     _guiParams.setGridSize(nfAPI::toInt(_gridSize->text));
     _guiParams.setMajorStep(nfAPI::toInt(_majorStep->text));
