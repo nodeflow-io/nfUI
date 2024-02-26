@@ -44,7 +44,7 @@ void ofApp::setup() {
     config.isDebug = false;                                             // wether to log debug infos to the console
     _guiParamsNode = nfUI::createUIElement<nfUI::NfPanel, nfUI::StringNFValue>(
         config,
-        "Pannel",
+        "UI Config Pannel",
         "UI Parameters"
     );
    
@@ -74,18 +74,6 @@ void ofApp::setup() {
     
 
     config.maxTextLength = 4;
-    _posX = nfUI::createUIElement<nfUI::NfTextInputField, nfUI::IntNFValue>(
-        config,
-        "Position X",
-        config.bounds.x
-    );
-    
-    _posY = nfUI::createUIElement<nfUI::NfTextInputField, nfUI::IntNFValue>(
-        config,
-        "Position Y",
-        config.bounds.x
-    );
-    
     _gridSize = nfUI::createUIElement<nfUI::NfTextInputField, nfUI::IntNFValue>(
         config,
         "GridSize",
@@ -122,14 +110,14 @@ void ofApp::setup() {
     config.backgroundColor = ofColor(46, 80, 117);
     config.textIsPassword = true;
     config.marginBottom = 8;  // TODO: this should not be necessary
-    myButton = nfUI::createUIElement<nfUI::NfButton, nfUI::StringNFValue>(
+    _guiParamsButton = nfUI::createUIElement<nfUI::NfButton, nfUI::StringNFValue>(
         config,
         "Button",
         "Set GUI-Parameters"
     );
-    
-    // Setup the inspector widget ----------------------------------------
 
+    // Setup Inspector Widget -----------------[ DOM configuration / Elements & Styles ]------------
+    width+=40;                                                          // the inspector needs more room
     config.backgroundColor = ofColor(35,38,42);                         // background color of pannel
     config.bounds = ofRectangle(0, 20, width, 20);                      // Set desired position and size
     config.isAbsolutePosition = true;                                   // coordinates are absolute position
@@ -137,10 +125,11 @@ void ofApp::setup() {
     config.setPadding(0);                                               // sets Top, Right, Bottom and Left
     config.contentHeight = 5;                                           // -1 sets to auto (children content height)
     config.contentWidth = width-2*margin;                               // width
+    config.textIsPassword = false;
     config.isDebug = false;                                             // wether to log debug infos to the console
     _inspectorNode = nfUI::createUIElement<nfUI::NfPanel, nfUI::StringNFValue>(
         config,
-        "Pannel",
+        "InspectorPannel",
         "Inspector"
     );
     
@@ -153,26 +142,56 @@ void ofApp::setup() {
     auto _inspectorLabel = nfUI::createUIElement<nfUI::NfLabel, nfUI::StringNFValue>(
         config,
         "Label",
-        "INSPECTOR"
+        "INSPECTOR (Gui Configuration)"
+    );
+    
+    config.backgroundColor = ofColor(30,30,30);
+    config.bounds = ofRectangle(100, 100, width-2*margin, 20);
+    config.setMargin(8, 10, 0, 8);
+    config.setPadding(5, 10, 5, 10);
+    config.maxTextLength = 4;
+    config.showLabel = true;
+    
+    
+    _inspectorPosX = nfUI::createUIElement<nfUI::NfTextInputField, nfUI::IntNFValue>(
+        config,
+        "Position X",
+        300
+    );
+    
+    _inspectorPosY = nfUI::createUIElement<nfUI::NfTextInputField, nfUI::IntNFValue>(
+        config,
+        "Position Y",
+        100
+    );
+    
+    config.backgroundColor = ofColor(46, 80, 117);
+    config.textIsPassword = true;
+    config.marginBottom = 8;  // TODO: this should not be necessary
+    _inspectorButton = nfUI::createUIElement<nfUI::NfButton, nfUI::StringNFValue>(
+        config,
+        "Button",
+        "Update Widget"
     );
     
     
-    ofAddListener(myButton->clicked, this, &ofApp::onButtonSetParametersClicked);
+    ofAddListener(_guiParamsButton->clicked, this, &ofApp::onButtonSetParametersClicked);
     // The UI rendering tree is specified here
     // boxer is our root element here (which is a Pannel)
     _guiParamsNode->addChild(_label);
-    _guiParamsNode->addChild(_posX);
-    _guiParamsNode->addChild(_posY);
     _guiParamsNode->addChild(_showGrid);
     _guiParamsNode->addChild(_gridSize);
     _guiParamsNode->addChild(_majorStep);
     _guiParamsNode->addChild(_project);
     _guiParamsNode->addChild(_version);
     _guiParamsNode->addChild(_password);
-    _guiParamsNode->addChild(myButton);
+    _guiParamsNode->addChild(_guiParamsButton);
     
     // adding childs to inspector here
     _inspectorNode->addChild(_inspectorLabel);
+    _inspectorNode->addChild(_inspectorPosX);
+    _inspectorNode->addChild(_inspectorPosY);
+    _inspectorNode->addChild(_inspectorButton);
     
     // adding Widget to NodeManager
     _nodeManager.addNode(_guiParamsNode); // Add the panel to the node manager
