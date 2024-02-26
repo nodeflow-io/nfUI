@@ -34,8 +34,10 @@ void ofApp::setup() {
     nfUI::NfUIConfig config;                                            // Create a config object
     float width = 220;
     float margin = 10;
+    float posX = 300;
+    float posY = 100;
     config.backgroundColor = ofColor(35,38,42);                         // background color of pannel
-    config.bounds = ofRectangle(300, 100, width, 20);                   // Set desired position and size
+    config.bounds = ofRectangle(posX, posY, width, 20);                   // Set desired position and size
     config.isAbsolutePosition = true;                                   // coordinates are absolute position
     config.setMargin(0);                                                // sets Top, Right, Bottom and Left
     config.setPadding(0);                                               // sets Top, Right, Bottom and Left
@@ -50,7 +52,7 @@ void ofApp::setup() {
    
     config.isAbsolutePosition = false;                                  // relative positioning from now on
     config.backgroundColor = ofColor(56,62,66);                         // background color of label
-    config.bounds = ofRectangle(100, 100, width, 30);
+    config.bounds = ofRectangle(posX, posY, width, 30);
     config.setMargin(0);
     config.setPadding(10);
     config.contentHeight = 5;
@@ -61,7 +63,7 @@ void ofApp::setup() {
     );
     
     config.backgroundColor = ofColor(30,30,30);
-    config.bounds = ofRectangle(100, 100, width-2*margin, 20);
+    config.bounds = ofRectangle(posX, posY, width-2*margin, 20);
     config.setMargin(8, 10, 0, 8);
     config.setPadding(5, 10, 5, 10);
     config.maxTextLength = 1;
@@ -118,8 +120,10 @@ void ofApp::setup() {
 
     // Setup Inspector Widget -----------------[ DOM configuration / Elements & Styles ]------------
     width+=40;                                                          // the inspector needs more room
+    posX = 0;
+    posY = 20;
     config.backgroundColor = ofColor(35,38,42);                         // background color of pannel
-    config.bounds = ofRectangle(0, 20, width, 20);                      // Set desired position and size
+    config.bounds = ofRectangle(posX, posY, width, 20);                      // Set desired position and size
     config.isAbsolutePosition = true;                                   // coordinates are absolute position
     config.setMargin(0);                                                // sets Top, Right, Bottom and Left
     config.setPadding(0);                                               // sets Top, Right, Bottom and Left
@@ -135,7 +139,7 @@ void ofApp::setup() {
     
     config.isAbsolutePosition = false;                                  // relative positioning from now on
     config.backgroundColor = ofColor(56,62,66);                         // background color of label
-    config.bounds = ofRectangle(100, 100, width, 30);
+    config.bounds = ofRectangle(posX, posY, width, 30);
     config.setMargin(0);
     config.setPadding(10);
     config.contentHeight = 5;
@@ -146,7 +150,7 @@ void ofApp::setup() {
     );
     
     config.backgroundColor = ofColor(30,30,30);
-    config.bounds = ofRectangle(100, 100, width-2*margin, 20);
+    config.bounds = ofRectangle(posX, posY, width-2*margin, 20);
     config.setMargin(8, 10, 0, 8);
     config.setPadding(5, 10, 5, 10);
     config.maxTextLength = 4;
