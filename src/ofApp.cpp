@@ -56,7 +56,7 @@ void ofApp::setup() {
     config.setMargin(0);
     config.setPadding(10);
     config.contentHeight = 5;
-    auto _label = nfUI::createUIElement<nfUI::NfLabel, nfUI::StringNFValue>(
+    _guiParamsLabel = nfUI::createUIElement<nfUI::NfLabel, nfUI::StringNFValue>(
         config,
         "Label",
         "GUI CONFIGURATION"
@@ -68,7 +68,7 @@ void ofApp::setup() {
     config.setPadding(5, 10, 5, 10);
     config.maxTextLength = 1;
     config.showLabel = true;
-    _showGrid = nfUI::createUIElement<nfUI::NfTextInputField, nfUI::BoolNFValue>(
+    _guiParamsShowGrid = nfUI::createUIElement<nfUI::NfTextInputField, nfUI::BoolNFValue>(
         config,
         "Show Grid",
          _guiParams.getShowGrid()
@@ -76,33 +76,33 @@ void ofApp::setup() {
     
 
     config.maxTextLength = 4;
-    _gridSize = nfUI::createUIElement<nfUI::NfTextInputField, nfUI::IntNFValue>(
+    _guiParamsGridSize = nfUI::createUIElement<nfUI::NfTextInputField, nfUI::IntNFValue>(
         config,
         "GridSize",
         _guiParams.getGridSize()
     );
     
-    _majorStep = nfUI::createUIElement<nfUI::NfTextInputField, nfUI::IntNFValue>(
+    _guiParamsMajorStep = nfUI::createUIElement<nfUI::NfTextInputField, nfUI::IntNFValue>(
         config,
         "MajorStep",
         _guiParams.getMajorStep()
     );
     
     config.maxTextLength = 255;
-    _project = nfUI::createUIElement<nfUI::NfTextInputField, nfUI::StringNFValue>(
+    _guiParamsProject = nfUI::createUIElement<nfUI::NfTextInputField, nfUI::StringNFValue>(
         config,
         "Project",
         "nodeFlowUI"
     );
     
-    _version = nfUI::createUIElement<nfUI::NfTextInputField, nfUI::StringNFValue>(
+    _guiParamsVersion = nfUI::createUIElement<nfUI::NfTextInputField, nfUI::StringNFValue>(
         config,
         "Version",
         "v0.0.3"
     );
     
     config.textIsPassword = true;
-    _password = nfUI::createUIElement<nfUI::NfTextInputField, nfUI::StringNFValue>(
+    _guiParamsPassword = nfUI::createUIElement<nfUI::NfTextInputField, nfUI::StringNFValue>(
         config,
         "Password",
         "nodeFlow"
@@ -179,23 +179,27 @@ void ofApp::setup() {
     );
     
     
-    ofAddListener(_guiParamsButton->clicked, this, &ofApp::onButtonSetParametersClicked);
+    
     // The UI rendering tree is specified here
     // adding childs to GUI-Parameters widget here
-    _guiParamsNode->addChild(_label);
-    _guiParamsNode->addChild(_showGrid);
-    _guiParamsNode->addChild(_gridSize);
-    _guiParamsNode->addChild(_majorStep);
-    _guiParamsNode->addChild(_project);
-    _guiParamsNode->addChild(_version);
-    _guiParamsNode->addChild(_password);
+    _guiParamsNode->addChild(_guiParamsLabel);
+    _guiParamsNode->addChild(_guiParamsShowGrid);
+    _guiParamsNode->addChild(_guiParamsGridSize);
+    _guiParamsNode->addChild(_guiParamsMajorStep);
+    _guiParamsNode->addChild(_guiParamsProject);
+    _guiParamsNode->addChild(_guiParamsVersion);
+    _guiParamsNode->addChild(_guiParamsPassword);
     _guiParamsNode->addChild(_guiParamsButton);
+    // add event handlers for interactive elementt
+     ofAddListener(_guiParamsButton->clicked, this, &ofApp::onGuiParametersButtonClicked);
     
     // adding childs to inspector widget here
     _inspectorNode->addChild(_inspectorLabel);
     _inspectorNode->addChild(_inspectorPosX);
     _inspectorNode->addChild(_inspectorPosY);
     _inspectorNode->addChild(_inspectorButton);
+    // add event handlers for interactive elementt
+     ofAddListener(_inspectorButton->clicked, this, &ofApp::onInspectorButtonClicked);
     
     // adding widgets to NodeManager
     _nodeManager.addNode(_guiParamsNode); // Add the GUI Parameters to the node manager
@@ -251,24 +255,29 @@ void ofApp::keyPressed(int key) {
 }
 
 //--------------------------------------------------------------
-// EVENT HANDLERS
-//--------------------------------------------------------------
-void ofApp::onButtonSetParametersClicked(nfUI::UIEventArgs& eventArgs) {
-    // Handle the UI element click event here
-    std::cout << "onButtonSetParametersClicked\n";
-    // update our GUI parameters from the UI Elements
-    _guiParamsNode->setPosition(ofPoint(nfAPI::toInt(_posX->text),nfAPI::toInt(_posY->text)));
-    _guiParams.setShowGrid(nfAPI::toBool(_showGrid->text));
-    _guiParams.setGridSize(nfAPI::toInt(_gridSize->text));
-    _guiParams.setMajorStep(nfAPI::toInt(_majorStep->text));
-    _guiParams.setStatusBarText1(_project->text);
-    _guiParams.setStatusBarText2(_version->text);
+// YOUR OWN EVENT HANDLERS
+//----------------------------------------[ Buttons ]-----------
 
-    // _guiParams.setScalingFactor(nfAPI::toDouble(tif7->text));
+void ofApp::onGuiParametersButtonClicked(nfUI::UIEventArgs& eventArgs) {
+    std::cout << "ofApp::onGuiParametersButtonClicked\n";
+    // update our GUI parameters from the UI Elements
+    _guiParams.setShowGrid(nfAPI::toBool(_guiParamsShowGrid->text));
+    _guiParams.setGridSize(nfAPI::toInt(_guiParamsGridSize->text));
+    _guiParams.setMajorStep(nfAPI::toInt(_guiParamsMajorStep->text));
+    _guiParams.setStatusBarText1(_guiParamsProject->text);
+    _guiParams.setStatusBarText2(_guiParamsVersion->text);
+}
+
+void ofApp::onInspectorButtonClicked(nfUI::UIEventArgs& eventArgs) {
+    std::cout << "ofApp::onInspectorButtonClicked\n";
+    // update the position oof the GUI parameters node from the inspector widget
+    _guiParamsNode->setPosition(ofPoint(nfAPI::toInt(_inspectorPosX->text),nfAPI::toInt(_inspectorPosY->text)));
 
 }
 
 //--------------------------------------------------------------
+// DEFAULT OPEN FRAMEWORKS EVENT HANDLERS
+//----------------------------------------[ Buttons ]-----------
 void ofApp::keyReleased(int key){
 
 }

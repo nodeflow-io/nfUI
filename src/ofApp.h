@@ -26,9 +26,11 @@ public:
     void drawTxt() ;
     void exit() override;
     
-    // your ownn eventhandlers - TODO: reimplement
-    void onButtonSetParametersClicked(nfUI::UIEventArgs& eventArgs);
+    // your ownn eventhandlers
+    void onGuiParametersButtonClicked(nfUI::UIEventArgs& eventArgs);
+    void onInspectorButtonClicked(nfUI::UIEventArgs& eventArgs);
     
+    // default of eventhandlers
     void keyPressed(int key) override;
     void keyReleased(int key) override;
     void mouseMoved(int x, int y ) override;
@@ -48,22 +50,22 @@ private:
     
     nfUI::NfNodeManager _nodeManager;
     
-    // define UI Elements that require global event handling
+    // define UI Elements that may require global event handling
+    // Gui Parameters widget
     std::shared_ptr<nfUI::NfBoxxer> _guiParamsNode;
-    std::shared_ptr<nfUI::NfTextInputField> _posX;
-    std::shared_ptr<nfUI::NfTextInputField> _posY;
-    std::shared_ptr<nfUI::NfTextInputField> _showGrid;
-    std::shared_ptr<nfUI::NfTextInputField> _gridSize;
-    std::shared_ptr<nfUI::NfTextInputField> _majorStep;
-    std::shared_ptr<nfUI::NfTextInputField> _project;
-    std::shared_ptr<nfUI::NfTextInputField> _version;
-    std::shared_ptr<nfUI::NfTextInputField> _password;
+    std::shared_ptr<nfUI::NfBoxxer> _guiParamsLabel;
+    std::shared_ptr<nfUI::NfBoxxer> _guiParamsShowGrid;
+    std::shared_ptr<nfUI::NfBoxxer> _guiParamsGridSize;
+    std::shared_ptr<nfUI::NfBoxxer> _guiParamsMajorStep;
+    std::shared_ptr<nfUI::NfBoxxer> _guiParamsProject;
+    std::shared_ptr<nfUI::NfBoxxer> _guiParamsVersion;
+    std::shared_ptr<nfUI::NfBoxxer> _guiParamsPassword;
     std::shared_ptr<nfUI::NfButton> _guiParamsButton;
-    // inspector widget
+    // Inspector widget
     std::shared_ptr<nfUI::NfBoxxer> _inspectorNode;
     std::shared_ptr<nfUI::NfBoxxer> _inspectorLabel;
     std::shared_ptr<nfUI::NfBoxxer> _inspectorPosX;
     std::shared_ptr<nfUI::NfBoxxer> _inspectorPosY;
-    std::shared_ptr<nfUI::NfBoxxer> _inspectorButton;
+    std::shared_ptr<nfUI::NfButton> _inspectorButton;
     
 };
