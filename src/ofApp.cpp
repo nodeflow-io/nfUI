@@ -177,7 +177,7 @@ void ofApp::setup() {
     
     ofAddListener(_guiParamsButton->clicked, this, &ofApp::onButtonSetParametersClicked);
     // The UI rendering tree is specified here
-    // boxer is our root element here (which is a Pannel)
+    // adding childs to GUI-Parameters widget here
     _guiParamsNode->addChild(_label);
     _guiParamsNode->addChild(_showGrid);
     _guiParamsNode->addChild(_gridSize);
@@ -187,14 +187,14 @@ void ofApp::setup() {
     _guiParamsNode->addChild(_password);
     _guiParamsNode->addChild(_guiParamsButton);
     
-    // adding childs to inspector here
+    // adding childs to inspector widget here
     _inspectorNode->addChild(_inspectorLabel);
     _inspectorNode->addChild(_inspectorPosX);
     _inspectorNode->addChild(_inspectorPosY);
     _inspectorNode->addChild(_inspectorButton);
     
-    // adding Widget to NodeManager
-    _nodeManager.addNode(_guiParamsNode); // Add the panel to the node manager
+    // adding widgets to NodeManager
+    _nodeManager.addNode(_guiParamsNode); // Add the GUI Parameters to the node manager
     _nodeManager.addNode(_inspectorNode); // Add the inspector to the node manager
 }
 
