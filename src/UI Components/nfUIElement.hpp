@@ -185,6 +185,24 @@ public:
         float offsetX, offsetY;
         offsetX = position.x - rootElement->bounds.x;
         offsetY = position.y - rootElement->bounds.y;
+        rootElement->bounds.x = position.x;
+        rootElement->bounds.y = position.y;
+        rootElement->_config.bounds.x = position.x;
+        rootElement->_config.bounds.y = position.y;
+        rootElement->boundsMouse.x = position.x;
+        rootElement->boundsMouse.y = position.y;
+        
+        for (auto& child : rootElement->children) {
+            child->bounds.x += offsetX;
+            child->bounds.y += offsetY;
+            child->boundsMouse.y += offsetX;
+            child->boundsMouse.y += offsetY;
+        }
+        
+        /*
+        float offsetX, offsetY;
+        offsetX = position.x - rootElement->bounds.x;
+        offsetY = position.y - rootElement->bounds.y;
         
         std::cout << "pX" << position.x << std::endl;
         std::cout << "rX" << rootElement->bounds.x << std::endl;
@@ -199,8 +217,10 @@ public:
         boundsMouse.x += offsetX;
         boundsMouse.y += offsetY;
         std::cout << "bX" << boundsMouse.x << std::endl;
-        // _config.boundsMouse.x += offsetX;
-        // _config.boundsMouse.y += offsetY;
+         */
+        
+        
+        
     }
     
     void getChildDimensions(const std::shared_ptr<NfUIElement>& child, float& width, float& height) {

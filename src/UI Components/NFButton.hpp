@@ -81,6 +81,7 @@ public:
         if(mouseDownInRect) {
             parameters.getBool("IsFocused") = true; // Set to true
         }
+        std::cout << "mousePressed" << _name << ": " << boundsMouse.x << std::endl;
     }
     
     void mouseMoved(ofMouseEventArgs& args) {
