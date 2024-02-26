@@ -52,5 +52,8 @@ private:
     std::shared_ptr<nfUI::NfTextInputField> _version;
     std::shared_ptr<nfUI::NfTextInputField> _password;
     std::shared_ptr<nfUI::NfButton> myButton;
+    // inspector widget
+    std::shared_ptr<nfUI::NfBoxxer> _inspector;
+    std::shared_ptr<nfUI::NfBoxxer> _inspectorLabel;
     
 };

@@ -128,6 +128,35 @@ void ofApp::setup() {
         "Set GUI-Parameters"
     );
     
+    // Setup the inspector widget
+
+    config.backgroundColor = ofColor(35,38,42);                         // background color of pannel
+    config.bounds = ofRectangle(0, 20, width, 20);                   // Set desired position and size
+    config.isAbsolutePosition = true;                                   // coordinates are absolute position
+    config.setMargin(0);                                               // sets Top, Right, Bottom and Left
+    config.setPadding(0);                                               // sets Top, Right, Bottom and Left
+    config.contentHeight = 5;                                           // -1 sets to auto (children content height)
+    config.contentWidth = width-2*margin;                               // width
+    config.isDebug = false;                                             // wether to log debug infos to the console
+    _inspector = nfUI::createUIElement<nfUI::NfPanel, nfUI::StringNFValue>(
+        config,
+        "Pannel",
+        "Inspector"
+    );
+    
+    config.isAbsolutePosition = false;                                  // relative positioning from now on
+    config.backgroundColor = ofColor(56,62,66);                         // background color of label
+    config.bounds = ofRectangle(100, 100, width, 30);
+    config.setMargin(0);
+    config.setPadding(10);
+    config.contentHeight = 5;
+    auto _inspectorLabel = nfUI::createUIElement<nfUI::NfLabel, nfUI::StringNFValue>(
+        config,
+        "Label",
+        "GUI CONFIGURATION"
+    );
+    
+    
     ofAddListener(myButton->clicked, this, &ofApp::onButtonSetParametersClicked);
     // The UI rendering tree is specified here
     // boxer is our root element here (which is a Pannel)
@@ -141,6 +170,8 @@ void ofApp::setup() {
     _boxxer->addChild(_version);
     _boxxer->addChild(_password);
     _boxxer->addChild(myButton);
+    
+    // adding childs to inspector here
 }
 
 //--------------------------------------------------------------
