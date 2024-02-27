@@ -65,6 +65,7 @@ void ofApp::setup() {
     );
     
     config.backgroundColor = ofColor(30,30,30);
+    config.focusBackgroundColor = ofColor::black;
     config.bounds = ofRectangle(posX, posY, width-2*margin, 20);
     config.setMargin(8, 10, 0, 8);
     config.setPadding(5, 10, 5, 10);
@@ -112,6 +113,7 @@ void ofApp::setup() {
     
     
     config.backgroundColor = ofColor(46, 80, 117);
+    config.focusBackgroundColor = ofColor::yellow;
     config.textIsPassword = true;
     config.marginBottom = 8;  // TODO: this should not be necessary
     _guiParamsButton = nfUI::createUIElement<nfUI::NfButton, nfUI::StringNFValue>(
@@ -152,6 +154,7 @@ void ofApp::setup() {
     );
     
     config.backgroundColor = ofColor(30,30,30);
+    config.focusBackgroundColor = ofColor::black;
     config.bounds = ofRectangle(posX, posY, width-2*margin, 20);
     config.setMargin(8, 10, 0, 8);
     config.setPadding(5, 10, 5, 10);
@@ -172,6 +175,7 @@ void ofApp::setup() {
     );
     
     config.backgroundColor = ofColor(46, 80, 117);
+    config.focusBackgroundColor = ofColor::yellow;
     config.textIsPassword = true;
     config.marginBottom = 8;  // TODO: this should not be necessary
     _inspectorButton = nfUI::createUIElement<nfUI::NfButton, nfUI::StringNFValue>(

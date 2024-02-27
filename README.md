@@ -288,5 +288,5 @@ ofParameter<float> left;
 - 0.0.4 f0004-inspector: 
   - added a nodemanager
   - a property inspector widget for nodes
-  - button hover colors (text backgrounds)
+  - button hover colors (text & backgrounds)
 

@@ -184,7 +184,11 @@ void NfTextInputField::draw() {
         ofTranslate(textfieldWith, 0);
         translateBounds(boundsMouse, textfieldWith, 0, _name);
     }
-    ofSetColor(backgroundColor.get());
+    if(isEditing) {
+        ofSetColor(focusBackgroundColor.get());
+    } else {
+        ofSetColor(backgroundColor.get());
+    }
     ofDrawRectangle(0,0, textfieldWith, bounds.height);
     
     ofSetColor(textColor.get());
