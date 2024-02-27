@@ -183,6 +183,7 @@ public:
 - Key: F1 -> toggle grid display
 - Key: F2 -> toggle StatusBar display
 - Button Set GUI-Parameters -> update GUI Parameters
+- Button Set Inspector.Parameters -> update GUI configuration pannel position
 
 
 # Supported UI Elements 
