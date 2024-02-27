@@ -1,5 +1,7 @@
 # nodeFlowUI v.0.0.4 - inspector
 
+![nodeFlowUI version 0.0.4](docs/nodeFlowUI-0.0.4.png")
+
 # Demo UI
 
 ## Status Bar
@@ -8,7 +10,7 @@
 - Hints - TODO add to config
 - FPS - TODO add to config
 
-## UI Components Pannel
+## GUI Configuration Pannel
 
 - Show Grid (Bool)
 - Grid Size (Int)
