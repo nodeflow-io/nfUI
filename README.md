@@ -285,5 +285,8 @@ ofParameter<float> left;
 - 0.0.1 f0001-textinput: basic text input
 - 0.0.2 f0002-button: buttons, configuration, statusbar
 - 0.0.3 f0003-boxxer: a simple box rendering engine
-- 0.0.4 f0004-inspector: a property inspector widget for nodes
+- 0.0.4 f0004-inspector: 
+  - added a nodemanager
+  - a property inspector widget for nodes
+  - button hover colors (text backgrounds)
 
