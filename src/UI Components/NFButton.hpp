@@ -41,7 +41,7 @@ public:
         }
 
         if (isFocused.get()) {
-            ofSetColor(focusColor.get());
+            ofSetColor(focusBackgroundColor.get());
         } else {
             ofSetColor(backgroundColor.get());
         }
@@ -53,8 +53,11 @@ public:
         // draw own Background
         ofDrawRectangle(0, 0, bounds.width, bounds.height);
         
-        ofSetColor(textColor.get());
-        
+        if (isFocused.get()) {
+            ofSetColor(focusColor.get());
+        } else {
+            ofSetColor(textColor.get());
+        }
         NFValue* valueRawPtr = this->getValue();
         if (valueRawPtr != nullptr) {
             std::string valueAsString = valueRawPtr->toString();
@@ -85,15 +88,24 @@ public:
     }
     
     void mouseMoved(ofMouseEventArgs& args) {
+        if(boundsMouse.inside(args.x, args.y)) {
+            parameters.getBool("IsFocused") = true;
+            // ofSetCursor(OF_CURSOR_HAND);
+        } else {
+            parameters.getBool("IsFocused") = false;
+            // ofSetCursor(OF_CURSOR_ARROW);
+        }
     }
     
     void mouseScrolled(ofMouseEventArgs& args) {
     }
     
     void mouseEntered(ofMouseEventArgs& args) {
+
     }
     
     void mouseExited(ofMouseEventArgs& args) {
+ 
     }
 
     void mouseReleased(ofMouseEventArgs& args) {

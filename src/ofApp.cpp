@@ -37,7 +37,9 @@ void ofApp::setup() {
     float posX = 300;
     float posY = 100;
     config.backgroundColor = ofColor(35,38,42);                         // background color of pannel
-    config.bounds = ofRectangle(posX, posY, width, 20);                   // Set desired position and size
+    config.focusBackgroundColor = ofColor::yellow;
+    config.focusColor = ofColor::black;
+    config.bounds = ofRectangle(posX, posY, width, 20);                 // Set desired position and size
     config.isAbsolutePosition = true;                                   // coordinates are absolute position
     config.setMargin(0);                                                // sets Top, Right, Bottom and Left
     config.setPadding(0);                                               // sets Top, Right, Bottom and Left
@@ -123,7 +125,7 @@ void ofApp::setup() {
     posX = 0;
     posY = 20;
     config.backgroundColor = ofColor(35,38,42);                         // background color of pannel
-    config.bounds = ofRectangle(posX, posY, width, 20);                      // Set desired position and size
+    config.bounds = ofRectangle(posX, posY, width, 20);                 // Set desired position and size
     config.isAbsolutePosition = true;                                   // coordinates are absolute position
     config.setMargin(0);                                                // sets Top, Right, Bottom and Left
     config.setPadding(0);                                               // sets Top, Right, Bottom and Left
@@ -178,8 +180,6 @@ void ofApp::setup() {
         "Update Widget"
     );
     
-    
-    
     // The UI rendering tree is specified here
     // adding childs to GUI-Parameters widget here
     _guiParamsNode->addChild(_guiParamsLabel);
@@ -190,7 +190,7 @@ void ofApp::setup() {
     _guiParamsNode->addChild(_guiParamsVersion);
     _guiParamsNode->addChild(_guiParamsPassword);
     _guiParamsNode->addChild(_guiParamsButton);
-    // add event handlers for interactive elementt
+    // add event handlers for interactive element
      ofAddListener(_guiParamsButton->clicked, this, &ofApp::onGuiParametersButtonClicked);
     
     // adding childs to inspector widget here
@@ -198,7 +198,7 @@ void ofApp::setup() {
     _inspectorNode->addChild(_inspectorPosX);
     _inspectorNode->addChild(_inspectorPosY);
     _inspectorNode->addChild(_inspectorButton);
-    // add event handlers for interactive elementt
+    // add event handlers for interactive element
      ofAddListener(_inspectorButton->clicked, this, &ofApp::onInspectorButtonClicked);
     
     // adding widgets to NodeManager
