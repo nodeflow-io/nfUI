@@ -1,6 +1,6 @@
 # nodeFlowUI v.0.0.4 - inspector
 
-![nodeFlowUI version 0.0.4](docs/nodeFlowUI-0.0.4.png")
+![nodeFlowUI version 0.0.4](docs/nodeFlowUI-0.0.4.png)
 
 # Demo UI
 
