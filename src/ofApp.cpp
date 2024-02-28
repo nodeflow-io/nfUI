@@ -54,6 +54,8 @@ void ofApp::setup() {
    
     config.isAbsolutePosition = false;                                  // relative positioning from now on
     config.backgroundColor = ofColor(56,62,66);                         // background color of label
+    config.focusBackgroundColor = ofColor(56,62,66, 128);
+    config.focusColor = ofColor::yellow;
     config.bounds = ofRectangle(posX, posY, width, 30);
     config.setMargin(0);
     config.setPadding(10);
@@ -143,6 +145,8 @@ void ofApp::setup() {
     
     config.isAbsolutePosition = false;                                  // relative positioning from now on
     config.backgroundColor = ofColor(56,62,66);                         // background color of label
+    config.focusBackgroundColor = ofColor(56,62,66, 128);
+    config.focusColor = ofColor::yellow;
     config.bounds = ofRectangle(posX, posY, width, 30);
     config.setMargin(0);
     config.setPadding(10);

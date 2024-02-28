@@ -4,7 +4,7 @@
 
 ## In action
 
-![nodeFlowUI version 0.0.4](docs/nodeFlowUI-0.0.4-animated.gif)
+![nodeFlowUI version 0.0.4 animation](docs/nodeFlowUI-0.0.4-animated.gif)
 
 # Demo UI
 
@@ -187,7 +187,7 @@ public:
 - Key: F1 -> toggle grid display
 - Key: F2 -> toggle StatusBar display
 - Button Set GUI-Parameters -> update GUI Parameters
-- Button Set Inspector.Parameters -> update GUI configuration pannel position
+- Button Set Inspector-Parameters -> update GUI configuration pannel position
 
 
 # Supported UI Elements 
@@ -226,6 +226,9 @@ public:
 ### can toggle two states of a Type
 
 ## NfColorPicker
+### TODO
+
+## NfCommandLine
 ### TODO
 
 
@@ -282,7 +285,8 @@ ofParameter<float> left;
 
 # Features Roadmap
 
-## GUI help pane
+## GUI event display animation
+## Examples: Text-Adventure layout (Image pannel & TextInput)
 
 # Changelog
 
@@ -292,6 +296,9 @@ ofParameter<float> left;
 - 0.0.4 f0004-inspector: 
   - added a nodemanager
   - a property inspector widget for nodes
-  - button hover colors (text & backgrounds)
+  - button hover colors (text & background)
+  - label hover colors (text & background)
+  - pannel hover colors (text & background)
   - text input focus color (background)
+  - added demo animation to /docs and README.md
 

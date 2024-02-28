@@ -22,11 +22,15 @@ public:
     // Inherit NfBoxxer constructor
     using NfBoxxer::NfBoxxer;
     
+    // Event declaration
+    ofEvent<UIEventArgs> clicked;
+    
     void draw() override {
         ofPushMatrix();
         NfBoxxer::draw(); // Call base class draw for common drawing
         
         if (_firstRender) {
+            ofRegisterMouseEvents(this);
             if (_config.isDebug) {
                 std::cout << "NfPanel: " << _name << std::endl;
             }
@@ -34,7 +38,7 @@ public:
         }
 
         if (isFocused.get()) {
-            ofSetColor(focusColor.get());
+            ofSetColor(focusBackgroundColor.get());
         } else {
             ofSetColor(backgroundColor.get());
         }
@@ -48,6 +52,40 @@ public:
         drawChildren(_config.paddingLeft, _config.paddingTop);
         
         ofPopMatrix(); // Restore the drawing context
+    }
+    
+    // mouse event handling -------------------
+    
+    void mouseDragged(ofMouseEventArgs& args) {
+    }
+    
+    void mousePressed(ofMouseEventArgs& args) {
+
+    }
+    
+    void mouseMoved(ofMouseEventArgs& args) {
+        if(boundsMouse.inside(args.x, args.y)) {
+            parameters.getBool("IsFocused") = true;
+            // ofSetCursor(OF_CURSOR_HAND);
+        } else {
+            parameters.getBool("IsFocused") = false;
+            // ofSetCursor(OF_CURSOR_ARROW);
+        }
+    }
+    
+    void mouseScrolled(ofMouseEventArgs& args) {
+    }
+    
+    void mouseEntered(ofMouseEventArgs& args) {
+
+    }
+    
+    void mouseExited(ofMouseEventArgs& args) {
+ 
+    }
+
+    void mouseReleased(ofMouseEventArgs& args) {
+
     }
 };
 

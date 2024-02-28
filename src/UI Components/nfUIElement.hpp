@@ -129,7 +129,10 @@ public:
     }
     
     
-    // This function starts from the current node (this) and iterates through the parents until it finds a node with no parent (parent == nullptr), which is the root of the structure. This is a straightforward and effective way to navigate hierarchical structures, such as scene graphs or family trees, within your application.
+    // This function starts from the current node (this) and iterates
+    // through the parents until it finds a node with no parent (parent == nullptr),
+    // which is the root of the structure. This is a straightforward and effective way
+    // to navigate hierarchical structures, such as scene graphs or family trees, within your application.
     
     NfUIElement* findRoot() {
         NfUIElement* current = this; // Start with the current node
@@ -180,8 +183,6 @@ public:
     
     void setPosition(const ofPoint& position) {
         NfUIElement* rootElement = this->findRoot();
-        
-        
         float offsetX, offsetY;
         offsetX = position.x - rootElement->bounds.x;
         offsetY = position.y - rootElement->bounds.y;
@@ -198,29 +199,6 @@ public:
             child->boundsMouse.y += offsetX;
             child->boundsMouse.y += offsetY;
         }
-        
-        /*
-        float offsetX, offsetY;
-        offsetX = position.x - rootElement->bounds.x;
-        offsetY = position.y - rootElement->bounds.y;
-        
-        std::cout << "pX" << position.x << std::endl;
-        std::cout << "rX" << rootElement->bounds.x << std::endl;
-        std::cout << "bX" << boundsMouse.x << std::endl;
-        std::cout << "oX" << offsetX << std::endl;
-
-        _config.bounds.x = position.x;
-        _config.bounds.y = position.y;
-        bounds.x = position.x;
-        bounds.y = position.y;
-        // update mouseBounds accordingly
-        boundsMouse.x += offsetX;
-        boundsMouse.y += offsetY;
-        std::cout << "bX" << boundsMouse.x << std::endl;
-         */
-        
-        
-        
     }
     
     void getChildDimensions(const std::shared_ptr<NfUIElement>& child, float& width, float& height) {
