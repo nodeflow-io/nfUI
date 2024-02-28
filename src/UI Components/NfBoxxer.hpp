@@ -102,6 +102,8 @@ public:
             }
             child->draw();
         }
+        // setting the mouseBounds to the accumulated height of all children rendered
+        this->boundsMouse.height = accumulatedHeight;
         ofPopMatrix();
     }
 };

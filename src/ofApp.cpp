@@ -36,8 +36,8 @@ void ofApp::setup() {
     float margin = 10;
     float posX = 300;
     float posY = 100;
-    config.backgroundColor = ofColor(35,38,42);                         // background color of pannel
-    config.focusBackgroundColor = ofColor::yellow;
+    config.backgroundColor = ofColor(20,25,31);                         // background color of pannel
+    config.focusBackgroundColor = ofColor(35,38,42);                    // focus color of panel
     config.focusColor = ofColor::black;
     config.bounds = ofRectangle(posX, posY, width, 20);                 // Set desired position and size
     config.isAbsolutePosition = true;                                   // coordinates are absolute position
@@ -66,8 +66,8 @@ void ofApp::setup() {
         "GUI CONFIGURATION"
     );
     
-    config.backgroundColor = ofColor(30,30,30);
-    config.focusBackgroundColor = ofColor::black;
+    config.backgroundColor = ofColor(22,34,51);
+    config.focusBackgroundColor = ofColor(13,20,30);
     config.bounds = ofRectangle(posX, posY, width-2*margin, 20);
     config.setMargin(8, 10, 0, 8);
     config.setPadding(5, 10, 5, 10);
@@ -114,7 +114,7 @@ void ofApp::setup() {
     );
     
     
-    config.backgroundColor = ofColor(46, 80, 117);
+    config.backgroundColor = ofColor(13, 47, 53);
     config.focusBackgroundColor = ofColor::yellow;
     config.focusColor = ofColor::black;
     config.textIsPassword = true;
@@ -129,7 +129,8 @@ void ofApp::setup() {
     width+=40;                                                          // the inspector needs more room
     posX = 0;
     posY = 20;
-    config.backgroundColor = ofColor(35,38,42);                         // background color of pannel
+    config.backgroundColor = ofColor(20,25,31);                         // background color of pannel
+    config.focusBackgroundColor = ofColor(35,38,42);                    // focus color of panel
     config.bounds = ofRectangle(posX, posY, width, 20);                 // Set desired position and size
     config.isAbsolutePosition = true;                                   // coordinates are absolute position
     config.setMargin(0);                                                // sets Top, Right, Bottom and Left
@@ -158,8 +159,8 @@ void ofApp::setup() {
         "INSPECTOR (Gui Configuration)"
     );
     
-    config.backgroundColor = ofColor(30,30,30);
-    config.focusBackgroundColor = ofColor::black;
+    config.backgroundColor = ofColor(22,34,51);
+    config.focusBackgroundColor = ofColor(13,20,30);
     config.bounds = ofRectangle(posX, posY, width-2*margin, 20);
     config.setMargin(8, 10, 0, 8);
     config.setPadding(5, 10, 5, 10);
