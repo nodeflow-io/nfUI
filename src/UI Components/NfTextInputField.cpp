@@ -81,6 +81,7 @@ void NfTextInputField::setup(){
 
 void NfTextInputField::enable(){
     if(!isEnabled){
+        ofAddListener(ofEvents().mouseMoved, this, &NfTextInputField::mouseMoved);
         ofAddListener(ofEvents().mousePressed, this, &NfTextInputField::mousePressed);
         ofAddListener(ofEvents().mouseDragged, this, &NfTextInputField::mouseDragged);
         ofAddListener(ofEvents().mouseReleased, this, &NfTextInputField::mouseReleased);
@@ -93,6 +94,7 @@ void NfTextInputField::disable(){
         endEditing();
     }
     if(isEnabled){
+        ofRemoveListener(ofEvents().mouseMoved, this, &NfTextInputField::mouseMoved);
         ofRemoveListener(ofEvents().mousePressed, this, &NfTextInputField::mousePressed);
         ofRemoveListener(ofEvents().mouseDragged, this, &NfTextInputField::mouseDragged);
         ofRemoveListener(ofEvents().mouseReleased, this, &NfTextInputField::mouseReleased);
@@ -187,7 +189,11 @@ void NfTextInputField::draw() {
     if(isEditing) {
         ofSetColor(focusBackgroundColor.get());
     } else {
-        ofSetColor(backgroundColor.get());
+        if (isFocused.get()) {
+            ofSetColor(focusBackgroundColor.get());
+        } else {
+            ofSetColor(backgroundColor.get());
+        }
     }
     ofDrawRectangle(0,0, textfieldWith, bounds.height);
     
@@ -349,6 +355,15 @@ int NfTextInputField::getCursorPositionFromMouse(int x, int y) {
     return c;
 }
 
+void NfTextInputField::mouseMoved(ofMouseEventArgs& args) {
+    if(boundsMouse.inside(args.x, args.y)) {
+        parameters.getBool("IsFocused") = true;
+        // ofSetCursor(OF_CURSOR_HAND);
+    } else {
+        parameters.getBool("IsFocused") = false;
+        // ofSetCursor(OF_CURSOR_ARROW);
+    }
+}
 
 void NfTextInputField::mousePressed(ofMouseEventArgs& args){
     mouseDownInRect = boundsMouse.inside(args.x, args.y);

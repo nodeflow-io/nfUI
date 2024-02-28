@@ -65,6 +65,7 @@ protected:
     bool    isEnabled;
     bool    isEditing;
     bool    mouseDownInRect;
+    void    mouseMoved(ofMouseEventArgs& args);
     void    mousePressed(ofMouseEventArgs& args);
     void    mouseDragged(ofMouseEventArgs& args);
     void    mouseReleased(ofMouseEventArgs& args);

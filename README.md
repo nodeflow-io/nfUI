@@ -2,6 +2,10 @@
 
 ![nodeFlowUI version 0.0.4](docs/nodeFlowUI-0.0.4.png)
 
+## In action
+
+![nodeFlowUI version 0.0.4](docs/nodeFlowUI-0.0.4-animated.gif)
+
 # Demo UI
 
 ## Status Bar
@@ -289,4 +293,5 @@ ofParameter<float> left;
   - added a nodemanager
   - a property inspector widget for nodes
   - button hover colors (text & backgrounds)
+  - text input focus color (background)
 
