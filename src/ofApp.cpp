@@ -53,8 +53,8 @@ void ofApp::setup() {
     );
    
     config.isAbsolutePosition = false;                                  // relative positioning from now on
-    config.backgroundColor = ofColor(56,62,66);                         // background color of label
-    config.focusBackgroundColor = ofColor(56,62,66, 128);
+    config.backgroundColor = ofColor(56, 62, 66, 128);                  // background color of label
+    config.focusBackgroundColor = ofColor(56, 62, 66, 255);
     config.focusColor = ofColor::yellow;
     config.bounds = ofRectangle(posX, posY, width, 30);
     config.setMargin(0);
@@ -116,6 +116,7 @@ void ofApp::setup() {
     
     config.backgroundColor = ofColor(46, 80, 117);
     config.focusBackgroundColor = ofColor::yellow;
+    config.focusColor = ofColor::black;
     config.textIsPassword = true;
     config.marginBottom = 8;  // TODO: this should not be necessary
     _guiParamsButton = nfUI::createUIElement<nfUI::NfButton, nfUI::StringNFValue>(
@@ -144,8 +145,8 @@ void ofApp::setup() {
     );
     
     config.isAbsolutePosition = false;                                  // relative positioning from now on
-    config.backgroundColor = ofColor(56,62,66);                         // background color of label
-    config.focusBackgroundColor = ofColor(56,62,66, 128);
+    config.backgroundColor = ofColor(56, 62, 66, 128);                  // background color of label
+    config.focusBackgroundColor = ofColor(56,62,66, 255);
     config.focusColor = ofColor::yellow;
     config.bounds = ofRectangle(posX, posY, width, 30);
     config.setMargin(0);
@@ -180,6 +181,7 @@ void ofApp::setup() {
     
     config.backgroundColor = ofColor(46, 80, 117);
     config.focusBackgroundColor = ofColor::yellow;
+    config.focusColor = ofColor::black;
     config.textIsPassword = true;
     config.marginBottom = 8;  // TODO: this should not be necessary
     _inspectorButton = nfUI::createUIElement<nfUI::NfButton, nfUI::StringNFValue>(
