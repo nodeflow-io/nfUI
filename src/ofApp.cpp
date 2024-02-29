@@ -114,7 +114,7 @@ void ofApp::setup() {
     );
     
     
-    config.backgroundColor = ofColor(13, 47, 53);
+    config.backgroundColor = ofColor(46, 80, 117);
     config.focusBackgroundColor = ofColor::yellow;
     config.focusColor = ofColor::black;
     config.textIsPassword = true;
