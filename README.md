@@ -200,12 +200,8 @@ public:
 ### to create an elelement
 
 ## NfPannel
-### TODO
-- make it dragable
 
 ## NfLabel
-### TODO
-- make it dragable
 
 
 ## NfTextInputField
@@ -304,5 +300,6 @@ ofParameter<float> left;
   - label hover colors (text & background)
   - pannel hover colors (text & background)
   - text input focus color (background)
+  - added drag and drop for labels
   - added demo animation to /docs and README.md
 
