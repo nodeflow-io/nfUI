@@ -46,7 +46,7 @@ public:
         // this is used for keeping track of the bounds for mouse interactions
         // If we are drawing the root element we reset it for all children too
         if (this->isRoot()) {
-            this->boundsMouse=bounds;
+            // this->boundsMouse.x =
             for (size_t i = 0; i < children.size(); ++i) {
                 auto& child = children[i];
                 child->boundsMouse=child->bounds;
@@ -56,7 +56,12 @@ public:
         // decide wheter we need to translate to an absolute position
         if (_config.isAbsolutePosition) {
             ofTranslate(bounds.x, bounds.y);
-            translateBounds(boundsMouse, bounds.x, bounds.y, _name);
+            // if this is not the root element we need to translate
+            // the mousebounds to its new absolute position
+            // because mousevents are happening in absolute coordinates
+            if (!this->isRoot()) {
+                translateBounds(boundsMouse, bounds.x, bounds.y, _name);
+            }
             if (_config.isDebug) {
                 std::cout << "Boxxer: " << _name << " absolute position: " << bounds.x << "," << bounds.y << std::endl;
             }
