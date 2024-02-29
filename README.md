@@ -279,7 +279,6 @@ ofParameter<float> left;
 ### TODO
 - fix rendering glitches (margin on first element)
 - horizontal rendering
-- UI manager for setting absolute coordinates for root-UI elements
 - borders for all elements
 
 
