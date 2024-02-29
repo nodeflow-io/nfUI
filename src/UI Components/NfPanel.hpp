@@ -16,7 +16,11 @@ namespace nfUI {
 class NfPanel : public NfBoxxer {
     
 private:
-    bool _firstRender = true; // Flag to track if draw() was called for the first time
+    bool _firstRender = true;   // Flag to track if draw() was called for the first time
+    bool _isDragging = false;   // Flag to track if the panel is being dragged
+    ofPoint _dragStartPos;      // Starting point of a drag
+    ofPoint _panelStartPos;     // Offset from the initial drag point
+     
     
 public:
     // Inherit NfBoxxer constructor
@@ -60,7 +64,6 @@ public:
     }
     
     void mousePressed(ofMouseEventArgs& args) {
-
     }
     
     void mouseMoved(ofMouseEventArgs& args) {
@@ -85,7 +88,6 @@ public:
     }
 
     void mouseReleased(ofMouseEventArgs& args) {
-
     }
 };
 

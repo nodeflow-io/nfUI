@@ -16,9 +16,12 @@ namespace nfUI {
 class NfLabel : public NfBoxxer {
     
 private:
-    bool _firstRender = true; // Flag to track if draw() was called for the first time
-    uint32_t verticalTextOffset; // font size dependant
+    bool _firstRender = true;   // Flag to track if draw() was called for the first time
+    uint32_t verticalTextOffset; 
     uint32_t horizontalTextOffset;
+    bool _isDragging = false;   // Flag to track if the panel is being dragged
+    ofPoint _dragStartPos;      // Starting point of a drag
+    ofPoint _panelStartPos;     // Offset from the initial drag point
     
 public:
     // Inherit NfBoxxer constructor
@@ -76,10 +79,20 @@ public:
     // mouse event handling -------------------
     
     void mouseDragged(ofMouseEventArgs& args) {
+        if(_isDragging) {
+            // Calculate the new position based on the drag
+            ofPoint newPos = _panelStartPos + (ofPoint(args.x, args.y) - _dragStartPos);
+            setPosition(newPos);
+        }
     }
     
     void mousePressed(ofMouseEventArgs& args) {
-
+        // Check if the click is inside the panel's bounds
+        if(boundsMouse.inside(args.x, args.y)) {
+            _isDragging = true;
+            _dragStartPos.set(args.x, args.y);
+            this->getPosition(_panelStartPos);
+        }
     }
     
     void mouseMoved(ofMouseEventArgs& args) {
@@ -104,7 +117,7 @@ public:
     }
 
     void mouseReleased(ofMouseEventArgs& args) {
-
+        _isDragging = false;
     }
 };
 

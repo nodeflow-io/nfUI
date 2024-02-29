@@ -180,6 +180,11 @@ public:
         width = childrenWidthMax + this->_config.paddingLeft + this->_config.paddingRight;
         height = childrenHeight + this->_config.paddingTop + this->_config.paddingBottom;
     }
+    void getPosition(ofPoint& position) {
+        NfUIElement* rootElement = this->findRoot();
+        position.x = rootElement->boundsMouse.x;
+        position.y = rootElement->boundsMouse.y;
+    }
     
     void setPosition(const ofPoint& position) {
         NfUIElement* rootElement = this->findRoot();
