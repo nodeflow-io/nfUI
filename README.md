@@ -2,9 +2,13 @@
 
 ![nodeFlowUI version 0.0.4](docs/nodeFlowUI-0.0.4.png)
 
-## In action
+## In action - with alternate color scheme
 
 ![nodeFlowUI version 0.0.4 animation](docs/nodeFlowUI-0.0.4-animated.gif)
+
+## Text selection, copy & paste in action
+
+![nodeFlowUI version 0.0.4 animation alternate colorscheme](docs/nodeFlowUI-0.0.4-animated-alternate-colors.gif)
 
 # Demo UI
 
