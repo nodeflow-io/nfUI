@@ -1,4 +1,4 @@
-# nodeFlowUI v.0.0.4 - inspector
+# nodeFlowUI v.0.0.5
 
 ![nodeFlowUI version 0.0.4](docs/nodeFlowUI-0.0.4.png)
 
