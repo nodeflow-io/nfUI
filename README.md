@@ -185,9 +185,12 @@ public:
 
 ## Event handlers for GUI
 
-- Key: F1 -> toggle grid display
-- Key: F2 -> toggle statusbar display
-- Key: F3 -> toggle display of FPS in statusbar
+- Key: F1 -> toggle grid display & update UI element (toggle switch)
+- Key: F2 -> toggle statusbar display & update UI element (toggle switch)
+- Key: F3 -> toggle display of FPS in statusbar & update UI element (toggle switch)
+- Toggleswitch showGrid -> update GU Parameters
+- Toggleswitch showStatusBar -> update GU Parameters
+- Toggleswitch showStatusFPS -> update GU Parameters
 - Button Set GUI-Parameters -> update GUI Parameters
 - Button Set Inspector-Parameters -> update GUI configuration pannel position
 
@@ -218,10 +221,11 @@ public:
 ### TODO
 - focus onMouseover (instead of click and release)
 
-# Upcoming UI Elements
-
 ## NfToggleSwitch
 ### can toggle two states of a Type
+
+# Upcoming UI Elements
+
 
 ## NfColorPicker
 ### TODO
@@ -305,4 +309,6 @@ ofParameter<float> left;
   - added events in gui for showing the active node in the gui-statusbar (text 3)
   - added configuration for displaying FPS in statusbar
   - added F3 to toggle FPS display in statusbar
+  - added NfToggleSwitch
+  - added toggle switches (show grid, show statusbar, show fps) to the UI demo
 

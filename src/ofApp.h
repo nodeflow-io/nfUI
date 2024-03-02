@@ -31,6 +31,8 @@ public:
     // your ownn eventhandlers
     void onGuiParametersButtonClicked(nfUI::UIEventArgs& eventArgs);
     void onGuiParametersShowGridClicked(nfUI::UIEventArgs& eventArgs);
+    void onGuiParametersShowStatusBarClicked(nfUI::UIEventArgs& eventArgs);
+    void onGuiParametersShowStatusFPSClicked(nfUI::UIEventArgs& eventArgs);
     void onInspectorButtonClicked(nfUI::UIEventArgs& eventArgs);
     
     // default of eventhandlers
@@ -64,6 +66,8 @@ private:
     std::shared_ptr<nfUI::NfBoxxer> _guiParamsProject;
     std::shared_ptr<nfUI::NfBoxxer> _guiParamsVersion;
     std::shared_ptr<nfUI::NfBoxxer> _guiParamsPassword;
+    std::shared_ptr<nfUI::NfToggleSwitch> _guiParamsShowStatusBar;
+    std::shared_ptr<nfUI::NfToggleSwitch> _guiParamsShowStatusFPS;
     std::shared_ptr<nfUI::NfButton> _guiParamsButton;
     // Inspector widget
     std::shared_ptr<nfUI::NfBoxxer> _inspectorNode;
