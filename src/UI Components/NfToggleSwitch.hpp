@@ -122,6 +122,8 @@ public:
         if(boundsMouse.inside(args.x, args.y)) {
             parameters.getBool("IsFocused") = true;
             // ofSetCursor(OF_CURSOR_HAND);
+            UIEventArgs eventArgs;
+            ofNotifyEvent(clicked, eventArgs, this);
         }
     }
     

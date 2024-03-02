@@ -30,6 +30,7 @@ public:
     
     // your ownn eventhandlers
     void onGuiParametersButtonClicked(nfUI::UIEventArgs& eventArgs);
+    void onGuiParametersShowGridClicked(nfUI::UIEventArgs& eventArgs);
     void onInspectorButtonClicked(nfUI::UIEventArgs& eventArgs);
     
     // default of eventhandlers
@@ -57,7 +58,7 @@ private:
     // Gui Parameters widget
     std::shared_ptr<nfUI::NfBoxxer> _guiParamsNode;
     std::shared_ptr<nfUI::NfBoxxer> _guiParamsLabel;
-    std::shared_ptr<nfUI::NfBoxxer> _guiParamsShowGrid;
+    std::shared_ptr<nfUI::NfToggleSwitch> _guiParamsShowGrid;
     std::shared_ptr<nfUI::NfBoxxer> _guiParamsGridSize;
     std::shared_ptr<nfUI::NfBoxxer> _guiParamsMajorStep;
     std::shared_ptr<nfUI::NfBoxxer> _guiParamsProject;

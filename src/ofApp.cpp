@@ -210,6 +210,7 @@ void ofApp::setup() {
     _guiParamsNode->addChild(_guiParamsPassword);
     _guiParamsNode->addChild(_guiParamsButton);
     // add event handlers for interactive element
+     ofAddListener(_guiParamsShowGrid->clicked, this, &ofApp::onGuiParametersShowGridClicked);
      ofAddListener(_guiParamsButton->clicked, this, &ofApp::onGuiParametersButtonClicked);
     
     // adding childs to inspector widget here
@@ -292,6 +293,11 @@ void ofApp::onGuiParametersButtonClicked(nfUI::UIEventArgs& eventArgs) {
     _guiParams.setMajorStep(nfAPI::toInt(_guiParamsMajorStep->text));
     _guiParams.setStatusBarText1(_guiParamsProject->text);
     _guiParams.setStatusBarText2(_guiParamsVersion->text);
+}
+
+void ofApp::onGuiParametersShowGridClicked(nfUI::UIEventArgs& eventArgs) {
+    std::cout << "ofApp::onGuiParametersShowGridClicked\n";
+    _guiParams._showGrid = !_guiParams._showGrid;
 }
 
 void ofApp::onInspectorButtonClicked(nfUI::UIEventArgs& eventArgs) {
