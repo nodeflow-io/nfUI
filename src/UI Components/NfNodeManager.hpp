@@ -19,6 +19,14 @@ private:
     std::vector<std::shared_ptr<NfBoxxer>> nodes;
 
 public:
+    
+    NfNodeManager() {
+        // Subscribe to node focus events
+        g_eventManager.subscribe("node_focus", [this](const std::string& nodeName) {
+            this->focusNode(nodeName);
+        });
+    }
+    
     // Add a node
     void addNode(std::shared_ptr<NfBoxxer> node) {
         nodes.push_back(node);
@@ -43,14 +51,25 @@ public:
 
     // Focus a node by name
     bool focusNode(const std::string& name) {
-        auto it = std::find_if(nodes.begin(), nodes.end(),
-                               [&name](const std::shared_ptr<NfBoxxer>& node) { return node->_name == name; });
-        if (it != nodes.end()) {
-            (*it)->focus();
-            return true;
+        bool found = false;
+
+        // First, unfocus all nodes
+        for (auto& node : nodes) {
+            node->nodeIsFocused = false; // Assuming each node has an isFocused boolean property
         }
-        return false;
+
+        // Then, find and focus the specified node
+        for (auto& node : nodes) {
+            if (node->_name == name) {
+                node->nodeIsFocused = true;
+                found = true;
+                break; // Stop the loop once the focused node is found
+            }
+        }
+
+        return found; // Return true if the node was found and focused, false otherwise
     }
+
 
     // Remove a node
     bool removeNode(const std::string& name) {

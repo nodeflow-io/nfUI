@@ -12,6 +12,7 @@
 #include "NfUIConfig.hpp"
 #include "../API/ValueType.hpp"
 #include "NFValue.hpp"
+#include "NfEventManager.hpp"
 
 namespace nfUI {
 
