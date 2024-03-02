@@ -22,7 +22,8 @@ void ofApp::setup() {
     _guiParams.setStatusBarTextColor(ofColor(41, 225, 255, 255));
     _guiParams.setStatusBarText1("nodeFlowUI");
     _guiParams.setStatusBarText2(_nfGUI.getVersionString());
-    _guiParams.setStatusBarText3("CLick on a node to see details here");
+    _guiParams.setStatusBarText3("Click on a node to see details here");
+    _guiParams.setShowFPS(false);
     
     // Set up grid parameters -------------------------------------------------------------------
     _guiParams.setShowGrid(true);
@@ -256,17 +257,22 @@ void ofApp::keyPressed(int key) {
         case OF_KEY_F1:
             // F1 key pressed
             _guiParams._showGrid = !_guiParams._showGrid;
-            std::cout << "main _showGrid: " << _guiParams._showGrid << "\n";
+            std::cout << "ofApp::keyPressed _showGrid: " << _guiParams._showGrid << "\n";
             break;
         case OF_KEY_F2:
             // F2 key pressed
             _guiParams._showStatusBar = !_guiParams._showStatusBar;
-            std::cout << "main _showStatusBar: "  << _guiParams._showStatusBar << "\n";
+            std::cout << "ofApp::keyPressed _showStatusBar: "  << _guiParams._showStatusBar << "\n";
+            break;
+        case OF_KEY_F3:
+            // F3 key pressed
+            _guiParams.setShowFPS(!_guiParams.getShowFPS());
+            std::cout << "ofApp::keyPressed _showFPS: "  << _guiParams._showFPS << "\n";
             break;
 
         default:
             // Default action for other keys
-            cout << "key pressed: " << key << endl;
+            cout << "ofApp::keyPressed: " << key << endl;
             break;
     }
 }

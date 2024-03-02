@@ -10,10 +10,10 @@ Why another UI?
 # Demo UI
 
 ## Status Bar
-- Text1
-- Text2
-- Hints - TODO add to config
-- FPS - TODO add to config
+- Text1 (project name)
+- Text2 (version)
+- Text3 (active node)
+- FPS (if configured via _guiParams.setShowFPS(true);)
 
 ## GUI Configuration Pannel
 
@@ -186,7 +186,8 @@ public:
 ## Event handlers for GUI
 
 - Key: F1 -> toggle grid display
-- Key: F2 -> toggle StatusBar display
+- Key: F2 -> toggle statusbar display
+- Key: F3 -> toggle display of FPS in statusbar
 - Button Set GUI-Parameters -> update GUI Parameters
 - Button Set Inspector-Parameters -> update GUI configuration pannel position
 
@@ -301,4 +302,7 @@ ofParameter<float> left;
 - 0.0.5 f0005-refactor:
   - added a NodeManager and an EventManager
   - added events for focusing nodes (focused nodes are rendered in the foreground)
+  - added events in gui for showing the active node in the gui-statusbar (text 3)
+  - added configuration for displaying FPS in statusbar
+  - added F3 to toggle FPS display in statusbar
 

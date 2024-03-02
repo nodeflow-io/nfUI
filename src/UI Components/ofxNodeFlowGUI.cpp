@@ -38,9 +38,12 @@ void ofxNodeFlowGUI::drawStatusBar(const GUIParams& guiParams) {
     // Draw "nodeFlowUI vx.x.x"
     ofDrawBitmapString(guiParams.getStatusBarText1()+" "+guiParams.getStatusBarText2()+"        "+guiParams.getStatusBarText3(), 10, (guiParams._statusBarHeight / 2)+4);
 
-    // Draw "FPS: 30"
-    std::string fpsText = "FPS: " + ofToString(std::round(ofGetFrameRate()));
-    ofDrawBitmapString(fpsText, ofGetWidth() - 80, (guiParams._statusBarHeight / 2)+4);
+    // Draw "FPS: XX"
+    if(guiParams._showFPS) {
+        std::string fpsText = "FPS: " + ofToString(std::round(ofGetFrameRate()));
+        ofDrawBitmapString(fpsText, ofGetWidth() - 80, (guiParams._statusBarHeight / 2)+4);
+    }
+    
 }
 
 void ofxNodeFlowGUI::drawGrid(const GUIParams& guiParams) {

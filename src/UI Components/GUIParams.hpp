@@ -140,6 +140,14 @@ public:
     void setStatusBarText3(const std::string& statusBarText) {
         _statusBarText3 = statusBarText;
     }
+    
+    const bool getShowFPS() const {
+        return _showFPS;
+    }
+    
+    void setShowFPS(const bool showFPS) {
+        _showFPS = showFPS;
+    }
 
     // Statusbar parameters
     bool _showStatusBar;
@@ -157,6 +165,7 @@ public:
     ofColor _majorGridColor;
     ofColor _minorGridColor;
     double _scalingFactor;
+    bool _showFPS;
     
 };
 
