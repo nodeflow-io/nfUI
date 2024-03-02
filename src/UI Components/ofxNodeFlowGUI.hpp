@@ -32,7 +32,7 @@ protected:
     ofTrueTypeFont _font;
     int _majorVersion = 0;
     int _minorVersion = 0;
-    int _patchVersion = 5;
+    int _patchVersion = 6;
     
 };
 

@@ -1,4 +1,4 @@
-# nodeFlowUI v.0.0.5
+# nodeFlowUI v.0.0.6
 
 Why another UI? 
 
