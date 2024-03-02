@@ -41,7 +41,7 @@ public:
             _firstRender=false;
         }
 
-        if (isFocused.get()) {
+        if (nodeIsFocused || isFocused.get()) {
             ofSetColor(focusBackgroundColor.get());
         } else {
             ofSetColor(backgroundColor.get());

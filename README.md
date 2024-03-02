@@ -1,14 +1,11 @@
 # nodeFlowUI v.0.0.5
 
-![nodeFlowUI version 0.0.4](docs/nodeFlowUI-0.0.4.png)
+Why another UI? 
 
-## In action - with alternate color scheme
+## See it in action 
 
-![nodeFlowUI version 0.0.4 animation](docs/nodeFlowUI-0.0.4-animated.gif)
+![nodeFlowUI version 0.0.5 animation](docs/nodeFlowUI-0.0.5-animated.gif)
 
-## Text selection, copy & paste in action
-
-![nodeFlowUI version 0.0.4 animation alternate colorscheme](docs/nodeFlowUI-0.0.4-animated-alternate-colors.gif)
 
 # Demo UI
 
@@ -301,4 +298,7 @@ ofParameter<float> left;
   - text input focus color (background)
   - added drag and drop for labels
   - added demo animation to /docs and README.md
+- 0.0.5 f0005-refactor:
+  - added a NodeManager and an EventManager
+  - added events for focusing nodes (focused nodes are rendered in the foreground)
 
