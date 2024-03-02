@@ -18,7 +18,8 @@ private:
 
 public:
     std::string _name;
-    NfUIConfig _config; // Reference to a NfUIConfig object
+    NfUIConfig _config;
+    bool nodeIsFocused = false;
 
 
     // Updated constructor
@@ -110,6 +111,10 @@ public:
         // setting the mouseBounds to the accumulated height of all children rendered
         this->boundsMouse.height = accumulatedHeight;
         ofPopMatrix();
+    }
+    
+    void focus() {
+        nodeIsFocused = true;
     }
 };
 
