@@ -9,11 +9,22 @@
 
 // constructor
 ofxNodeFlowGUI::ofxNodeFlowGUI() {
+    
 }
 
 // destrutor
 ofxNodeFlowGUI::~ofxNodeFlowGUI()  {
 }
+
+
+void ofxNodeFlowGUI::setupEventManager(GUIParams& guiParams) {
+    // Subscribe to node focus events
+    nfUI::g_eventManager.subscribe("gui_hint", [this, &guiParams](const std::string& hintText) {
+        guiParams.setStatusBarText3(hintText);
+    });
+}
+
+
 
 void ofxNodeFlowGUI::drawStatusBar(const GUIParams& guiParams) {
     if (!guiParams._showStatusBar) return;
@@ -25,7 +36,7 @@ void ofxNodeFlowGUI::drawStatusBar(const GUIParams& guiParams) {
     ofSetColor(guiParams._statusBarTextColor);
 
     // Draw "nodeFlowUI vx.x.x"
-    ofDrawBitmapString(guiParams.getStatusBarText1()+" "+guiParams.getStatusBarText2()+"        Nodes: 1    Channels: 6    Connections: 0", 10, (guiParams._statusBarHeight / 2)+4);
+    ofDrawBitmapString(guiParams.getStatusBarText1()+" "+guiParams.getStatusBarText2()+"        "+guiParams.getStatusBarText3(), 10, (guiParams._statusBarHeight / 2)+4);
 
     // Draw "FPS: 30"
     std::string fpsText = "FPS: " + ofToString(std::round(ofGetFrameRate()));

@@ -14,6 +14,7 @@
 #include "NfButton.hpp"
 #include "NfTextInputField.hpp"
 #include "NfDom.hpp"
+#include "GUIParams.hpp"
 
 
 
@@ -45,8 +46,9 @@ public:
     void gotMessage(ofMessage msg) override;
     
 private:
-    ofxNodeFlowGUI _nfGUI;
+    
     GUIParams _guiParams;
+    ofxNodeFlowGUI _nfGUI;
     
     nfUI::NfNodeManager _nodeManager;
     

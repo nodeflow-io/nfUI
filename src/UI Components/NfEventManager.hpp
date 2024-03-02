@@ -33,7 +33,7 @@ public:
     }
 };
 
-// Global event manager instance
+// Declaration only
 extern NfEventManager g_eventManager;
 
 }

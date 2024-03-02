@@ -22,6 +22,7 @@ void ofApp::setup() {
     _guiParams.setStatusBarTextColor(ofColor(41, 225, 255, 255));
     _guiParams.setStatusBarText1("nodeFlowUI");
     _guiParams.setStatusBarText2(_nfGUI.getVersionString());
+    _guiParams.setStatusBarText3("CLick on a node to see details here");
     
     // Set up grid parameters -------------------------------------------------------------------
     _guiParams.setShowGrid(true);
@@ -215,6 +216,9 @@ void ofApp::setup() {
     // adding widgets to NodeManager
     _nodeManager.addNode(_guiParamsNode); // Add the GUI Parameters to the node manager
     _nodeManager.addNode(_inspectorNode); // Add the inspector to the node manager
+    
+    // setup event handlers for the gui
+    _nfGUI.setupEventManager(_guiParams);
 }
 
 //--------------------------------------------------------------

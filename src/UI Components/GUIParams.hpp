@@ -133,6 +133,13 @@ public:
         _statusBarText2 = statusBarText;
     }
     
+    const std::string& getStatusBarText3() const {
+        return _statusBarText3;
+    }
+    
+    void setStatusBarText3(const std::string& statusBarText) {
+        _statusBarText3 = statusBarText;
+    }
 
     // Statusbar parameters
     bool _showStatusBar;
@@ -141,6 +148,7 @@ public:
     ofColor _statusBarTextColor;
     std::string _statusBarText1;
     std::string _statusBarText2;
+    std::string _statusBarText3;
     
     // Grid parameters
     bool _showGrid;

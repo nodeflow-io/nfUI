@@ -62,6 +62,7 @@ public:
         for (auto& node : nodes) {
             if (node->_name == name) {
                 node->nodeIsFocused = true;
+                g_eventManager.emit("gui_hint", name);
                 found = true;
                 break; // Stop the loop once the focused node is found
             }
