@@ -2,7 +2,7 @@
 //  NfDom.cpp
 //  nodeflowUI
 //
-//  Created by Ulrike Siegl on 22.02.24.
+//  Created by Matthias Strohmaier on 22.02.24.
 //
 
 #include "NfDom.hpp"

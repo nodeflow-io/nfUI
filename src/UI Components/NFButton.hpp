@@ -2,7 +2,7 @@
 //  NfButton.hpp
 //  nodeflowUI
 //
-//  Created by Matthias Strohmaie on 21.02.24.
+//  Created by Matthias Strohmaier on 21.02.24.
 //
 
 #ifndef NfButton_hpp
