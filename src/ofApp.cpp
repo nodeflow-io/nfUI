@@ -298,6 +298,11 @@ void ofApp::onGuiParametersButtonClicked(nfUI::UIEventArgs& eventArgs) {
 void ofApp::onGuiParametersShowGridClicked(nfUI::UIEventArgs& eventArgs) {
     std::cout << "ofApp::onGuiParametersShowGridClicked\n";
     _guiParams._showGrid = !_guiParams._showGrid;
+    
+    // Create a std::unique_ptr to BoolNFValue
+    auto boolNFtemp = std::make_unique<nfUI::BoolNFValue>(_guiParams._showGrid);
+    // Assuming _guiParamsShowGrid->setValue expects a std::unique_ptr<NFValue>
+    _guiParamsShowGrid->setValue(std::move(boolNFtemp));
 }
 
 void ofApp::onInspectorButtonClicked(nfUI::UIEventArgs& eventArgs) {
