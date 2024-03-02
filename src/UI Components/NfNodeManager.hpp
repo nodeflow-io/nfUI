@@ -62,7 +62,8 @@ public:
         for (auto& node : nodes) {
             if (node->_name == name) {
                 node->nodeIsFocused = true;
-                g_eventManager.emit("gui_hint", name);
+                // emit event to the gui - so it updates the hint
+                g_eventManager.emit("gui_hint", "Node: "+ name+" ("+ofToString(node->getChildCountOfRoot())+" Elements)");
                 found = true;
                 break; // Stop the loop once the focused node is found
             }

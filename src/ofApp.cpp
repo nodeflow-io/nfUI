@@ -31,6 +31,9 @@ void ofApp::setup() {
     _guiParams.setMajorGridColor(ofColor(255, 0, 0, 128)); // Red for major grid lines
     _guiParams.setMinorGridColor(ofColor(255, 0, 0, 50));  // Red dark for minor grid lines
     
+    // Set up gui event handlers ----------------------------------------------------------------
+    _nfGUI.setupEventManager(_guiParams);
+    
     // Setup UI Elements -------------------[ DOM configuration / Elements & Styles ]------------
     nfUI::NfUIConfig config;                                            // Create a config object
     float width = 220;
@@ -49,8 +52,8 @@ void ofApp::setup() {
     config.isDebug = false;                                             // wether to log debug infos to the console
     _guiParamsNode = nfUI::createUIElement<nfUI::NfPanel, nfUI::StringNFValue>(
         config,
-        "UI Config Pannel",
-        "UI Parameters"
+        "GUI Configuration",
+        "GUI Parameters"
     );
    
     config.isAbsolutePosition = false;                                  // relative positioning from now on
@@ -142,7 +145,7 @@ void ofApp::setup() {
     config.isDebug = false;                                             // wether to log debug infos to the console
     _inspectorNode = nfUI::createUIElement<nfUI::NfPanel, nfUI::StringNFValue>(
         config,
-        "InspectorPannel",
+        "Inspector",
         "Inspector"
     );
     
@@ -217,8 +220,7 @@ void ofApp::setup() {
     _nodeManager.addNode(_guiParamsNode); // Add the GUI Parameters to the node manager
     _nodeManager.addNode(_inspectorNode); // Add the inspector to the node manager
     
-    // setup event handlers for the gui
-    _nfGUI.setupEventManager(_guiParams);
+    
 }
 
 //--------------------------------------------------------------

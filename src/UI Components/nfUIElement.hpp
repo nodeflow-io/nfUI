@@ -247,6 +247,12 @@ public:
         }
     }
     
+    size_t getChildCountOfRoot() {
+        NfUIElement* rootElement = this->findRoot();
+        // TODO: also count subchildren of children
+        return rootElement->children.size();
+    }
+    
 };
 
 } // nfUI
