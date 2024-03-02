@@ -2,7 +2,7 @@
 //  NFValue.hpp
 //  nodeflowUI
 //
-//  Created by Ulrike Siegl on 21.02.24.
+//  Created by Matthias Strohmaier on 21.02.24.
 //
 
 #ifndef NFValue_hpp
@@ -17,13 +17,11 @@ class NFValue {
 public:
     virtual ~NFValue() {}
     
-    // Virtual function to return value as string
     virtual std::string toString() const = 0;
-    
+    virtual bool toBool() const = 0;
     virtual nfAPI::ValueType getType() const = 0;
 };
 
-// Example NFValues using ofParameter types
 class StringNFValue : public NFValue {
 public:
     ofParameter<std::string> value;
@@ -37,8 +35,11 @@ public:
     nfAPI::ValueType getType() const override {
         return nfAPI::ValueType::String;
     }
+    
+    bool toBool() const override {
+        return !value.get().empty();
+    }
 };
-
 
 class DoubleNFValue : public NFValue {
 public:
@@ -52,6 +53,10 @@ public:
     
     nfAPI::ValueType getType() const override {
         return nfAPI::ValueType::Double;
+    }
+    
+    bool toBool() const override {
+        return value.get() != 0.0;
     }
 };
 
@@ -68,6 +73,10 @@ public:
     nfAPI::ValueType getType() const override {
         return nfAPI::ValueType::Bool;
     }
+    
+    bool toBool() const override {
+        return value.get();
+    }
 };
 
 class IntNFValue : public NFValue {
@@ -82,6 +91,10 @@ public:
     
     nfAPI::ValueType getType() const override {
         return nfAPI::ValueType::Int;
+    }
+    
+    bool toBool() const override {
+        return value.get() != 0;
     }
 };
 

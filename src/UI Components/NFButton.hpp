@@ -64,7 +64,7 @@ public:
             // calculate text position
             horizontalTextOffset = _config.paddingLeft;
             verticalTextOffset = BITMAP_FONT_SIZE + _config.paddingTop;
-            ofDrawBitmapString(valueAsString, horizontalTextOffset, verticalTextOffset); // Placeholder for text drawing
+            ofDrawBitmapString(valueAsString, horizontalTextOffset, verticalTextOffset);
         } else {
             std::cout << "NfButton: " << _name << ":no value available." << std::endl;
         }

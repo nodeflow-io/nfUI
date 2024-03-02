@@ -71,20 +71,23 @@ void ofApp::setup() {
         "GUI CONFIGURATION"
     );
     
-    config.backgroundColor = ofColor(22,34,51);
-    config.focusBackgroundColor = ofColor(13,20,30);
+    // in this case we use an alpha value because focused elements 
+    config.backgroundColor = ofColor(255,0,0,150);
+    config.focusBackgroundColor = ofColor(0,255,0,150);
     config.bounds = ofRectangle(posX, posY, width-2*margin, 20);
     config.setMargin(8, 10, 0, 8);
     config.setPadding(5, 10, 5, 10);
     config.maxTextLength = 1;
     config.showLabel = true;
-    _guiParamsShowGrid = nfUI::createUIElement<nfUI::NfTextInputField, nfUI::BoolNFValue>(
+    _guiParamsShowGrid = nfUI::createUIElement<nfUI::NfToggleSwitch, nfUI::BoolNFValue>(
         config,
         "Show Grid",
          _guiParams.getShowGrid()
     );
     
 
+    config.backgroundColor = ofColor(22,34,51);
+    config.focusBackgroundColor = ofColor(13,20,30);
     config.maxTextLength = 4;
     _guiParamsGridSize = nfUI::createUIElement<nfUI::NfTextInputField, nfUI::IntNFValue>(
         config,
