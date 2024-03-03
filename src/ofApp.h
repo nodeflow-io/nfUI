@@ -54,7 +54,7 @@ private:
     GUIParams _guiParams;
     ofxNodeFlowGUI _nfGUI;
     
-    nfUI::NfNodeManager _nodeManager;
+    // nfUI::NfNodeManager _nodeManager;
     
     // define UI Elements that may require global event handling
     // Gui Parameters widget

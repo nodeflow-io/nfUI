@@ -190,6 +190,9 @@ public:
     
 };
 
+// Declaration only
+extern NfNodeManager g_nodeManager;
+
 } // namespace nfUI
 
 

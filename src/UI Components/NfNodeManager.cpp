@@ -6,3 +6,5 @@
 //
 
 #include "NfNodeManager.hpp"
+
+nfUI::NfNodeManager nfUI::g_nodeManager; // Definition

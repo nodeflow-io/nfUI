@@ -19,15 +19,17 @@ public:
         : NfBoxxer(config, name, std::make_unique<StringNFValue>("")) {}
 
     void selectItem(int itemIndex) {
-        // Convert itemIndex to string
-        std::string itemIndexStr = std::to_string(itemIndex);
-
         // Logic to handle item selection
-        // Notify the NfNodeManager or parent node of the selection
-        g_eventManager.emit("dropdown_selection", itemIndexStr);
+        g_eventManager.emit("dropdown_selection", std::to_string(itemIndex));
+        // Close the modal after selection
+       // g_nodeManager.closeModalNode(_name);
     }
 
-    // Override draw method if needed to render dropdown options
+    // Override the draw method to render dropdown options
+    void draw() override {
+        // Your drawing logic here
+        std::cout << "Drawing dropdown: " << _name << std::endl;
+    }
 };
 
 }

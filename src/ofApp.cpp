@@ -246,8 +246,8 @@ void ofApp::setup() {
      ofAddListener(_inspectorButton->clicked, this, &ofApp::onInspectorButtonClicked);
     
     // adding widgets to NodeManager
-    _nodeManager.addNode(_guiParamsNode); // Add the GUI Parameters to the node manager
-    _nodeManager.addNode(_inspectorNode); // Add the inspector to the node manager
+    nfUI::g_nodeManager.addNode(_guiParamsNode); // Add the GUI Parameters to the node manager
+    nfUI::g_nodeManager.addNode(_inspectorNode); // Add the inspector to the node manager
     
     
 }
@@ -268,7 +268,7 @@ void ofApp::draw(){
     _nfGUI.drawStatusBar(this->_guiParams);
     
     // draw nodes
-    _nodeManager.drawNodes(); // This starts the recursive drawing process
+    nfUI::g_nodeManager.drawNodes(); // This starts the recursive drawing process
     
     ofPopMatrix(); // Restore the transformation matrix
 }
