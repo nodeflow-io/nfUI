@@ -11,6 +11,7 @@
 #include <vector>
 #include <memory>
 #include "NfBoxxer.hpp"
+#include "NfDropdown.hpp"
 
 namespace nfUI {
 
@@ -18,6 +19,7 @@ class NfNodeManager {
 private:
     std::vector<std::shared_ptr<NfBoxxer>> nodes;
     std::vector<std::shared_ptr<NfBoxxer>> modalNodes;
+    using ListenerID = size_t; // Unique identifier for listeners
 
 public:
     
@@ -34,22 +36,6 @@ public:
     }
 
     // Draw all nodes, ensuring the focused node is drawn last
-    void drawNodesOld() {
-        // Find the focused node
-        auto it = std::find_if(nodes.begin(), nodes.end(),
-                               [](const std::shared_ptr<NfBoxxer>& node) { return node->nodeIsFocused; });
-        
-        if (it != nodes.end()) {
-            // Move the focused node to the end of the vector
-            std::rotate(it, it + 1, nodes.end());
-        }
-
-        // Draw the nodes, with the focused node being drawn last
-        for (auto& node : nodes) {
-            node->draw();
-        }
-    }
-    
     void drawNodes() {
         // Find the focused node
         auto it = std::find_if(nodes.begin(), nodes.end(),
@@ -149,6 +135,59 @@ public:
         }
         return false;
     }
+    
+    
+    // A method to handle requests from nodes to open modals.
+    // This could involve passing a callback or using the event manager to handle the modal's response.
+    void requestModalNode(std::shared_ptr<NfBoxxer> requestingNode, NfModalType modalType, NfUIConfig config, std::string name) {
+        std::shared_ptr<NfBoxxer> modalNode;
+        if (modalType == NfModalType::Dropdown) {
+            modalNode = std::make_shared<NfDropdown>(config, name);
+        }
+
+        // Subscribe and save the listener ID
+        ListenerID id = g_eventManager.subscribe("dropdown_selection", [requestingNode](const std::string& itemIndexStr) {
+            int itemIndex = std::stoi(itemIndexStr);
+            // requestingNode->setValueFromModal(itemIndex);
+        });
+
+        // Store the listener ID with the modal node or in a map
+        modalNode->setListenerID(id); // Or modalListenerIDs[modalNodeName] = id;
+
+        addModalNode(modalNode);
+    }
+
+    
+    void closeModalNode(const std::string& modalNodeName) {
+        // Retrieve the listener ID for the modal node
+        // Assuming you have a way to get the modal node by name
+        auto modalNode = getModalNodeByName(modalNodeName);
+        if (modalNode) {
+            ListenerID id = modalNode->getListenerID(); // Or id = modalListenerIDs[modalNodeName];
+            
+            // Unsubscribe using both the event type and the listener ID
+            g_eventManager.unsubscribe("dropdown_selection", id);
+            
+            // Proceed to remove the modal node
+            removeModalNode(modalNodeName);
+            
+            // Optionally, if using a map: modalListenerIDs.erase(modalNodeName);
+        }
+    }
+    
+    std::shared_ptr<NfBoxxer> getModalNodeByName(const std::string& modalNodeName) {
+        // Search through the modalNodes collection for a node with the matching name
+        for (const auto& modalNode : modalNodes) {
+            if (modalNode->_name == modalNodeName) {
+                return modalNode; // Return the found node
+            }
+        }
+        // Return nullptr if no matching node is found
+        return nullptr;
+    }
+
+    
+    
 };
 
 } // namespace nfUI

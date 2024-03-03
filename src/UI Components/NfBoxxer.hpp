@@ -9,12 +9,16 @@
 #define NfBoxxer_hpp
 
 #include "nfUIElement.hpp"
+#include "NfModalType.h"
+
 namespace nfUI {
 
 class NfBoxxer : public NfUIElement {
     
 private:
+    using ListenerID = size_t;
     bool _firstRender = true; // Flag to track if draw() was called for the first time
+    ListenerID listenerID;
 
 public:
     std::string _name;
@@ -115,6 +119,16 @@ public:
     
     void focus() {
         nodeIsFocused = true;
+    }
+    
+    // Set the listener ID for the node
+    void setListenerID(ListenerID id) {
+        listenerID = id;
+    }
+
+    // Get the listener ID for the node
+    ListenerID getListenerID() const {
+        return listenerID;
     }
 };
 
