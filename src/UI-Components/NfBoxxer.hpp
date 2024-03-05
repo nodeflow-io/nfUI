@@ -97,7 +97,7 @@ public:
         ofTranslate(paddingLeft, paddingTop);
         name = "padding: "+_name;
         translateBounds(boundsMouse, paddingLeft, paddingTop, _name);
-        float accumulatedHeight;
+        float accumulatedHeight=0;
         for (size_t i = 0; i < children.size(); ++i) {
             auto& child = children[i];
             // auto& childsParent = children[i]->parent;

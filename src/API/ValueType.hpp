@@ -12,6 +12,7 @@
 #include <string>
 #include <cstdint> // For uint32_t
 #include <iostream>
+#include <algorithm>
 
 namespace nfAPI {
 

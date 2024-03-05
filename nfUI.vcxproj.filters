@@ -1,0 +1,180 @@
+<?xml version="1.0"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+	<ItemGroup>
+		<ClCompile Include="src\ofApp.cpp">
+			<Filter>src</Filter>
+		</ClCompile>
+		<ClCompile Include="src\main.cpp">
+			<Filter>src</Filter>
+		</ClCompile>
+		<ClCompile Include="src\API\ValueType.cpp">
+			<Filter>src\API</Filter>
+		</ClCompile>
+		<ClCompile Include="src\UI-Components\GUIParams.cpp">
+			<Filter>src\UI-Components</Filter>
+		</ClCompile>
+		<ClCompile Include="src\UI-Components\NFValue.cpp">
+			<Filter>src\UI-Components</Filter>
+		</ClCompile>
+		<ClCompile Include="src\UI-Components\NfBoxxer.cpp">
+			<Filter>src\UI-Components</Filter>
+		</ClCompile>
+		<ClCompile Include="src\UI-Components\NfBoxxerManager.cpp">
+			<Filter>src\UI-Components</Filter>
+		</ClCompile>
+		<ClCompile Include="src\UI-Components\NfButton.cpp">
+			<Filter>src\UI-Components</Filter>
+		</ClCompile>
+		<ClCompile Include="src\UI-Components\NfDom.cpp">
+			<Filter>src\UI-Components</Filter>
+		</ClCompile>
+		<ClCompile Include="src\UI-Components\NfDropdown.cpp">
+			<Filter>src\UI-Components</Filter>
+		</ClCompile>
+		<ClCompile Include="src\UI-Components\NfEventManager.cpp">
+			<Filter>src\UI-Components</Filter>
+		</ClCompile>
+		<ClCompile Include="src\UI-Components\NfLabel.cpp">
+			<Filter>src\UI-Components</Filter>
+		</ClCompile>
+		<ClCompile Include="src\UI-Components\NfNodeManager.cpp">
+			<Filter>src\UI-Components</Filter>
+		</ClCompile>
+		<ClCompile Include="src\UI-Components\NfPanel.cpp">
+			<Filter>src\UI-Components</Filter>
+		</ClCompile>
+		<ClCompile Include="src\UI-Components\NfTextInputField.cpp">
+			<Filter>src\UI-Components</Filter>
+		</ClCompile>
+		<ClCompile Include="src\UI-Components\NfToggleSwitch.cpp">
+			<Filter>src\UI-Components</Filter>
+		</ClCompile>
+		<ClCompile Include="src\UI-Components\NfUIConfig.cpp">
+			<Filter>src\UI-Components</Filter>
+		</ClCompile>
+		<ClCompile Include="src\UI-Components\nfUIElement.cpp">
+			<Filter>src\UI-Components</Filter>
+		</ClCompile>
+		<ClCompile Include="src\UI-Components\ofxNodeFlowGUI.cpp">
+			<Filter>src\UI-Components</Filter>
+		</ClCompile>
+		<ClCompile Include="src\main.cpp">
+			<Filter>src</Filter>
+		</ClCompile>
+		<ClCompile Include="src\ofApp.cpp">
+			<Filter>src</Filter>
+		</ClCompile>
+		<ClCompile Include="..\..\..\addons\ofxXmlSettings\src\ofxXmlSettings.cpp">
+			<Filter>addons\ofxXmlSettings\src</Filter>
+		</ClCompile>
+		<ClCompile Include="..\..\..\addons\ofxXmlSettings\libs\tinyxml.cpp">
+			<Filter>addons\ofxXmlSettings\libs</Filter>
+		</ClCompile>
+		<ClCompile Include="..\..\..\addons\ofxXmlSettings\libs\tinyxmlerror.cpp">
+			<Filter>addons\ofxXmlSettings\libs</Filter>
+		</ClCompile>
+		<ClCompile Include="..\..\..\addons\ofxXmlSettings\libs\tinyxmlparser.cpp">
+			<Filter>addons\ofxXmlSettings\libs</Filter>
+		</ClCompile>
+	</ItemGroup>
+	<ItemGroup>
+		<Filter Include="src">
+			<UniqueIdentifier>{d8376475-7454-4a24-b08a-aac121d3ad6f}</UniqueIdentifier>
+		</Filter>
+		<Filter Include="src\API">
+			<UniqueIdentifier>{AA4478D1--042-A-45-41-B-DF1-462FE8D8CD43}</UniqueIdentifier>
+		</Filter>
+		<Filter Include="src\UI-Components">
+			<UniqueIdentifier>{EB8E1F00--E1D-8-45-D0-A-36C-A2E19AB460E4}</UniqueIdentifier>
+		</Filter>
+		<Filter Include="addons">
+			<UniqueIdentifier>{FE415F8B--481-1-47-F5-9-AD0-E2B11251CECF}</UniqueIdentifier>
+		</Filter>
+		<Filter Include="addons\ofxXmlSettings">
+			<UniqueIdentifier>{07B746CE--3DD-6-44-A6-8-6E6-ACAE3AB1C99B}</UniqueIdentifier>
+		</Filter>
+		<Filter Include="addons\ofxXmlSettings\src">
+			<UniqueIdentifier>{0463CFF7--03B-7-43-FA-9-044-A2E320447FC8}</UniqueIdentifier>
+		</Filter>
+		<Filter Include="addons\ofxXmlSettings\libs">
+			<UniqueIdentifier>{B14B0A10--540-E-40-1B-B-6F7-BC44392A6EA8}</UniqueIdentifier>
+		</Filter>
+	</ItemGroup>
+	<ItemGroup>
+		<ClInclude Include="src\ofApp.h">
+			<Filter>src</Filter>
+		</ClInclude>
+		<ClInclude Include="src\API\ValueType.hpp">
+			<Filter>src\API</Filter>
+		</ClInclude>
+		<ClInclude Include="src\UI-Components\GUIParams.hpp">
+			<Filter>src\UI-Components</Filter>
+		</ClInclude>
+		<ClInclude Include="src\UI-Components\NFConstants.h">
+			<Filter>src\UI-Components</Filter>
+		</ClInclude>
+		<ClInclude Include="src\UI-Components\NFValue.hpp">
+			<Filter>src\UI-Components</Filter>
+		</ClInclude>
+		<ClInclude Include="src\UI-Components\NfBoxxer.hpp">
+			<Filter>src\UI-Components</Filter>
+		</ClInclude>
+		<ClInclude Include="src\UI-Components\NfBoxxerManager.hpp">
+			<Filter>src\UI-Components</Filter>
+		</ClInclude>
+		<ClInclude Include="src\UI-Components\NfButton.hpp">
+			<Filter>src\UI-Components</Filter>
+		</ClInclude>
+		<ClInclude Include="src\UI-Components\NfDom.hpp">
+			<Filter>src\UI-Components</Filter>
+		</ClInclude>
+		<ClInclude Include="src\UI-Components\NfDropdown.hpp">
+			<Filter>src\UI-Components</Filter>
+		</ClInclude>
+		<ClInclude Include="src\UI-Components\NfEventManager.hpp">
+			<Filter>src\UI-Components</Filter>
+		</ClInclude>
+		<ClInclude Include="src\UI-Components\NfLabel.hpp">
+			<Filter>src\UI-Components</Filter>
+		</ClInclude>
+		<ClInclude Include="src\UI-Components\NfModalType.h">
+			<Filter>src\UI-Components</Filter>
+		</ClInclude>
+		<ClInclude Include="src\UI-Components\NfNodeManager.hpp">
+			<Filter>src\UI-Components</Filter>
+		</ClInclude>
+		<ClInclude Include="src\UI-Components\NfPanel.hpp">
+			<Filter>src\UI-Components</Filter>
+		</ClInclude>
+		<ClInclude Include="src\UI-Components\NfTextInputField.hpp">
+			<Filter>src\UI-Components</Filter>
+		</ClInclude>
+		<ClInclude Include="src\UI-Components\NfToggleSwitch.hpp">
+			<Filter>src\UI-Components</Filter>
+		</ClInclude>
+		<ClInclude Include="src\UI-Components\NfUIConfig.hpp">
+			<Filter>src\UI-Components</Filter>
+		</ClInclude>
+		<ClInclude Include="src\UI-Components\nfUIElement.hpp">
+			<Filter>src\UI-Components</Filter>
+		</ClInclude>
+		<ClInclude Include="src\UI-Components\ofxNodeFlowGUI.hpp">
+			<Filter>src\UI-Components</Filter>
+		</ClInclude>
+		<ClInclude Include="src\UI-Components\ofxTextInputFieldFontRenderer.h">
+			<Filter>src\UI-Components</Filter>
+		</ClInclude>
+		<ClInclude Include="src\ofApp.h">
+			<Filter>src</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\addons\ofxXmlSettings\src\ofxXmlSettings.h">
+			<Filter>addons\ofxXmlSettings\src</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\addons\ofxXmlSettings\libs\tinyxml.h">
+			<Filter>addons\ofxXmlSettings\libs</Filter>
+		</ClInclude>
+	</ItemGroup>
+	<ItemGroup>
+		<ResourceCompile Include="icon.rc" />
+	</ItemGroup>
+</Project>
