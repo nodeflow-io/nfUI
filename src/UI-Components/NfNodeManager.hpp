@@ -12,6 +12,7 @@
 #include <memory>
 #include "NfBoxxer.hpp"
 #include "NfDropdown.hpp"
+#include "NfEventManager.hpp"
 
 namespace nfUI {
 
@@ -25,7 +26,7 @@ public:
     
     NfNodeManager() {
         // Subscribe to node focus events
-        g_eventManager.subscribe("node_focus", [this](const std::string& nodeName) {
+        nfUI::NfEventManager::getEventManager().subscribe("node_focus", [this](const std::string& nodeName) {
             this->focusNode(nodeName);
         });
     }
@@ -116,7 +117,7 @@ public:
             if (node->_name == name) {
                 node->nodeIsFocused = true;
                 // emit event to the GUI - so it updates the hint
-                g_eventManager.emit("gui_hint", "Node: " + name + " (" + ofToString(node->getChildCountOfRoot()) + " Elements)");
+                nfUI::NfEventManager::getEventManager().emit("gui_hint", "Node: " + name + " (" + ofToString(node->getChildCountOfRoot()) + " Elements)");
                 return true; // Node found and focused
             }
         }
@@ -146,7 +147,7 @@ public:
         }
 
         // Subscribe and save the listener ID
-        ListenerID id = g_eventManager.subscribe("dropdown_selection", [requestingNode](const std::string& itemIndexStr) {
+        ListenerID id = nfUI::NfEventManager::getEventManager().subscribe("dropdown_selection", [requestingNode](const std::string& itemIndexStr) {
             int itemIndex = std::stoi(itemIndexStr);
             // requestingNode->setValueFromModal(itemIndex);
         });
@@ -166,7 +167,7 @@ public:
             ListenerID id = modalNode->getListenerID(); // Or id = modalListenerIDs[modalNodeName];
             
             // Unsubscribe using both the event type and the listener ID
-            g_eventManager.unsubscribe("dropdown_selection", id);
+            nfUI::NfEventManager::getEventManager().unsubscribe("dropdown_selection", id);
             
             // Proceed to remove the modal node
             removeModalNode(modalNodeName);

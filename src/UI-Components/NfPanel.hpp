@@ -10,6 +10,7 @@
 
 #include "ofMain.h"
 #include "NfBoxxer.hpp"
+#include "NfEventManager.hpp"
 
 namespace nfUI {
 
@@ -66,7 +67,7 @@ public:
     void mousePressed(ofMouseEventArgs& args) {
         if(boundsMouse.inside(args.x, args.y)) {
             if (!this->nodeIsFocused) {
-                g_eventManager.emit("node_focus", this->_name);
+                nfUI::NfEventManager::getEventManager().emit("node_focus", this->_name);
             }
         }
     }

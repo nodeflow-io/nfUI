@@ -9,5 +9,12 @@ ifndef OF_ROOT
 	OF_ROOT=$(realpath ../../..)
 endif
 
+# add our own directories
+PROJECT_INCLUDE_CFLAGS += -I$(CURDIR)/src/API
+PROJECT_INCLUDE_CFLAGS += -I$(CURDIR)/src/UI-Components
+
+$(info PROJECT_INCLUDE_CFLAGS is $(PROJECT_INCLUDE_CFLAGS))
+
+
 # call the project makefile!
 include $(OF_ROOT)/libs/openFrameworksCompiled/project/makefileCommon/compile.project.mk

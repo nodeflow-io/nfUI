@@ -19,7 +19,7 @@ ofxNodeFlowGUI::~ofxNodeFlowGUI()  {
 
 void ofxNodeFlowGUI::setupEventManager(GUIParams& guiParams) {
     // Subscribe to node focus events
-    nfUI::g_eventManager.subscribe("gui_hint", [this, &guiParams](const std::string& hintText) {
+    nfUI::NfEventManager::getEventManager().subscribe("gui_hint", [this, &guiParams](const std::string& hintText) {
         guiParams.setStatusBarText3(hintText);
     });
 }

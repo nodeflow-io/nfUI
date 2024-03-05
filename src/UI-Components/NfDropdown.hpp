@@ -10,6 +10,7 @@
 
 #include "ofMain.h"
 #include "NfBoxxer.hpp"
+#include "NfEventManager.hpp"
 
 namespace nfUI {
 
@@ -19,8 +20,9 @@ public:
         : NfBoxxer(config, name, std::make_unique<StringNFValue>("")) {}
 
     void selectItem(int itemIndex) {
+        
         // Logic to handle item selection
-        g_eventManager.emit("dropdown_selection", std::to_string(itemIndex));
+        nfUI::NfEventManager::getEventManager().emit("dropdown_selection", std::to_string(itemIndex));
         // Close the modal after selection
        // g_nodeManager.closeModalNode(_name);
     }

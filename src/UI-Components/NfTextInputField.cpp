@@ -415,21 +415,32 @@ void NfTextInputField::mouseReleased(ofMouseEventArgs& args){
 #endif
 
 
-void NfTextInputField::setClipboard(string clippy)
-{
-    glfwSetClipboardString( (GLFWwindow*) ofGetWindowPtr()->getCocoaWindow(), clippy.c_str());
+#include "ofAppRunner.h" // Ensure this is included for ofGetWindowPtr()
+#include "ofAppGLFWWindow.h"
+
+void NfTextInputField::setClipboard(string clippy) {
+    auto windowPtr = dynamic_cast<ofAppGLFWWindow*>(ofGetWindowPtr());
+    if (windowPtr != nullptr) { // Ensure the cast was successful
+        glfwSetClipboardString(windowPtr->getGLFWWindow(), clippy.c_str());
+    } else {
+        ofLogWarning("NfTextInputField::setClipboard") << "Window pointer is not of type ofAppGLFWWindow.";
+    }
 }
 
-string NfTextInputField::getClipboard()
-{
-    const char *clip = glfwGetClipboardString((GLFWwindow*) ofGetWindowPtr()->getCocoaWindow());
-    if(clip!=NULL) {
-        return string(clip);
+string NfTextInputField::getClipboard() {
+    auto windowPtr = dynamic_cast<ofAppGLFWWindow*>(ofGetWindowPtr());
+    if (windowPtr != nullptr) { // Ensure the cast was successful
+        const char* clip = glfwGetClipboardString(windowPtr->getGLFWWindow());
+        if (clip != nullptr) {
+            return string(clip);
+        }
     } else {
-        return "";
+        ofLogWarning("NfTextInputField::getClipboard") << "Window pointer is not of type ofAppGLFWWindow.";
     }
-    
+    return "";
 }
+
+
 
 #endif
 
