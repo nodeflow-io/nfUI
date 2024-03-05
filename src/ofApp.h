@@ -3,11 +3,8 @@
 #include "ofMain.h"
 
 #include "ofxNodeFlowGUI.hpp"
-
 #include "nfUIElement.hpp"
-
 #include "NfNodeManager.hpp"
-
 #include "NfBoxxer.hpp"
 #include "NfPanel.hpp"
 #include "NfLabel.hpp"
