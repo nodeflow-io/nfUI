@@ -27,51 +27,51 @@ void ofxNodeFlowGUI::setupEventManager(GUIParams& guiParams) {
 
 
 void ofxNodeFlowGUI::drawStatusBar(const GUIParams& guiParams) {
-    if (!guiParams._showStatusBar) return;
+    if (!guiParams.getShowStatusBar()) return;
     // Draw the status bar rectangle
-    ofSetColor(guiParams._statusBarColor);
-    ofDrawRectangle(0, 0, ofGetWidth(), guiParams._statusBarHeight);
+    ofSetColor(guiParams.getStatusBarColor());
+    ofDrawRectangle(0, 0, ofGetWidth(), guiParams.getStatusBarHeight());
 
     // Draw the text displays
-    ofSetColor(guiParams._statusBarTextColor);
+    ofSetColor(guiParams.getStatusBarTextColor());
 
     // Draw "nodeFlowUI vx.x.x"
-    ofDrawBitmapString(guiParams.getStatusBarText1()+" "+guiParams.getStatusBarText2()+"        "+guiParams.getStatusBarText3(), 10, (guiParams._statusBarHeight / 2)+4);
+    ofDrawBitmapString(guiParams.getStatusBarText1()+" "+guiParams.getStatusBarText2()+"        "+guiParams.getStatusBarText3(), 10, (guiParams.getStatusBarHeight() / 2)+4);
 
     // Draw "FPS: XX"
-    if(guiParams._showFPS) {
+    if(guiParams.getShowFPS()) {
         std::string fpsText = "FPS: " + ofToString(std::round(ofGetFrameRate()));
-        ofDrawBitmapString(fpsText, ofGetWidth() - 80, (guiParams._statusBarHeight / 2)+4);
+        ofDrawBitmapString(fpsText, ofGetWidth() - 80, (guiParams.getStatusBarHeight() / 2)+4);
     }
     
 }
 
 void ofxNodeFlowGUI::drawGrid(const GUIParams& guiParams) {
-    if (!guiParams._showGrid) return;
+    if (!guiParams.getShowGrid()) return;
     // Draw vertical grid lines
-    for (int x = 0; x <= ofGetWidth(); x += guiParams._gridSize) {
-        if (x % guiParams._majorStep == 0) {
-            ofSetColor(guiParams._majorGridColor);
+    for (int x = 0; x <= ofGetWidth(); x += guiParams.getGridSize()) {
+        if (x % guiParams.getMajorStep() == 0) {
+            ofSetColor(guiParams.getMajorGridColor());
             ofDrawLine(x, 0, x, ofGetHeight());
 
             // Draw text label
             ofDrawBitmapString(ofToString(x), x, ofGetHeight() - 5);
         } else {
-            ofSetColor(guiParams._minorGridColor);
+            ofSetColor(guiParams.getMinorGridColor());
             ofDrawLine(x, 0, x, ofGetHeight());
         }
     }
 
     // Draw horizontal grid lines
-    for (int y = 0; y <= ofGetHeight(); y += guiParams._gridSize) {
-        if (y % guiParams._majorStep == 0) {
-            ofSetColor(guiParams._majorGridColor);
+    for (int y = 0; y <= ofGetHeight(); y += guiParams.getGridSize()) {
+        if (y % guiParams.getMajorStep() == 0) {
+            ofSetColor(guiParams.getMajorGridColor());
             ofDrawLine(0, y, ofGetWidth(), y);
 
             // Draw text label
             ofDrawBitmapString(ofToString(y), 5, y);
         } else {
-            ofSetColor(guiParams._minorGridColor);
+            ofSetColor(guiParams.getMinorGridColor());
             ofDrawLine(0, y, ofGetWidth(), y);
         }
     }

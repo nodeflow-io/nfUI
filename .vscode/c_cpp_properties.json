@@ -7,7 +7,12 @@
                 "${workspaceFolder}/../../../libs/openFrameworks",
                 "${workspaceFolder}/src",
                 "${workspaceFolder}/src/UI-Components",
-                "${workspaceFolder}/../../../libs/openFrameworks/utils"
+                "${workspaceFolder}/../../../libs/openFrameworks/utils",
+                "${workspaceFolder}/../../../libs/glew/include",
+                "${workspaceFolder}/../../../libs/tess2/include",
+                "${workspaceFolder}/../../../libs/utf8/include",
+                "${workspaceFolder}/../../../libs/glm/include"
+
             ],
             "defines": [],
             "macFrameworkPath": [

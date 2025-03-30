@@ -82,7 +82,7 @@ void ofApp::setup() {
     _guiParamsShowGrid = nfUI::createUIElement<nfUI::NfToggleSwitch, nfUI::BoolNFValue>(
         config,
         "Show Grid",
-         _guiParams.getShowGrid()
+        _guiParams.getShowGrid()
     );
     
 
@@ -145,7 +145,6 @@ void ofApp::setup() {
     config.backgroundColor = ofColor(46, 80, 117);
     config.focusBackgroundColor = ofColor::yellow;
     config.focusColor = ofColor::black;
-    config.textIsPassword = true;
     config.marginBottom = 8;  // TODO: this should not be necessary
     _guiParamsButton = nfUI::createUIElement<nfUI::NfButton, nfUI::StringNFValue>(
         config,
@@ -284,20 +283,20 @@ void ofApp::keyPressed(int key) {
     switch (key) {
         case OF_KEY_F1: {
             // F1 key pressed
-            _guiParams._showGrid = !_guiParams._showGrid;
-            std::cout << "ofApp::keyPressed _showGrid: " << _guiParams._showGrid << "\n";
+            _guiParams.setShowGrid(!_guiParams.getShowGrid());
+            std::cout << "ofApp::keyPressed _showGrid: " << _guiParams.getShowGrid() << "\n";
             // Create a std::unique_ptr to BoolNFValue
-            auto boolNFtemp = std::make_unique<nfUI::BoolNFValue>(_guiParams._showGrid);
+            auto boolNFtemp = std::make_unique<nfUI::BoolNFValue>(_guiParams.getShowGrid());
             // Assuming _guiParamsShowGrid->setValue expects a std::unique_ptr<NFValue>
             _guiParamsShowGrid->setValue(std::move(boolNFtemp));
             }
             break;
         case OF_KEY_F2: {
             // F2 key pressed
-            _guiParams._showStatusBar = !_guiParams._showStatusBar;
-            std::cout << "ofApp::keyPressed _showStatusBar: "  << _guiParams._showStatusBar << "\n";
+            _guiParams.setShowStatusBar(!_guiParams.getShowStatusBar());
+            std::cout << "ofApp::keyPressed _showStatusBar: "  << _guiParams.getShowStatusBar() << "\n";
             // Create a std::unique_ptr to BoolNFValue
-            auto boolNFtemp = std::make_unique<nfUI::BoolNFValue>(_guiParams._showStatusBar);
+            auto boolNFtemp = std::make_unique<nfUI::BoolNFValue>(_guiParams.getShowStatusBar());
             // Assuming _guiParamsShowGrid->setValue expects a std::unique_ptr<NFValue>
             _guiParamsShowStatusBar->setValue(std::move(boolNFtemp));
             }
@@ -305,9 +304,9 @@ void ofApp::keyPressed(int key) {
         case OF_KEY_F3: {
             // F3 key pressed
             _guiParams.setShowFPS(!_guiParams.getShowFPS());
-            std::cout << "ofApp::keyPressed _showFPS: "  << _guiParams._showFPS << "\n";
+            std::cout << "ofApp::keyPressed _showFPS: "  << _guiParams.getShowFPS() << "\n";
             // Create a std::unique_ptr to BoolNFValue
-            auto boolNFtemp = std::make_unique<nfUI::BoolNFValue>(_guiParams._showFPS);
+            auto boolNFtemp = std::make_unique<nfUI::BoolNFValue>(_guiParams.getShowFPS());
             // Assuming _guiParamsShowGrid->setValue expects a std::unique_ptr<NFValue>
             _guiParamsShowStatusFPS->setValue(std::move(boolNFtemp));
         }
@@ -336,30 +335,30 @@ void ofApp::onGuiParametersButtonClicked(nfUI::UIEventArgs& eventArgs) {
 
 void ofApp::onGuiParametersShowGridClicked(nfUI::UIEventArgs& eventArgs) {
     std::cout << "ofApp::onGuiParametersShowGridClicked\n";
-    _guiParams._showGrid = !_guiParams._showGrid;
+    _guiParams.setShowGrid(!_guiParams.getShowGrid());
     
     // Create a std::unique_ptr to BoolNFValue
-    auto boolNFtemp = std::make_unique<nfUI::BoolNFValue>(_guiParams._showGrid);
+    auto boolNFtemp = std::make_unique<nfUI::BoolNFValue>(_guiParams.getShowGrid());
     // Assuming _guiParamsShowGrid->setValue expects a std::unique_ptr<NFValue>
     _guiParamsShowGrid->setValue(std::move(boolNFtemp));
 }
 
 void ofApp::onGuiParametersShowStatusBarClicked(nfUI::UIEventArgs& eventArgs) {
     std::cout << "ofApp::onGuiParametersShowStatusBarClicked\n";
-    _guiParams._showStatusBar = !_guiParams._showStatusBar;
+    _guiParams.setShowStatusBar(!_guiParams.getShowStatusBar());
     
     // Create a std::unique_ptr to BoolNFValue
-    auto boolNFtemp = std::make_unique<nfUI::BoolNFValue>(_guiParams._showStatusBar);
+    auto boolNFtemp = std::make_unique<nfUI::BoolNFValue>(_guiParams.getShowStatusBar());
     // Assuming _guiParamsShowGrid->setValue expects a std::unique_ptr<NFValue>
     _guiParamsShowStatusBar->setValue(std::move(boolNFtemp));
 }
 
 void ofApp::onGuiParametersShowStatusFPSClicked(nfUI::UIEventArgs& eventArgs) {
     std::cout << "ofApp::onGuiParametersShowStatusFPSClicked\n";
-    _guiParams._showFPS = !_guiParams._showFPS;
+    _guiParams.setShowFPS(!_guiParams.getShowFPS());
     
     // Create a std::unique_ptr to BoolNFValue
-    auto boolNFtemp = std::make_unique<nfUI::BoolNFValue>(_guiParams._showFPS);
+    auto boolNFtemp = std::make_unique<nfUI::BoolNFValue>(_guiParams.getShowFPS());
     // Assuming _guiParamsShowGrid->setValue expects a std::unique_ptr<NFValue>
     _guiParamsShowStatusFPS->setValue(std::move(boolNFtemp));
 }
