@@ -8,6 +8,17 @@
 #ifndef NfButton_hpp
 #define NfButton_hpp
 
+// Standard library includes
+#include <string>
+
+// Forward declarations
+namespace nfUI {
+    class NfBoxxer;
+    class UIEventArgs;
+    class NFValue;
+}
+
+// Project includes
 #include "ofMain.h"
 #include "NfBoxxer.hpp"
 
@@ -16,7 +27,7 @@ namespace nfUI {
 class NfButton : public NfBoxxer {
     
 protected:
-    bool _firstRender = true; // Flag to track if draw() was called for the first time
+    bool _firstRender = true;   // Flag to track if draw() was called for the first time
     uint32_t verticalTextOffset; // font size dependant
     uint32_t horizontalTextOffset;
     bool mouseDownInRect;
@@ -28,97 +39,19 @@ public:
     // Event declaration
     ofEvent<UIEventArgs> clicked;
     
-    void draw() override {
-        ofPushMatrix();
-        NfBoxxer::draw(); // Call base class draw for common drawing code if needed
-        
-        if (_firstRender) {
-            ofRegisterMouseEvents(this);
-            if (_config.isDebug) {
-                std::cout << "NfButton: " << _name << std::endl;
-            }
-            _firstRender=false;
-        }
-
-        if (isFocused.get()) {
-            ofSetColor(focusBackgroundColor.get());
-        } else {
-            ofSetColor(backgroundColor.get());
-        }
-
-        
-        // get Dimensions children requires
-        // this->getDimensions(_config.width, _config.height);
-        
-        // draw own Background
-        ofDrawRectangle(0, 0, bounds.width, bounds.height);
-        
-        if (isFocused.get()) {
-            ofSetColor(focusColor.get());
-        } else {
-            ofSetColor(textColor.get());
-        }
-        NFValue* valueRawPtr = this->getValue();
-        if (valueRawPtr != nullptr) {
-            std::string valueAsString = valueRawPtr->toString();
-            // calculate text position
-            horizontalTextOffset = _config.paddingLeft;
-            verticalTextOffset = BITMAP_FONT_SIZE + _config.paddingTop;
-            ofDrawBitmapString(valueAsString, horizontalTextOffset, verticalTextOffset);
-        } else {
-            std::cout << "NfButton: " << _name << ":no value available." << std::endl;
-        }
-        
-        // call drawChildren with the current paddings
-        // drawChildren(_config.paddingLeft, _config.paddingTop);
-        
-        ofPopMatrix(); // Restore the drawing context
-    }
+    // Core functionality
+    void draw() override;
     
-    void mouseDragged(ofMouseEventArgs& args) {
-    }
-    
-    void mousePressed(ofMouseEventArgs& args) {
-        // Handle mouse pressed event for the button, if needed
-        mouseDownInRect = boundsMouse.inside(args.x, args.y);
-        if(mouseDownInRect) {
-            parameters.getBool("IsFocused") = true; // Set to true
-        }
-        // std::cout << "mousePressed" << _name << ": " << boundsMouse.x << std::endl;
-    }
-    
-    void mouseMoved(ofMouseEventArgs& args) {
-        if(boundsMouse.inside(args.x, args.y)) {
-            parameters.getBool("IsFocused") = true;
-            // ofSetCursor(OF_CURSOR_HAND);
-        } else {
-            parameters.getBool("IsFocused") = false;
-            // ofSetCursor(OF_CURSOR_ARROW);
-        }
-    }
-    
-    void mouseScrolled(ofMouseEventArgs& args) {
-    }
-    
-    void mouseEntered(ofMouseEventArgs& args) {
-
-    }
-    
-    void mouseExited(ofMouseEventArgs& args) {
- 
-    }
-
-    void mouseReleased(ofMouseEventArgs& args) {
-        // Handle mouse released event for the button, if needed
-        mouseDownInRect = boundsMouse.inside(args.x, args.y);
-        if (mouseDownInRect) {
-            UIEventArgs eventArgs;
-            ofNotifyEvent(clicked, eventArgs, this);
-            parameters.getBool("IsFocused") = false; // Set to true
-        }
-    }
+    // Mouse event handlers
+    void mouseDragged(ofMouseEventArgs& args);
+    void mousePressed(ofMouseEventArgs& args);
+    void mouseMoved(ofMouseEventArgs& args);
+    void mouseScrolled(ofMouseEventArgs& args);
+    void mouseEntered(ofMouseEventArgs& args);
+    void mouseExited(ofMouseEventArgs& args);
+    void mouseReleased(ofMouseEventArgs& args);
 };
 
-}
+} // namespace nfUI
 
 #endif /* NfButton_hpp */

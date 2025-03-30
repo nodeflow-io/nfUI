@@ -6,3 +6,69 @@
 //
 
 #include "NfPanel.hpp"
+
+namespace nfUI {
+
+void NfPanel::draw() {
+    ofPushMatrix();
+    NfBoxxer::draw(); // Call base class draw for common drawing
+    
+    if (_firstRender) {
+        ofRegisterMouseEvents(this);
+        if (_config.isDebug) {
+            std::cout << "NfPanel: " << _name << std::endl;
+        }
+        _firstRender = false;
+    }
+
+    if (nodeIsFocused || isFocused.get()) {
+        ofSetColor(focusBackgroundColor.get());
+    } else {
+        ofSetColor(backgroundColor.get());
+    }
+    
+    // get Dimensions children requires
+    this->getDimensions(_config.width, _config.height);
+    // draw own content
+    ofDrawRectangle(0, 0, _config.width, _config.height);
+    
+    // call drawChildren with the current paddings
+    drawChildren(_config.paddingLeft, _config.paddingTop);
+    
+    ofPopMatrix(); // Restore the drawing context
+}
+
+void NfPanel::mouseDragged(ofMouseEventArgs& args) {
+}
+
+void NfPanel::mousePressed(ofMouseEventArgs& args) {
+    if(boundsMouse.inside(args.x, args.y)) {
+        if (!this->nodeIsFocused) {
+            nfUI::NfEventManager::getEventManager().emit("node_focus", this->_name);
+        }
+    }
+}
+
+void NfPanel::mouseMoved(ofMouseEventArgs& args) {
+    if(boundsMouse.inside(args.x, args.y)) {
+        parameters.getBool("IsFocused") = true;
+        // ofSetCursor(OF_CURSOR_HAND);
+    } else {
+        parameters.getBool("IsFocused") = false;
+        // ofSetCursor(OF_CURSOR_ARROW);
+    }
+}
+
+void NfPanel::mouseScrolled(ofMouseEventArgs& args) {
+}
+
+void NfPanel::mouseEntered(ofMouseEventArgs& args) {
+}
+
+void NfPanel::mouseExited(ofMouseEventArgs& args) {
+}
+
+void NfPanel::mouseReleased(ofMouseEventArgs& args) {
+}
+
+} // namespace nfUI
