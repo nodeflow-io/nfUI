@@ -10,28 +10,34 @@
 
 #include <memory> // For std::shared_ptr and std::unique_ptr
 #include <string> // For std::string
+#include <string_view> // For std::string_view
+#include <type_traits> // For std::is_base_of
 
 #include "NfUIConfig.hpp"
 #include "NFValue.hpp"
+#include "NfBoxxer.hpp"
 
 namespace nfUI {
 
-    // TODO: investigate why this does not work with st::make_shared
-    // it would be more performant and we are on c++17
     template<typename UIElementType, typename ValueType, typename... Args>
-    std::shared_ptr<UIElementType> createUIElement(
+    [[nodiscard]] constexpr std::shared_ptr<UIElementType> createUIElement(
         const NfUIConfig& config,
-        const std::string& elementName,
+        std::string_view elementName,
         Args&&... valueArgs)
     {
-        // Construct the ValueType object with the provided arguments
+        static_assert(std::is_base_of<NfBoxxer, UIElementType>::value, 
+                     "UIElementType must inherit from NfBoxxer");
+        static_assert(std::is_base_of<NFValue, ValueType>::value, 
+                     "ValueType must inherit from NFValue");
+        
+        // Create value first to ensure it's constructed before the UI element
         auto value = std::make_unique<ValueType>(std::forward<Args>(valueArgs)...);
-
-        // Construct the UI element with the config, name, and ValueType object
+        
+        // Create UI element with moved value
         return std::make_shared<UIElementType>(
             config,
-            elementName,
-            std::move(value) // Move the unique_ptr to the constructor
+            std::string(elementName), // Convert string_view to string
+            std::move(value)
         );
     }
 }
