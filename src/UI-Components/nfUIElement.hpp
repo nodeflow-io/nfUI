@@ -26,6 +26,9 @@ class NfUIElement : public std::enable_shared_from_this<NfUIElement> {
     
 private:
     std::unique_ptr<NFValue> value; // Smart pointer to NFValue
+    bool _dimensionsDirty = true;    // Flag to track if dimensions need recalculation
+    float _cachedWidth = 0.0f;       // Cached width value
+    float _cachedHeight = 0.0f;      // Cached height value
 
 public:
     std::weak_ptr<NfUIElement> parent; // Weak pointer to the parent element
@@ -70,6 +73,7 @@ public:
     void addChild(const std::shared_ptr<NfUIElement>& child);
     void setValue(std::unique_ptr<NFValue> newValue);
     NFValue* getValue() const;
+    void markDimensionsDirty();
     
     // Dimension and position management
     void getDimensions(float& width, float& height);

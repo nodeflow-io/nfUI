@@ -83,6 +83,7 @@ NfUIElement* NfUIElement::findRoot() {
 void NfUIElement::addChild(const std::shared_ptr<NfUIElement>& child) {
     children.push_back(child);
     child->parent = shared_from_this();
+    markDimensionsDirty();
 }
 
 void NfUIElement::setValue(std::unique_ptr<NFValue> newValue) {
@@ -94,18 +95,40 @@ NFValue* NfUIElement::getValue() const {
 }
 
 void NfUIElement::getDimensions(float& width, float& height) {
+    // Return cached values if not dirty
+    if (!_dimensionsDirty) {
+        width = _cachedWidth;
+        height = _cachedHeight;
+        return;
+    }
+
     float childrenWidth = 0;
     float childrenHeight = 0;
     float childrenWidthMax = 0;
-    for (auto& child : this->children) {
+    
+    for (const auto& child : children) {
         float childHeight;
         float childWidth;
         this->getChildDimensions(child, childWidth, childHeight);
         childrenWidthMax = std::max(childrenWidthMax, childWidth);
         childrenHeight += childHeight;
     }
-    width = childrenWidthMax + this->_config.paddingLeft + this->_config.paddingRight;
-    height = childrenHeight + this->_config.paddingTop + this->_config.paddingBottom;
+    
+    // Calculate and cache dimensions
+    _cachedWidth = childrenWidthMax + this->_config.paddingLeft + this->_config.paddingRight;
+    _cachedHeight = childrenHeight + this->_config.paddingTop + this->_config.paddingBottom;
+    _dimensionsDirty = false;
+    
+    width = _cachedWidth;
+    height = _cachedHeight;
+}
+
+void NfUIElement::markDimensionsDirty() {
+    _dimensionsDirty = true;
+    // Propagate dirty state to parent
+    if (auto parentPtr = parent.lock()) {
+        parentPtr->markDimensionsDirty();
+    }
 }
 
 void NfUIElement::getPosition(ofPoint& position) {

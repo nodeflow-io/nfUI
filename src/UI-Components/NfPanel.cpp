@@ -19,6 +19,7 @@ void NfPanel::draw() {
             std::cout << "NfPanel: " << _name << std::endl;
         }
         _firstRender = false;
+        markDimensionsDirty();  // Ensure dimensions are calculated on first render
     }
 
     if (nodeIsFocused || isFocused.get()) {
@@ -28,7 +29,11 @@ void NfPanel::draw() {
     }
     
     // get Dimensions children requires
-    this->getDimensions(_config.width, _config.height);
+    float width, height;
+    this->getDimensions(width, height);
+    _config.width = width;
+    _config.height = height;
+    
     // draw own content
     ofDrawRectangle(0, 0, _config.width, _config.height);
     
@@ -45,6 +50,7 @@ void NfPanel::mousePressed(ofMouseEventArgs& args) {
     if(boundsMouse.inside(args.x, args.y)) {
         if (!this->nodeIsFocused) {
             nfUI::NfEventManager::getEventManager().emit("node_focus", this->_name);
+            markDimensionsDirty();  // Mark dimensions as dirty when focus changes
         }
     }
 }
@@ -52,10 +58,9 @@ void NfPanel::mousePressed(ofMouseEventArgs& args) {
 void NfPanel::mouseMoved(ofMouseEventArgs& args) {
     if(boundsMouse.inside(args.x, args.y)) {
         parameters.getBool("IsFocused") = true;
-        // ofSetCursor(OF_CURSOR_HAND);
+        markDimensionsDirty();  // Mark dimensions as dirty when mouse moves
     } else {
         parameters.getBool("IsFocused") = false;
-        // ofSetCursor(OF_CURSOR_ARROW);
     }
 }
 
