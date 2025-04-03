@@ -1,4 +1,5 @@
 #include "ofApp.h"
+#include "UI-Components/NfEventBus.hpp"
 
 
 //--------------------------------------------------------------
@@ -378,44 +379,90 @@ void ofApp::keyReleased(int key){
 }
 
 //--------------------------------------------------------------
-void ofApp::mouseMoved(int x, int y ){
-
+void ofApp::mouseMoved(int x, int y){
+    nfUI::Event event;
+    event.type = nfUI::AppEventType::MOUSE_MOVED;
+    event.payload = std::make_tuple(x, y);
+    BUS.publish(event);
 }
 
 //--------------------------------------------------------------
 void ofApp::mouseDragged(int x, int y, int button){
-
+    nfUI::Event event;
+    event.type = nfUI::AppEventType::MOUSE_DRAGGED;
+    event.payload = std::make_tuple(x, y, button);
+    BUS.publish(event);
 }
 
 //--------------------------------------------------------------
 void ofApp::mousePressed(int x, int y, int button){
-
+    // You might want to check if the press was inside a specific UI element *here*
+    // or let the UI elements themselves publish their "clicked" events.
+    // Publishing a generic mouse press allows interested components to react.
+    struct MouseInfo { int x, y, button; };
+    nfUI::Event event;
+    event.type = nfUI::AppEventType::MOUSE_PRESSED; 
+    event.payload = MouseInfo{x, y, button};
+    BUS.publish(event);
 }
 
 //--------------------------------------------------------------
 void ofApp::mouseReleased(int x, int y, int button){
-
+    nfUI::Event event;
+    event.type = nfUI::AppEventType::MOUSE_RELEASED;
+    event.payload = std::make_tuple(x, y, button);
+    BUS.publish(event);
 }
 
 //--------------------------------------------------------------
 void ofApp::mouseScrolled(int x, int y, float scrollX, float scrollY){
-
+    nfUI::Event event;
+    event.type = nfUI::AppEventType::MOUSE_SCROLLED;
+    event.payload = std::make_tuple(x, y, scrollX, scrollY);
+    BUS.publish(event);
 }
 
 //--------------------------------------------------------------
 void ofApp::mouseEntered(int x, int y){
-
+    nfUI::Event event;
+    event.type = nfUI::AppEventType::MOUSE_ENTERED;
+    event.payload = std::make_tuple(x, y);
+    BUS.publish(event);
 }
 
 //--------------------------------------------------------------
 void ofApp::mouseExited(int x, int y){
-
+    nfUI::Event event;
+    event.type = nfUI::AppEventType::MOUSE_EXITED;
+    event.payload = std::make_tuple(x, y);
+    BUS.publish(event);
 }
 
 //--------------------------------------------------------------
 void ofApp::windowResized(int w, int h){
-
+    nfUI::Event event;
+    event.type = nfUI::AppEventType::WINDOW_RESIZED;
+    event.payload = std::make_tuple(w, h);
+    BUS.publish(event);
 }
+
+/*
+//--------------------------------------------------------------
+void ofApp::windowEntered(int x, int y){
+    nfUI::Event event;
+    event.type = nfUI::AppEventType::WINDOW_ENTERED;
+    event.payload = std::make_tuple(x, y);
+    BUS.publish(event);
+}
+
+//--------------------------------------------------------------
+void ofApp::windowExited(int x, int y){
+    nfUI::Event event;
+    event.type = nfUI::AppEventType::WINDOW_EXITED;
+    event.payload = std::make_tuple(x, y);
+    BUS.publish(event);
+}
+*/
 
 //--------------------------------------------------------------
 void ofApp::gotMessage(ofMessage msg){

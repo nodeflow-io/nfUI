@@ -29,6 +29,7 @@
 		5D1655D42B9750D800E6EC06 /* NfPanel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5D1655C42B9750D700E6EC06 /* NfPanel.cpp */; };
 		5D1655D52B9750D800E6EC06 /* GUIParams.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5D1655C52B9750D700E6EC06 /* GUIParams.cpp */; };
 		5D90DEC92B83A64A0016E6DA /* ValueType.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5D90DEC72B83A64A0016E6DA /* ValueType.cpp */; };
+		5DA1418C2D9E9AB500C08F12 /* NfEventBus.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5DA1418A2D9E9AA700C08F12 /* NfEventBus.cpp */; };
 		"755CE2A2-A8C6-4A60-BC18-AA005EC0D96E" /* ofxButton.cpp in Sources */ = {isa = PBXBuildFile; fileRef = "59D0C829-39E7-4538-813E-4CE8D5EC6EE7" /* ofxButton.cpp */; };
 		"7CC0E72D-C77A-4B7B-8141-41D4CF9DC8BD" /* ofxLabel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = "BBD140E0-F750-401D-ADF4-8D9AED02121F" /* ofxLabel.cpp */; };
 		"7EDCA8DD-8230-4398-B934-3CE32E303D92" /* ofxToggle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = "D433846F-8CE2-4830-80AB-1C51281CF622" /* ofxToggle.cpp */; };
@@ -110,6 +111,8 @@
 		5D74DF3B2B7CF258001935EF /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		5D90DEC72B83A64A0016E6DA /* ValueType.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ValueType.cpp; sourceTree = "<group>"; };
 		5D90DEC82B83A64A0016E6DA /* ValueType.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = ValueType.hpp; sourceTree = "<group>"; };
+		5DA1418A2D9E9AA700C08F12 /* NfEventBus.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = NfEventBus.cpp; sourceTree = "<group>"; };
+		5DA1418B2D9E9AA700C08F12 /* NfEventBus.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = NfEventBus.hpp; sourceTree = "<group>"; };
 		"66FF57F2-426A-4353-940F-4E8DCCFB5C1F" /* ofxColorPicker.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 4; name = ofxColorPicker.cpp; path = ../../../addons/ofxGui/src/ofxColorPicker.cpp; sourceTree = SOURCE_ROOT; };
 		"674EB0DA-BFE5-4364-8274-1F829323EF9F" /* ofxPanel.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 4; name = ofxPanel.h; path = ../../../addons/ofxGui/src/ofxPanel.h; sourceTree = SOURCE_ROOT; };
 		"7027E284-B6E3-4692-B076-FB1A379B4C08" /* ofxInputField.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 4; name = ofxInputField.cpp; path = ../../../addons/ofxGui/src/ofxInputField.cpp; sourceTree = SOURCE_ROOT; };
@@ -210,6 +213,8 @@
 				5D1655B92B9750D700E6EC06 /* NfDom.hpp */,
 				5D1655BB2B9750D700E6EC06 /* NfDropdown.cpp */,
 				5D1655B32B9750D700E6EC06 /* NfDropdown.hpp */,
+				5DA1418A2D9E9AA700C08F12 /* NfEventBus.cpp */,
+				5DA1418B2D9E9AA700C08F12 /* NfEventBus.hpp */,
 				5D1655BC2B9750D700E6EC06 /* NfEventManager.cpp */,
 				5D1655A32B9750D700E6EC06 /* NfEventManager.hpp */,
 				5D1655A42B9750D700E6EC06 /* NfLabel.cpp */,
@@ -419,6 +424,7 @@
 				5D1655C92B9750D800E6EC06 /* nfUIElement.cpp in Sources */,
 				"1684B5A8-3C16-4AD6-96D5-C8686DF5A4E3" /* ofxInputField.cpp in Sources */,
 				"7CC0E72D-C77A-4B7B-8141-41D4CF9DC8BD" /* ofxLabel.cpp in Sources */,
+				5DA1418C2D9E9AB500C08F12 /* NfEventBus.cpp in Sources */,
 				5D1655CF2B9750D800E6EC06 /* NfUIConfig.cpp in Sources */,
 				5D1655C72B9750D800E6EC06 /* NfTextInputField.cpp in Sources */,
 				5D1655C82B9750D800E6EC06 /* NfBoxxerManager.cpp in Sources */,

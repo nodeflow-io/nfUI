@@ -32,8 +32,7 @@ protected:
     ofTrueTypeFont _font;
     int _majorVersion = 0;
     int _minorVersion = 0;
-    int _patchVersion = 7;
-    
+    int _patchVersion = 8;
 };
 
 #endif /* ofxNodeFlowGUI_hpp */
