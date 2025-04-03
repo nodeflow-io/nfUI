@@ -1,4 +1,4 @@
-# nodeFlowUI v.0.0.6
+# nodeFlowUI v.0.0.7
 
 Why another UI? 
 
@@ -311,4 +311,5 @@ ofParameter<float> left;
   - added F3 to toggle FPS display in statusbar
   - added NfToggleSwitch
   - added toggle switches (show grid, show statusbar, show fps) to the UI demo
-
+- 0.0.7 f0007-refactoring
+  - only code refactoring - added include paths for VS code, sorted sources in Xcode
