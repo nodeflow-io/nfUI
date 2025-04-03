@@ -5,8 +5,7 @@
 //  Created by Matthias Strohmaier on 26.02.24.
 //
 
-#ifndef NfNodeManager_hpp
-#define NfNodeManager_hpp
+#pragma once
 
 #include <vector>
 #include <memory>
@@ -24,6 +23,7 @@ private:
 
 public:
     NfNodeManager();
+    ~NfNodeManager(); // Destructor
     
     // Node management
     void addNode(std::shared_ptr<NfBoxxer> node);
@@ -49,5 +49,3 @@ public:
 extern NfNodeManager g_nodeManager;
 
 } // namespace nfUI
-
-#endif /* NfNodeManager_hpp */

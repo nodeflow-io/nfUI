@@ -20,6 +20,23 @@ NfNodeManager::NfNodeManager() {
     });
 }
 
+// Destructor
+NfNodeManager::~NfNodeManager() {
+    // Clean up all modal nodes first
+    for (auto& modalNode : modalNodes) {
+        if (modalNode) {
+            closeModalNode(modalNode->_name);
+        }
+    }
+    modalNodes.clear();
+
+    // Clear regular nodes
+    nodes.clear();
+
+    // Unsubscribe from all events
+    // nfUI::NfEventManager::getEventManager().unsubscribeAll(this);
+}
+
 // Node management
 void NfNodeManager::addNode(std::shared_ptr<NfBoxxer> node) {
     nodes.push_back(node);
@@ -51,15 +68,6 @@ bool NfNodeManager::removeModalNode(const std::string& name) {
 
 // Drawing
 void NfNodeManager::drawNodes() {
-    // Find the focused node
-    auto it = std::find_if(nodes.begin(), nodes.end(),
-                           [](const std::shared_ptr<NfBoxxer>& node) { return node->nodeIsFocused; });
-    
-    if (it != nodes.end()) {
-        // Move the focused node to the end of the vector
-        std::rotate(it, it + 1, nodes.end());
-    }
-    
     // Draw regular nodes first
     for (auto& node : nodes) {
         node->draw();
@@ -67,14 +75,6 @@ void NfNodeManager::drawNodes() {
     
     // Then draw modal nodes
     if (modalNodes.size()) {
-        // Find the focused node - there should be only one probably but who knows now
-        auto it = std::find_if(modalNodes.begin(), modalNodes.end(),
-                               [](const std::shared_ptr<NfBoxxer>& node) { return node->nodeIsFocused; });
-        
-        if (it != modalNodes.end()) {
-            // Move the focused node to the end of the vector
-            std::rotate(it, it + 1, modalNodes.end());
-        }
         
         for (auto& modalNode : modalNodes) {
             modalNode->draw();
@@ -89,8 +89,26 @@ bool NfNodeManager::focusNode(const std::string& name) {
     // Attempt to focus in regular nodes
     found = focusInCollection(nodes, name) || found;
 
+    // Find the focused node
+    auto it = std::find_if(nodes.begin(), nodes.end(),
+                           [](const std::shared_ptr<NfBoxxer>& node) { return node->nodeIsFocused; });
+    
+    if (it != nodes.end()) {
+        // Move the focused node to the end of the vector
+        std::rotate(it, it + 1, nodes.end());
+    }
+
     // Attempt to focus in modal nodes with higher priority
     found = focusInCollection(modalNodes, name) || found;
+
+    // Find the focused node - there should be only one probably but who knows now
+    it = std::find_if(modalNodes.begin(), modalNodes.end(),
+                            [](const std::shared_ptr<NfBoxxer>& node) { return node->nodeIsFocused; });
+    
+    if (it != modalNodes.end()) {
+        // Move the focused node to the end of the vector
+        std::rotate(it, it + 1, modalNodes.end());
+    }
 
     return found; // Return true if any node was found and focused
 }
