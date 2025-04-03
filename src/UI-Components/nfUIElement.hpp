@@ -13,7 +13,7 @@
 #include "../API/ValueType.hpp"
 #include "NFValue.hpp"
 #include "NfEventManager.hpp"
-
+#include "NfEventBus.hpp"
 namespace nfUI {
 
 // TODO: break this out into its own header
@@ -82,6 +82,12 @@ public:
     void getChildDimensions(const std::shared_ptr<NfUIElement>& child, float& width, float& height);
     void translateBounds(ofRectangle& boundsref, float deltaX, float deltaY, std::string name = "");
     size_t getChildCountOfRoot();
+
+    // Method to handle events routed *by the parent*
+    // Returns true if the event was consumed, false otherwise.
+    virtual bool handleRoutedMouseEvent(AppEventType type, const ofPoint& localPoint, int button) {
+        return false; // Base implementation consumes nothing
+    }
 };
 
 } // namespace nfUI

@@ -396,13 +396,9 @@ void ofApp::mouseDragged(int x, int y, int button){
 
 //--------------------------------------------------------------
 void ofApp::mousePressed(int x, int y, int button){
-    // You might want to check if the press was inside a specific UI element *here*
-    // or let the UI elements themselves publish their "clicked" events.
-    // Publishing a generic mouse press allows interested components to react.
-    struct MouseInfo { int x, y, button; };
     nfUI::Event event;
     event.type = nfUI::AppEventType::MOUSE_PRESSED; 
-    event.payload = MouseInfo{x, y, button};
+    event.payload = std::make_tuple(x, y, button);
     BUS.publish(event);
 }
 

@@ -12,6 +12,7 @@
 #include "NfBoxxer.hpp"
 #include "NfDropdown.hpp"
 #include "NfEventManager.hpp"
+#include "NfEventBus.hpp"
 
 namespace nfUI {
 
@@ -20,6 +21,16 @@ private:
     std::vector<std::shared_ptr<NfBoxxer>> nodes;
     std::vector<std::shared_ptr<NfBoxxer>> modalNodes;
     using ListenerID = size_t; // Unique identifier for listeners
+
+    // Event handling
+    void routeMousePressed(const Event& e);
+    void routeMouseReleased(const Event& e);
+    void routeMouseDragged(const Event& e);
+    void routeMouseMoved(const Event& e);
+    void routeMouseScrolled(const Event& e);
+    void routeKeyPressed(const Event& e);
+    void routeKeyReleased(const Event& e);
+    
 
 public:
     NfNodeManager();

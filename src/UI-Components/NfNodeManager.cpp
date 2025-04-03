@@ -6,6 +6,7 @@
 //
 
 #include "NfNodeManager.hpp"
+#include "NfEventBus.hpp"
 
 namespace nfUI {
 
@@ -18,6 +19,13 @@ NfNodeManager::NfNodeManager() {
     nfUI::NfEventManager::getEventManager().subscribe("node_focus", [this](const std::string& nodeName) {
         this->focusNode(nodeName);
     });
+
+    BUS.subscribe(AppEventType::MOUSE_PRESSED,
+                       [this](const Event& e){ this->routeMousePressed(e); },
+                       nullptr, this);
+    BUS.subscribe(AppEventType::MOUSE_RELEASED,
+                       [this](const Event& e){ this->routeMouseReleased(e); },
+                       nullptr, this);
 }
 
 // Destructor
@@ -35,6 +43,7 @@ NfNodeManager::~NfNodeManager() {
 
     // Unsubscribe from all events
     // nfUI::NfEventManager::getEventManager().unsubscribeAll(this);
+    BUS.unsubscribeAll(this);
 }
 
 // Node management
@@ -177,6 +186,65 @@ std::shared_ptr<NfBoxxer> NfNodeManager::getModalNodeByName(const std::string& m
     }
     // Return nullptr if no matching node is found
     return nullptr;
+}
+
+
+// --- Event Bus ---
+
+void NfNodeManager::routeMousePressed(const Event& e) {
+    try {
+            auto globalCoordsPair = std::any_cast<std::tuple<int, int, int>>(e.payload);
+            ofPoint globalPoint(std::get<0>(globalCoordsPair), std::get<1>(globalCoordsPair));
+            int button = std::get<2>(globalCoordsPair);
+
+            // Iterate children in reverse (topmost first)
+            for (auto it = nodes.rbegin(); it != nodes.rend(); ++it) {
+                auto& node = *it;
+                if (node->boundsMouse.inside(globalPoint)) {
+                    ofLogNotice("NfNodeManager::routeMousePressed") << "Node pressed: " + node->_name;
+                    // 3. Calculate local coordinates for the child
+                    ofPoint localPoint = globalPoint - node->boundsMouse.getPosition();
+                    bool consumed = node->handleRoutedMouseEvent(AppEventType::MOUSE_PRESSED, localPoint, button);
+                    if (consumed) {
+                        return; // Child handled it, stop processing.
+                    }
+                }
+            }
+            // No child consumed it, Panel handles it (optional)
+            // ofLogNotice("Panel " + id) << "Panel itself was pressed.";
+            // Start dragging panel? Publish PANEL_PRESSED? Set internal state?
+
+        } catch (const std::bad_any_cast& e) {
+             ofLogError("NfNodeManager::routeMousePressed") << "Bad payload cast for MOUSE_PRESSED";
+        }
+}
+
+void NfNodeManager::routeMouseReleased(const Event& e) {
+    try {
+            auto globalCoordsPair = std::any_cast<std::tuple<int, int, int>>(e.payload);
+            ofPoint globalPoint(std::get<0>(globalCoordsPair), std::get<1>(globalCoordsPair));
+            int button = std::get<2>(globalCoordsPair);
+
+            // Iterate children in reverse (topmost first)
+            for (auto it = nodes.rbegin(); it != nodes.rend(); ++it) {
+                auto& node = *it;
+                if (node->boundsMouse.inside(globalPoint)) {
+                    ofLogNotice("NfNodeManager::routeMouseReleased") << "Node released: " + node->_name;
+                    // 3. Calculate local coordinates for the child
+                    ofPoint localPoint = globalPoint - node->boundsMouse.getPosition();
+                    bool consumed = node->handleRoutedMouseEvent(AppEventType::MOUSE_RELEASED, localPoint, button);
+                    if (consumed) {
+                        return; // Child handled it, stop processing.
+                    }
+                }
+            }
+            // No child consumed it, Panel handles it (optional)
+            // ofLogNotice("Panel " + id) << "Panel itself was pressed.";
+            // Start dragging panel? Publish PANEL_PRESSED? Set internal state?
+
+        } catch (const std::bad_any_cast& e) {
+             ofLogError("NfNodeManager::routeMouseReleased") << "Bad payload cast for MOUSE_RELEASED";
+        }
 }
 
 } // namespace nfUI
