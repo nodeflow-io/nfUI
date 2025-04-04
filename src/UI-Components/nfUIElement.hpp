@@ -88,6 +88,10 @@ public:
     virtual bool handleRoutedMouseEvent(AppEventType type, const ofPoint& localPoint, int button) {
         return false; // Base implementation consumes nothing
     }
+
+    virtual bool handleRoutedKeyEvent(AppEventType type, int key) {
+        return false; // Base implementation consumes nothing
+    }
 };
 
 } // namespace nfUI
