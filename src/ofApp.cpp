@@ -380,83 +380,53 @@ void ofApp::keyReleased(int key){
 
 //--------------------------------------------------------------
 void ofApp::mouseMoved(int x, int y){
-    nfUI::Event event;
-    event.type = nfUI::AppEventType::MOUSE_MOVED;
-    event.payload = std::make_tuple(x, y);
-    BUS.publish(event);
+    // NfEventBus now handles this automatically
 }
 
 //--------------------------------------------------------------
 void ofApp::mouseDragged(int x, int y, int button){
-    nfUI::Event event;
-    event.type = nfUI::AppEventType::MOUSE_DRAGGED;
-    event.payload = std::make_tuple(x, y, button);
-    BUS.publish(event);
+    // NfEventBus now handles this automatically
 }
 
 //--------------------------------------------------------------
 void ofApp::mousePressed(int x, int y, int button){
-    nfUI::Event event;
-    event.type = nfUI::AppEventType::MOUSE_PRESSED; 
-    event.payload = std::make_tuple(x, y, button);
-    BUS.publish(event);
+    // NfEventBus now handles this automatically
 }
 
 //--------------------------------------------------------------
 void ofApp::mouseReleased(int x, int y, int button){
-    nfUI::Event event;
-    event.type = nfUI::AppEventType::MOUSE_RELEASED;
-    event.payload = std::make_tuple(x, y, button);
-    BUS.publish(event);
+    // NfEventBus now handles this automatically
 }
 
 //--------------------------------------------------------------
 void ofApp::mouseScrolled(int x, int y, float scrollX, float scrollY){
-    nfUI::Event event;
-    event.type = nfUI::AppEventType::MOUSE_SCROLLED;
-    event.payload = std::make_tuple(x, y, scrollX, scrollY);
-    BUS.publish(event);
+    // NfEventBus now handles this automatically
 }
 
 //--------------------------------------------------------------
 void ofApp::mouseEntered(int x, int y){
-    nfUI::Event event;
-    event.type = nfUI::AppEventType::MOUSE_ENTERED;
-    event.payload = std::make_tuple(x, y);
-    BUS.publish(event);
+    // NfEventBus now handles this automatically
 }
 
 //--------------------------------------------------------------
 void ofApp::mouseExited(int x, int y){
-    nfUI::Event event;
-    event.type = nfUI::AppEventType::MOUSE_EXITED;
-    event.payload = std::make_tuple(x, y);
-    BUS.publish(event);
+    // NfEventBus now handles this automatically
 }
 
 //--------------------------------------------------------------
 void ofApp::windowResized(int w, int h){
-    nfUI::Event event;
-    event.type = nfUI::AppEventType::WINDOW_RESIZED;
-    event.payload = std::make_tuple(w, h);
-    BUS.publish(event);
+    // NfEventBus now handles this automatically
 }
 
 /*
 //--------------------------------------------------------------
 void ofApp::windowEntered(int x, int y){
-    nfUI::Event event;
-    event.type = nfUI::AppEventType::WINDOW_ENTERED;
-    event.payload = std::make_tuple(x, y);
-    BUS.publish(event);
+    // NfEventBus now handles this automatically
 }
 
 //--------------------------------------------------------------
 void ofApp::windowExited(int x, int y){
-    nfUI::Event event;
-    event.type = nfUI::AppEventType::WINDOW_EXITED;
-    event.payload = std::make_tuple(x, y);
-    BUS.publish(event);
+    // NfEventBus now handles this automatically
 }
 */
 

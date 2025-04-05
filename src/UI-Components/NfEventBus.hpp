@@ -7,11 +7,13 @@
 #include <map>
 #include <memory> // For weak_ptr
 #include "ofLog.h"
+#include "ofEvents.h"
 
 namespace nfUI {
 
+// Map our application events to OF events for consistency
 enum class AppEventType {
-    // OpenFrameworks Mouse Events
+    // OpenFrameworks Mouse Events - using OF's event structure
     MOUSE_PRESSED,
     MOUSE_RELEASED,
     MOUSE_MOVED,
@@ -36,11 +38,34 @@ enum class AppEventType {
     DATA_UPDATED
 };
 
+// Specialized event types for different OF event types
 struct Event {
     AppEventType type;
     std::string sourceId = ""; // Optional: ID of the UI element originating the event
     std::any payload;         // Data associated with the event (e.g., button ID, slider value, key code)
     void* sender = nullptr;    // Optional: Raw pointer to sender (use carefully)
+
+    // Converters to/from OF event args
+    static Event fromMouseEvent(const ofMouseEventArgs& args, AppEventType type) {
+        Event e;
+        e.type = type;
+        e.payload = args;
+        return e;
+    }
+
+    static Event fromKeyEvent(const ofKeyEventArgs& args, AppEventType type) {
+        Event e;
+        e.type = type;
+        e.payload = args;
+        return e;
+    }
+
+    static Event fromResizeEvent(const ofResizeEventArgs& args) {
+        Event e;
+        e.type = AppEventType::WINDOW_RESIZED;
+        e.payload = args;
+        return e;
+    }
 
     // Helper template to safely get payload
     template<typename T>
@@ -65,12 +90,6 @@ public:
 
     // Store listener and its filter together
     struct Subscription {
-        // Use weak_ptr to automatically handle object destruction
-        // Listener needs to be tied to the lifetime of the subscribing object
-        // This example uses a raw function pointer for simplicity,
-        // but binding to member functions often requires std::weak_ptr/shared_ptr management.
-        // A more robust approach involves storing weak_ptr to the listening object
-        // and calling a member function if the object still exists.
         EventListener listener;
         EventFilter filter;
         void* owner = nullptr; // Optional: Pointer to the subscribing object for easy unsubscribeAll.
@@ -88,16 +107,33 @@ public:
     // Publish an event
     void publish(const Event& event);
 
+    // Setup OF event listeners
+    void setupOFEvents();
+    
+    // Remove OF event listeners
+    void removeOFEvents();
+
     // --- Singleton Pattern ---
     static NfEventBus& getInstance();
 
 private:
     // Map event types to a list of subscriptions interested in that type
     std::map<AppEventType, std::vector<Subscription>> subscriptions;
-    // Potentially a mutex for thread safety if needed, though oF UI is often single-threaded
-    // std::mutex mtx;
+    
+    // OF Event handlers
+    void mousePressed(ofMouseEventArgs& args);
+    void mouseReleased(ofMouseEventArgs& args);
+    void mouseMoved(ofMouseEventArgs& args);
+    void mouseDragged(ofMouseEventArgs& args);
+    void mouseScrolled(ofMouseEventArgs& args);
+    void mouseEntered(ofMouseEventArgs& args);
+    void mouseExited(ofMouseEventArgs& args);
+    void keyPressed(ofKeyEventArgs& args);
+    void keyReleased(ofKeyEventArgs& args);
+    void windowResized(ofResizeEventArgs& args);
 
-    NfEventBus() = default; // Private constructor
+    NfEventBus(); // Constructor now sets up OF events
+    ~NfEventBus(); // Destructor removes OF events
     NfEventBus(const NfEventBus&) = delete; // Delete copy constructor
     void operator=(const NfEventBus&) = delete; // Delete assignment operator
 };
