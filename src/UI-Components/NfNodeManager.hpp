@@ -13,6 +13,7 @@
 #include "NfDropdown.hpp"
 #include "NfEventManager.hpp"
 #include "NfEventBus.hpp"
+#include "ofEvents.h"
 
 namespace nfUI {
 
