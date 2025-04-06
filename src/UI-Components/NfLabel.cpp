@@ -26,8 +26,10 @@ void NfLabel::draw() {
         ofSetColor(backgroundColor.get());
     }
     
-    // draw own Background
-    ofDrawRectangle(0, 0, bounds.width, bounds.height);
+    // draw own Background - use bounds which is more accurate
+    // Subtract borderSize to account for parent border rendering
+    // This prevents the 1px wider appearance
+    ofDrawRectangle(0, 0, bounds.width - borderSize, bounds.height - borderSize);
     
     if (isFocused.get()) {
         ofSetColor(focusColor.get());
