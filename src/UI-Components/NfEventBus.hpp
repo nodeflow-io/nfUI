@@ -8,6 +8,7 @@
 #include <memory> // For weak_ptr
 #include "ofLog.h"
 #include "ofEvents.h"
+#include "ofAppRunner.h" // For ofGetWindowPtr
 
 namespace nfUI {
 
@@ -107,7 +108,7 @@ public:
     // Publish an event
     void publish(const Event& event);
 
-    // Setup OF event listeners
+    // Setup OF event listeners - now public to be called after OF is initialized
     void setupOFEvents();
     
     // Remove OF event listeners
@@ -116,9 +117,13 @@ public:
     // --- Singleton Pattern ---
     static NfEventBus& getInstance();
 
+    // Check if OF events are set up
+    bool isInitialized() const { return _initialized; }
+
 private:
     // Map event types to a list of subscriptions interested in that type
     std::map<AppEventType, std::vector<Subscription>> subscriptions;
+    bool _initialized = false;
     
     // OF Event handlers
     void mousePressed(ofMouseEventArgs& args);
@@ -132,8 +137,8 @@ private:
     void keyReleased(ofKeyEventArgs& args);
     void windowResized(ofResizeEventArgs& args);
 
-    NfEventBus(); // Constructor now sets up OF events
-    ~NfEventBus(); // Destructor removes OF events
+    NfEventBus() noexcept; // Constructor now defined in CPP file
+    ~NfEventBus() noexcept; // Destructor removes OF events if initialized
     NfEventBus(const NfEventBus&) = delete; // Delete copy constructor
     void operator=(const NfEventBus&) = delete; // Delete assignment operator
 };

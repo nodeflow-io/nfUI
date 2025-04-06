@@ -14,7 +14,6 @@ void NfLabel::draw() {
     NfBoxxer::draw(); // Call base class draw for common drawing code if needed
     
     if (_firstRender) {
-        ofRegisterMouseEvents(this);
         if (_config.isDebug) {
             std::cout << "NfLabel: " << _name << std::endl;
         }
@@ -49,50 +48,51 @@ void NfLabel::draw() {
         std::cout << "NfLabel: " << _name << ":no value available." << std::endl;
     }
     
-    // call drawChildren with the current paddings
-    // drawChildren(_config.paddingLeft, _config.paddingTop);
-    
     ofPopMatrix(); // Restore the drawing context
 }
 
-void NfLabel::mouseDragged(ofMouseEventArgs& args) {
-    if(_isDragging) {
-        // Calculate the new position based on the drag
-        ofPoint newPos = _panelStartPos + (ofPoint(args.x, args.y) - _dragStartPos);
-        setPosition(newPos);
+bool NfLabel::handleRoutedMouseEvent(AppEventType type, const ofPoint& localPoint, int button) {
+    return false;
+    switch (type) {
+        case AppEventType::MOUSE_PRESSED:
+            if (boundsMouse.inside(localPoint)) {
+                _isDragging = true;
+                _dragStartPos.set(localPoint.x, localPoint.y);
+                getPosition(_panelStartPos);
+                return true;
+            }
+            return false;
+            
+        case AppEventType::MOUSE_DRAGGED:
+            if (_isDragging) {
+                ofPoint newPos = _panelStartPos + (ofPoint(localPoint.x, localPoint.y) - _dragStartPos);
+                setPosition(newPos);
+                return true;
+            }
+            return false;
+            
+        case AppEventType::MOUSE_RELEASED:
+            _isDragging = false;
+            return true;
+            
+        case AppEventType::MOUSE_MOVED:
+            if (boundsMouse.inside(localPoint)) {
+                parameters.getBool("IsFocused") = true;
+                return true;
+            }
+            return false;
+            
+        case AppEventType::MOUSE_EXITED:
+            if (!boundsMouse.inside(localPoint)) {
+                parameters.getBool("IsFocused") = false;
+                return true;
+            }
+            return false;
+            
+        default:
+            return false;
     }
-}
-
-void NfLabel::mousePressed(ofMouseEventArgs& args) {
-    // Check if the click is inside the panel's bounds
-    if(boundsMouse.inside(args.x, args.y)) {
-        _isDragging = true;
-        _dragStartPos.set(args.x, args.y);
-        this->getPosition(_panelStartPos);
-    }
-}
-
-void NfLabel::mouseMoved(ofMouseEventArgs& args) {
-    if(boundsMouse.inside(args.x, args.y)) {
-        parameters.getBool("IsFocused") = true;
-        // ofSetCursor(OF_CURSOR_HAND);
-    } else {
-        parameters.getBool("IsFocused") = false;
-        // ofSetCursor(OF_CURSOR_ARROW);
-    }
-}
-
-void NfLabel::mouseScrolled(ofMouseEventArgs& args) {
-}
-
-void NfLabel::mouseEntered(ofMouseEventArgs& args) {
-}
-
-void NfLabel::mouseExited(ofMouseEventArgs& args) {
-}
-
-void NfLabel::mouseReleased(ofMouseEventArgs& args) {
-    _isDragging = false;
 }
 
 } // namespace nfUI
+

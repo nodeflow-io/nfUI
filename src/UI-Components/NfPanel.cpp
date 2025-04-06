@@ -14,7 +14,6 @@ void NfPanel::draw() {
     NfBoxxer::draw(); // Call base class draw for common drawing
     
     if (_firstRender) {
-        ofRegisterMouseEvents(this);
         if (_config.isDebug) {
             std::cout << "NfPanel: " << _name << std::endl;
         }
@@ -43,37 +42,88 @@ void NfPanel::draw() {
     ofPopMatrix(); // Restore the drawing context
 }
 
-void NfPanel::mouseDragged(ofMouseEventArgs& args) {
-}
-
-void NfPanel::mousePressed(ofMouseEventArgs& args) {
-    if(boundsMouse.inside(args.x, args.y)) {
-        if (!this->nodeIsFocused) {
-            nfUI::NfEventManager::getEventManager().emit("node_focus", this->_name);
-            markDimensionsDirty();  // Mark dimensions as dirty when focus changes
+bool NfPanel::routeMouseEvent(AppEventType type, const ofPoint& localPoint, int button) {
+    // For MOUSE_MOVED, we need to propagate focus changes even if child handles event
+    bool sendToAll = (type == AppEventType::MOUSE_MOVED);
+    bool consumed = false;
+    
+    // Process children in reverse order (topmost/last drawn first)
+    for (auto it = children.rbegin(); it != children.rend(); ++it) {
+        auto& child = *it;
+        
+        // Check if the point is inside the child's bounds
+        bool isInside = child->boundsMouse.inside(localPoint);
+        
+        if (isInside || type == AppEventType::MOUSE_MOVED) {
+            // Pass the event to the child
+            bool childConsumed = child->handleRoutedMouseEvent(type, localPoint, button);
+            
+            // Mark as consumed if any child consumes the event
+            if (childConsumed) {
+                consumed = true;
+                
+                // If we're not sending to all components, we can stop here
+                if (!sendToAll) {
+                    return true;
+                }
+            }
         }
     }
+    
+    return consumed;
 }
 
-void NfPanel::mouseMoved(ofMouseEventArgs& args) {
-    if(boundsMouse.inside(args.x, args.y)) {
-        parameters.getBool("IsFocused") = true;
-        markDimensionsDirty();  // Mark dimensions as dirty when mouse moves
-    } else {
-        parameters.getBool("IsFocused") = false;
+bool NfPanel::handleRoutedMouseEvent(AppEventType type, const ofPoint& localPoint, int button) {
+    // First try to route the event to children
+    if (routeMouseEvent(type, localPoint, button)) {
+        return true;
     }
-}
-
-void NfPanel::mouseScrolled(ofMouseEventArgs& args) {
-}
-
-void NfPanel::mouseEntered(ofMouseEventArgs& args) {
-}
-
-void NfPanel::mouseExited(ofMouseEventArgs& args) {
-}
-
-void NfPanel::mouseReleased(ofMouseEventArgs& args) {
+    
+    // If children didn't handle it, process the event here
+    switch (type) {
+        case AppEventType::MOUSE_PRESSED:
+            if (boundsMouse.inside(localPoint)) {
+                if (!nodeIsFocused) {
+                    nfUI::NfEventManager::getEventManager().emit("node_focus", _name);
+                    markDimensionsDirty();  // Mark dimensions as dirty when focus changes
+                }
+                _isDragging = true;
+                _dragStartPos.set(localPoint.x, localPoint.y);
+                getPosition(_panelStartPos);
+                return true;
+            }
+            return false;
+            
+        case AppEventType::MOUSE_DRAGGED:
+            if (_isDragging) {
+                ofPoint newPos = _panelStartPos + (ofPoint(localPoint.x, localPoint.y) - _dragStartPos);
+                setPosition(newPos);
+                return true;
+            }
+            return false;
+            
+        case AppEventType::MOUSE_RELEASED:
+            _isDragging = false;
+            return true;
+            
+        case AppEventType::MOUSE_MOVED:
+            if (boundsMouse.inside(localPoint)) {
+                parameters.getBool("IsFocused") = true;
+                markDimensionsDirty();  // Mark dimensions as dirty when mouse moves
+                return true;
+            }
+            return false;
+            
+        case AppEventType::MOUSE_EXITED:
+            if (!boundsMouse.inside(localPoint)) {
+                parameters.getBool("IsFocused") = false;
+                return true;
+            }
+            return false;
+            
+        default:
+            return false;
+    }
 }
 
 } // namespace nfUI

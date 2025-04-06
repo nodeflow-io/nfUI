@@ -44,14 +44,8 @@ public:
     // Core functionality
     void draw();
     
-    // Mouse event handlers
-    void mouseDragged(ofMouseEventArgs& args);
-    void mousePressed(ofMouseEventArgs& args);
-    void mouseMoved(ofMouseEventArgs& args);
-    void mouseScrolled(ofMouseEventArgs& args);
-    void mouseEntered(ofMouseEventArgs& args);
-    void mouseExited(ofMouseEventArgs& args);
-    void mouseReleased(ofMouseEventArgs& args);
+    // Event handling
+    bool handleRoutedMouseEvent(AppEventType type, const ofPoint& localPoint, int button) override;
 };
 
 } // namespace nfUI

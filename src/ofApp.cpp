@@ -4,6 +4,9 @@
 
 //--------------------------------------------------------------
 void ofApp::setup() {
+    // Initialize the event bus now that the OF window is ready
+    BUS.setupOFEvents();
+    
     // set the logging level you can use:
     // OF_LOG_VERBOSE
     // OF_LOG_NOTICE

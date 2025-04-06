@@ -2,28 +2,41 @@
 
 namespace nfUI {
 
-NfEventBus::NfEventBus() {
+NfEventBus::NfEventBus() noexcept : _initialized(false) {
+    // Constructor now explicitly defined with no actions
     setupOFEvents();
 }
 
-NfEventBus::~NfEventBus() {
-    removeOFEvents();
+NfEventBus::~NfEventBus() noexcept {
+    if (_initialized) {
+        removeOFEvents();
+    }
 }
 
 void NfEventBus::setupOFEvents() {
-    ofAddListener(ofEvents().mousePressed, this, &NfEventBus::mousePressed);
-    ofAddListener(ofEvents().mouseReleased, this, &NfEventBus::mouseReleased);
-    ofAddListener(ofEvents().mouseMoved, this, &NfEventBus::mouseMoved);
-    ofAddListener(ofEvents().mouseDragged, this, &NfEventBus::mouseDragged);
-    ofAddListener(ofEvents().mouseScrolled, this, &NfEventBus::mouseScrolled);
-    ofAddListener(ofEvents().mouseEntered, this, &NfEventBus::mouseEntered);
-    ofAddListener(ofEvents().mouseExited, this, &NfEventBus::mouseExited);
-    ofAddListener(ofEvents().keyPressed, this, &NfEventBus::keyPressed);
-    ofAddListener(ofEvents().keyReleased, this, &NfEventBus::keyReleased);
-    ofAddListener(ofEvents().windowResized, this, &NfEventBus::windowResized);
+    if (_initialized) return;  // Don't set up twice
+    
+    // Only set up events if OF is initialized (window exists)
+    if (ofGetWindowPtr() != nullptr) {
+        ofAddListener(ofEvents().mousePressed, this, &NfEventBus::mousePressed);
+        ofAddListener(ofEvents().mouseReleased, this, &NfEventBus::mouseReleased);
+        ofAddListener(ofEvents().mouseMoved, this, &NfEventBus::mouseMoved);
+        ofAddListener(ofEvents().mouseDragged, this, &NfEventBus::mouseDragged);
+        ofAddListener(ofEvents().mouseScrolled, this, &NfEventBus::mouseScrolled);
+        ofAddListener(ofEvents().mouseEntered, this, &NfEventBus::mouseEntered);
+        ofAddListener(ofEvents().mouseExited, this, &NfEventBus::mouseExited);
+        ofAddListener(ofEvents().keyPressed, this, &NfEventBus::keyPressed);
+        ofAddListener(ofEvents().keyReleased, this, &NfEventBus::keyReleased);
+        ofAddListener(ofEvents().windowResized, this, &NfEventBus::windowResized);
+        _initialized = true;
+    } else {
+        ofLogWarning("NfEventBus") << "Attempted to setup events before OF window initialization";
+    }
 }
 
 void NfEventBus::removeOFEvents() {
+    if (!_initialized) return;  // Don't remove if not set up
+    
     ofRemoveListener(ofEvents().mousePressed, this, &NfEventBus::mousePressed);
     ofRemoveListener(ofEvents().mouseReleased, this, &NfEventBus::mouseReleased);
     ofRemoveListener(ofEvents().mouseMoved, this, &NfEventBus::mouseMoved);
@@ -34,46 +47,58 @@ void NfEventBus::removeOFEvents() {
     ofRemoveListener(ofEvents().keyPressed, this, &NfEventBus::keyPressed);
     ofRemoveListener(ofEvents().keyReleased, this, &NfEventBus::keyReleased);
     ofRemoveListener(ofEvents().windowResized, this, &NfEventBus::windowResized);
+    _initialized = false;
 }
 
 // OF Event handlers that forward to our event bus
 void NfEventBus::mousePressed(ofMouseEventArgs& args) {
+    if (!_initialized) return;
+    ofLogNotice("NfEventBus") << "Mouse pressed at: " << args.x << "," << args.y;
     publish(Event::fromMouseEvent(args, AppEventType::MOUSE_PRESSED));
 }
 
 void NfEventBus::mouseReleased(ofMouseEventArgs& args) {
+    if (!_initialized) return;
     publish(Event::fromMouseEvent(args, AppEventType::MOUSE_RELEASED));
 }
 
 void NfEventBus::mouseMoved(ofMouseEventArgs& args) {
+    if (!_initialized) return;
     publish(Event::fromMouseEvent(args, AppEventType::MOUSE_MOVED));
 }
 
 void NfEventBus::mouseDragged(ofMouseEventArgs& args) {
+    if (!_initialized) return;
     publish(Event::fromMouseEvent(args, AppEventType::MOUSE_DRAGGED));
 }
 
 void NfEventBus::mouseScrolled(ofMouseEventArgs& args) {
+    if (!_initialized) return;
     publish(Event::fromMouseEvent(args, AppEventType::MOUSE_SCROLLED));
 }
 
 void NfEventBus::mouseEntered(ofMouseEventArgs& args) {
+    if (!_initialized) return;
     publish(Event::fromMouseEvent(args, AppEventType::MOUSE_ENTERED));
 }
 
 void NfEventBus::mouseExited(ofMouseEventArgs& args) {
+    if (!_initialized) return;
     publish(Event::fromMouseEvent(args, AppEventType::MOUSE_EXITED));
 }
 
 void NfEventBus::keyPressed(ofKeyEventArgs& args) {
+    if (!_initialized) return;
     publish(Event::fromKeyEvent(args, AppEventType::KEY_PRESSED));
 }
 
 void NfEventBus::keyReleased(ofKeyEventArgs& args) {
+    if (!_initialized) return;
     publish(Event::fromKeyEvent(args, AppEventType::KEY_RELEASED));
 }
 
 void NfEventBus::windowResized(ofResizeEventArgs& args) {
+    if (!_initialized) return;
     publish(Event::fromResizeEvent(args));
 }
 

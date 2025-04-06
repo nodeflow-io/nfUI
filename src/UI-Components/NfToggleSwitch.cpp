@@ -15,7 +15,6 @@ void NfToggleSwitch::draw() {
     
     // Textbox-specific drawing code here
     if (_firstRender) {
-        ofRegisterMouseEvents(this);
         if (_config.isDebug) {
             std::cout << "NfToggleSwitch: " << _name << std::endl;
         }
@@ -87,38 +86,42 @@ void NfToggleSwitch::draw() {
     ofPopMatrix(); // Restore the drawing context
 }
 
-void NfToggleSwitch::mouseDragged(ofMouseEventArgs& args) {
-}
-
-void NfToggleSwitch::mousePressed(ofMouseEventArgs& args) {
-    if(boundsMouse.inside(args.x, args.y)) {
-        parameters.getBool("IsFocused") = true;
-        // ofSetCursor(OF_CURSOR_HAND);
-        UIEventArgs eventArgs;
-        ofNotifyEvent(clicked, eventArgs, this);
+bool NfToggleSwitch::handleRoutedMouseEvent(AppEventType type, const ofPoint& localPoint, int button) {
+    switch (type) {
+        case AppEventType::MOUSE_PRESSED:
+            if (boundsMouse.inside(localPoint)) {
+                parameters.getBool("IsFocused") = true;
+                UIEventArgs eventArgs;
+                ofNotifyEvent(clicked, eventArgs, this);
+                return true;
+            }
+            return false;
+            
+        case AppEventType::MOUSE_MOVED:
+            // Always check whether we're inside or outside on MOUSE_MOVED
+            // This ensures proper focus state even with hierarchical event routing
+            if (boundsMouse.inside(localPoint)) {
+                parameters.getBool("IsFocused") = true;
+                return true;
+            } else {
+                // If we were previously focused and mouse has moved out, update state
+                if (parameters.getBool("IsFocused") == true) {
+                    parameters.getBool("IsFocused") = false;
+                    // No need to return true here - let parent handle events outside our bounds
+                }
+            }
+            return false;
+            
+        case AppEventType::MOUSE_EXITED:
+            if (!boundsMouse.inside(localPoint)) {
+                parameters.getBool("IsFocused") = false;
+                return true;
+            }
+            return false;
+            
+        default:
+            return false;
     }
-}
-
-void NfToggleSwitch::mouseMoved(ofMouseEventArgs& args) {
-    if(boundsMouse.inside(args.x, args.y)) {
-        parameters.getBool("IsFocused") = true;
-        // ofSetCursor(OF_CURSOR_HAND);
-    } else {
-        parameters.getBool("IsFocused") = false;
-        // ofSetCursor(OF_CURSOR_ARROW);
-    }
-}
-
-void NfToggleSwitch::mouseScrolled(ofMouseEventArgs& args) {
-}
-
-void NfToggleSwitch::mouseEntered(ofMouseEventArgs& args) {
-}
-
-void NfToggleSwitch::mouseExited(ofMouseEventArgs& args) {
-}
-
-void NfToggleSwitch::mouseReleased(ofMouseEventArgs& args) {
 }
 
 } // namespace nfUI

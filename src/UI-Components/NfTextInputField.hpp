@@ -135,6 +135,9 @@ public:
     
     bool isValidChar(nfAPI::ValueType valueType, char inputChar);
     
+    // Event handling
+    bool handleRoutedMouseEvent(AppEventType type, const ofPoint& localPoint, int button) override;
+    bool handleRoutedKeyEvent(AppEventType type, int key) override;
 };
 
 }

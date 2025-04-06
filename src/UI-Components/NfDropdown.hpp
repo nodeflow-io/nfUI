@@ -19,6 +19,9 @@ public:
     NfDropdown(const NfUIConfig& config, const std::string& name);
     void selectItem(int itemIndex);
     void draw() override;
+    
+    // Event handling
+    bool handleRoutedMouseEvent(AppEventType type, const ofPoint& localPoint, int button) override;
 };
 
 } // namespace nfUI

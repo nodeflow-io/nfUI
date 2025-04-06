@@ -147,11 +147,9 @@ bool NfTextInputField::getIsEnabled(){
 
 void NfTextInputField::draw() {
     this->setup();
-    // this->setBounds(valuePosition);
-    ofPushMatrix(); // Save the current drawing context
+    ofPushMatrix();
     NfBoxxer::draw(); // Call base class draw for common drawing code if needed
     
-    // Textbox-specific drawing code here
     if (_firstRender) {
         this->init();
         if (_config.isDebug) {
@@ -166,15 +164,12 @@ void NfTextInputField::draw() {
             this->text = "";
             std::cout << "NfTextInputField: " << _name << ":no value available." << std::endl;
         }
-        _firstRender=false;
+        _firstRender = false;
     }
-    
-    
     
     float textfieldWith = bounds.width;
     // Draw the label text
     ofSetColor(textColor.get());
-    // ofDrawBitmapString(_name, _config.paddingLeft, _config.paddingTop + fontRef->getLineHeight());
     if (_config.showLabel) {
         fontRef->drawString(_name, 0, _config.paddingTop + fontRef->getLineHeight());
         textfieldWith /= 2;
@@ -186,6 +181,7 @@ void NfTextInputField::draw() {
         ofTranslate(textfieldWith, 0);
         translateBounds(boundsMouse, textfieldWith, 0, _name);
     }
+    
     if(isEditing) {
         ofSetColor(focusBackgroundColor.get());
     } else {
@@ -200,7 +196,7 @@ void NfTextInputField::draw() {
     ofSetColor(textColor.get());
     // Draw the text inside the textbox
     this->drawText();
-
+    
     ofPopMatrix(); // Restore the drawing context
 }
 
@@ -731,5 +727,101 @@ bool NfTextInputField::isValidChar(nfAPI::ValueType valueType, char inputChar) {
     return false;
 }
 
+bool NfTextInputField::handleRoutedMouseEvent(AppEventType type, const ofPoint& localPoint, int button) {
+    switch (type) {
+        case AppEventType::MOUSE_PRESSED:
+            mouseDownInRect = boundsMouse.inside(localPoint);
+            if (mouseDownInRect) {
+                cursorPosition = getCursorPositionFromMouse(localPoint.x, localPoint.y);
+                lastTimeCursorMoved = ofGetElapsedTimef();
+                selecting = false;
+                beginEditing();
+                return true;
+            }
+            return false;
+            
+        case AppEventType::MOUSE_MOVED:
+            // Always check whether we're inside or outside on MOUSE_MOVED
+            // This ensures proper focus state even with hierarchical event routing
+            if (boundsMouse.inside(localPoint)) {
+                parameters.getBool("IsFocused") = true;
+                return true;
+            } else {
+                // If we were previously focused and mouse has moved out, update state
+                if (parameters.getBool("IsFocused") == true) {
+                    parameters.getBool("IsFocused") = false;
+                    // No need to return true here - let parent handle events outside our bounds
+                }
+            }
+            return false;
+            
+        case AppEventType::MOUSE_EXITED:
+            if (!boundsMouse.inside(localPoint)) {
+                parameters.getBool("IsFocused") = false;
+                return true;
+            }
+            return false;
+            
+        default:
+            return false;
+    }
+}
+
+bool NfTextInputField::handleRoutedKeyEvent(AppEventType type, const int key) {
+    if (!isEditing) return false;
+    
+    switch (type) {
+        case AppEventType::KEY_PRESSED: {
+            if (key == OF_KEY_ESC) {
+                endEditing();
+                return true;
+            }
+            
+            if (key == OF_KEY_RETURN) {
+                if (!multiline) {
+                    endEditing();
+                    return true;
+                }
+            }
+            
+            if (key == OF_KEY_BACKSPACE) {
+                if (cursorPosition > 0) {
+                    text.erase(text.begin() + cursorPosition - 1);
+                    cursorPosition--;
+                }
+                return true;
+            }
+            
+            if (key >= 32 && key <= 126) {
+                char character = key;
+                if (isShifted) {
+                    if (shiftMap.find(key) != shiftMap.end()) {
+                        character = shiftMap[key];
+                    }
+                }
+                
+                if (isValidChar(valueType, character)) {
+                    text.insert(text.begin() + cursorPosition, character);
+                    cursorPosition++;
+                }
+                return true;
+            }
+            
+            return false;
+        }
+            
+        case AppEventType::KEY_RELEASED: {
+            if (key == OF_KEY_SHIFT) {
+                isShifted = false;
+            } else if (key == OF_KEY_COMMAND) {
+                isCommand = false;
+            }
+            return true;
+        }
+            
+        default:
+            return false;
+    }
+}
 
 }
