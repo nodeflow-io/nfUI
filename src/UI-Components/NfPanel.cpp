@@ -109,11 +109,12 @@ bool NfPanel::handleRoutedMouseEvent(AppEventType type, const ofPoint& localPoin
         case AppEventType::MOUSE_MOVED:
             if (boundsMouse.inside(localPoint)) {
                 parameters.getBool("IsFocused") = true;
-                // markDimensionsDirty();  // Mark dimensions as dirty when mouse moves
+                setDefaultCursor();
                 return true;
             } else {
                 if (!nodeIsFocused) {
                     parameters.getBool("IsFocused") = false;
+                    setDefaultCursor();
                 }   
             }
             return false;
@@ -121,6 +122,7 @@ bool NfPanel::handleRoutedMouseEvent(AppEventType type, const ofPoint& localPoin
         case AppEventType::MOUSE_EXITED:
             if (!boundsMouse.inside(localPoint)) {
                 parameters.getBool("IsFocused") = false;
+                setDefaultCursor();
                 return true;
             }
             return false;

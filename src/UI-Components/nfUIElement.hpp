@@ -14,6 +14,8 @@
 #include "NFValue.hpp"
 #include "NfEventManager.hpp"
 #include "NfEventBus.hpp"
+#include "NfCursorManager.hpp"
+
 namespace nfUI {
 
 // TODO: break this out into its own header
@@ -92,6 +94,13 @@ public:
     virtual bool handleRoutedKeyEvent(AppEventType type, int key) {
         return false; // Base implementation consumes nothing
     }
+    
+    // Cursor management helpers
+    static void setDefaultCursor() { NfCursorManager::setDefaultCursor(); }
+    static void setHandCursor() { NfCursorManager::setHandCursor(); }
+    static void setIBeamCursor() { NfCursorManager::setIBeamCursor(); }
+    static void setResizeNSCursor() { NfCursorManager::setResizeNSCursor(); }
+    static void setResizeEWCursor() { NfCursorManager::setResizeEWCursor(); }
 };
 
 } // namespace nfUI

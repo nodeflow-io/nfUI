@@ -760,6 +760,7 @@ bool NfTextInputField::handleRoutedMouseEvent(AppEventType type, const ofPoint& 
             // This ensures proper focus state even with hierarchical event routing
             if (boundsMouse.inside(localPoint)) {
                 parameters.getBool("IsFocused") = true;
+                setIBeamCursor();
                 return true;
             } else {
                 // If we were previously focused and mouse has moved out, update state
