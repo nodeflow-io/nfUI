@@ -215,7 +215,7 @@ void NfNodeManager::routeMousePressed(const Event& e) {
     try {
         auto args = e.payload_as<ofMouseEventArgs>();
         ofPoint globalPoint(args.x, args.y);
-        ofLogNotice("NfNodeManager") << "Processing mouse press at: " << args.x << "," << args.y;
+        // ofLogNotice("NfNodeManager") << "Processing mouse press at: " << args.x << "," << args.y;
 
         // Iterate children in reverse (topmost first)
         for (auto it = nodes.rbegin(); it != nodes.rend(); ++it) {
