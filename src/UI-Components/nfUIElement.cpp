@@ -6,6 +6,7 @@
 //
 
 #include "nfUIElement.hpp"
+#include "NfEventBus.hpp"
 
 namespace nfUI {
 
@@ -155,6 +156,9 @@ void NfUIElement::setPosition(const ofPoint& position) {
         child->boundsMouse.x += offsetX;
         child->boundsMouse.y += offsetY;
     }
+    
+    // Emit position change event
+    BUS.publish(nfUI::Event::fromPositionChange(position, this));
 }
 
 void NfUIElement::getChildDimensions(const std::shared_ptr<NfUIElement>& child, float& width, float& height) {

@@ -252,6 +252,21 @@ void ofApp::setup() {
     nfUI::g_nodeManager.addNode(_guiParamsNode); // Add the GUI Parameters to the node manager
     nfUI::g_nodeManager.addNode(_inspectorNode); // Add the inspector to the node manager
     
+    // Subscribe to position change events
+    BUS.subscribe(nfUI::AppEventType::POSITION_CHANGED, [this](const nfUI::Event& event) {
+        // Only update inspector if the changed node is _guiParamsNode
+        if (event.sender == _guiParamsNode.get()) {
+            ofPoint newPos = event.payload_as<ofPoint>();
+            
+            // Update the inspector X position field
+            auto xValue = std::make_unique<nfUI::IntNFValue>(static_cast<int>(newPos.x));
+            _inspectorPosX->setValue(std::move(xValue));
+            
+            // Update the inspector Y position field
+            auto yValue = std::make_unique<nfUI::IntNFValue>(static_cast<int>(newPos.y));
+            _inspectorPosY->setValue(std::move(yValue));
+        }
+    }, this);
     
 }
 

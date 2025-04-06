@@ -87,6 +87,9 @@ public:
     // Inherit NfBoxxer constructor
     using NfBoxxer::NfBoxxer;
     
+    // Override setValue to update text field
+    void setValue(std::unique_ptr<NFValue> newValue) override;
+    
     // ...
     virtual ~NfTextInputField();
     //swap in a font!

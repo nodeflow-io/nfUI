@@ -9,6 +9,7 @@
 #include "ofLog.h"
 #include "ofEvents.h"
 #include "ofAppRunner.h" // For ofGetWindowPtr
+#include "ofPoint.h" // For ofPoint type
 
 namespace nfUI {
 
@@ -36,7 +37,8 @@ enum class AppEventType {
     BUTTON_CLICKED,
     SLIDER_CHANGED,
     CUSTOM_UI_ACTION,
-    DATA_UPDATED
+    DATA_UPDATED,
+    POSITION_CHANGED
 };
 
 // Specialized event types for different OF event types
@@ -65,6 +67,15 @@ struct Event {
         Event e;
         e.type = AppEventType::WINDOW_RESIZED;
         e.payload = args;
+        return e;
+    }
+    
+    // Create position change event
+    static Event fromPositionChange(const ofPoint& position, void* sender) {
+        Event e;
+        e.type = AppEventType::POSITION_CHANGED;
+        e.payload = position;
+        e.sender = sender;
         return e;
     }
 

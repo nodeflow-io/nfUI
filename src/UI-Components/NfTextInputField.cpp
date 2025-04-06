@@ -65,7 +65,22 @@ void NfTextInputField::init() {
     lastTimeCursorMoved = ofGetElapsedTimef();
 }
 
-
+void NfTextInputField::setValue(std::unique_ptr<NFValue> newValue) {
+    // First call the base class setValue to handle the value storage
+    NfBoxxer::setValue(std::move(newValue));
+    
+    // Now update the text field with the new value
+    NFValue* valueRawPtr = this->getValue();
+    if (valueRawPtr != nullptr) {
+        text = valueRawPtr->toString();
+        // Reset cursor and selection when text changes
+        cursorPosition = text.length();
+        selectionBegin = cursorPosition;
+        selectionEnd = cursorPosition;
+        // Notify that text has changed
+        ofNotifyEvent(textChanged, text, this);
+    }
+}
 
 NfTextInputField::~NfTextInputField(){
     if(isEnabled){

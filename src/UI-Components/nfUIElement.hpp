@@ -71,7 +71,7 @@ public:
     bool isRoot() const;
     NfUIElement* findRoot();
     void addChild(const std::shared_ptr<NfUIElement>& child);
-    void setValue(std::unique_ptr<NFValue> newValue);
+    virtual void setValue(std::unique_ptr<NFValue> newValue);
     NFValue* getValue() const;
     void markDimensionsDirty();
     
