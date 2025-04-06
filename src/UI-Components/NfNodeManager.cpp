@@ -221,7 +221,7 @@ void NfNodeManager::routeMousePressed(const Event& e) {
         for (auto it = nodes.rbegin(); it != nodes.rend(); ++it) {
             auto& node = *it;
             if (node->boundsMouse.inside(globalPoint)) {
-                ofLogNotice("NfNodeManager::routeMousePressed") << "Node pressed: " + node->_name;
+                // ofLogNotice("NfNodeManager::routeMousePressed") << "Node pressed: " + node->_name;
                 // Use globalPoint instead of localPoint
                 bool consumed = node->handleRoutedMouseEvent(AppEventType::MOUSE_PRESSED, globalPoint, args.button);
                 if (consumed) {
@@ -238,14 +238,14 @@ void NfNodeManager::routeMouseReleased(const Event& e) {
     try {
         auto args = e.payload_as<ofMouseEventArgs>();
         ofPoint globalPoint(args.x, args.y);
-        ofLogNotice("NfNodeManager") << "Processing mouse release at: " << args.x << "," << args.y;
+        // ofLogNotice("NfNodeManager") << "Processing mouse release at: " << args.x << "," << args.y;
 
 
         // Iterate children in reverse (topmost first)
         for (auto it = nodes.rbegin(); it != nodes.rend(); ++it) {
             auto& node = *it;
             if (node->boundsMouse.inside(globalPoint)) {
-                ofLogNotice("NfNodeManager::routeMouseReleased") << "Node released: " + node->_name;
+                // ofLogNotice("NfNodeManager::routeMouseReleased") << "Node released: " + node->_name;
                 // Use globalPoint instead of localPoint
                 bool consumed = node->handleRoutedMouseEvent(AppEventType::MOUSE_RELEASED, globalPoint, args.button);
                 if (consumed) {
