@@ -160,8 +160,8 @@ void NfUIElement::setPosition(const ofPoint& position) {
 void NfUIElement::getChildDimensions(const std::shared_ptr<NfUIElement>& child, float& width, float& height) {
     float childWidth = child->_config.marginLeft + child->_config.marginRight + child->_config.contentWidth;
     float childHeight = child->_config.marginTop + child->_config.paddingTop + 
-                       child->_config.marginTop + child->_config.paddingBottom + 
-                       child->_config.marginBottom + child->_config.contentHeight;
+                       child->_config.contentHeight + child->_config.paddingBottom + 
+                       child->_config.marginBottom;
     
     width = childWidth;
     height = childHeight;

@@ -76,27 +76,57 @@ void NfBoxxer::draw() {
 }
 
 void NfBoxxer::drawChildren(const float& paddingLeft, const float& paddingTop) {
-    std::string name;
     ofPushMatrix();
+    
+    // Step 1: Apply padding translation
     ofTranslate(paddingLeft, paddingTop);
-    name = "padding: " + _name;
-    translateBounds(boundsMouse, paddingLeft, paddingTop, _name);
-    float accumulatedHeight = 0;
+    
+    // Track current vertical position
+    float yOffset = 0;
+    
+    // Step 2: Process all children
     for (size_t i = 0; i < children.size(); ++i) {
         auto& child = children[i];
-        if (i) {
-            auto& lastChild = children[i-1];
-            float width, height;
-            this->getChildDimensions(lastChild, width, height);
-            ofTranslate(0, height);
-            name = "cd: " + child->_name;
-            accumulatedHeight += height;
-            translateBounds(child->boundsMouse, 0, accumulatedHeight, name);
+        
+        // Get child dimensions
+        float childWidth, childHeight;
+        this->getChildDimensions(child, childWidth, childHeight);
+        
+        // Position for current child (in the parent's coordinate system)
+        ofPushMatrix();
+        ofTranslate(0, yOffset);
+        
+        // Update child's boundsMouse to reflect its absolute position
+        // First reset to avoid accumulated translations
+        child->boundsMouse = child->bounds;
+        
+        // Apply all transformations to get global coordinates
+        child->boundsMouse.x = this->boundsMouse.x + paddingLeft;
+        child->boundsMouse.y = this->boundsMouse.y + paddingTop + yOffset;
+        
+        if (_config.isDebug) {
+            std::cout << "Child " << child->_name << " boundsMouse: " 
+                      << child->boundsMouse.x << "," << child->boundsMouse.y 
+                      << " w:" << child->boundsMouse.width 
+                      << " h:" << child->boundsMouse.height << std::endl;
         }
+        
+        // Draw the child
         child->draw();
+        
+        ofPopMatrix();
+        
+        // Move offset for next child
+        yOffset += childHeight;
     }
-    // setting the mouseBounds to the accumulated height of all children rendered
-    this->boundsMouse.height = accumulatedHeight;
+    
+    // Update parent's boundsMouse height to encompass all children
+    this->boundsMouse.height = paddingTop + yOffset + _config.paddingBottom;
+    
+    if (_config.isDebug) {
+        std::cout << "Parent " << _name << " final boundsMouse height: " << this->boundsMouse.height << std::endl;
+    }
+    
     ofPopMatrix();
 }
 
