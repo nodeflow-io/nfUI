@@ -142,9 +142,11 @@ bool NfNodeManager::focusNode(const std::string& name) {
 bool NfNodeManager::unfocusAll() {
     for (auto& node : nodes) {
         node->nodeIsFocused = false;
+        node->parameters.getBool("IsFocused") = false;
     }
     for (auto& modalNode : modalNodes) {
         modalNode->nodeIsFocused = false;
+        modalNode->parameters.getBool("IsFocused") = false;
     }
     return false; // Return false as a convenience for chaining
 }

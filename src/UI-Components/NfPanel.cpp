@@ -85,7 +85,7 @@ bool NfPanel::handleRoutedMouseEvent(AppEventType type, const ofPoint& localPoin
             if (boundsMouse.inside(localPoint)) {
                 if (!nodeIsFocused) {
                     nfUI::NfEventManager::getEventManager().emit("node_focus", _name);
-                    markDimensionsDirty();  // Mark dimensions as dirty when focus changes
+                    // markDimensionsDirty();  // Mark dimensions as dirty when focus changes
                 }
                 _isDragging = true;
                 _dragStartPos.set(localPoint.x, localPoint.y);
@@ -109,8 +109,12 @@ bool NfPanel::handleRoutedMouseEvent(AppEventType type, const ofPoint& localPoin
         case AppEventType::MOUSE_MOVED:
             if (boundsMouse.inside(localPoint)) {
                 parameters.getBool("IsFocused") = true;
-                markDimensionsDirty();  // Mark dimensions as dirty when mouse moves
+                // markDimensionsDirty();  // Mark dimensions as dirty when mouse moves
                 return true;
+            } else {
+                if (!nodeIsFocused) {
+                    parameters.getBool("IsFocused") = false;
+                }   
             }
             return false;
             

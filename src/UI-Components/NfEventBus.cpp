@@ -4,7 +4,6 @@ namespace nfUI {
 
 NfEventBus::NfEventBus() noexcept : _initialized(false) {
     // Constructor now explicitly defined with no actions
-    setupOFEvents();
 }
 
 NfEventBus::~NfEventBus() noexcept {
@@ -53,7 +52,7 @@ void NfEventBus::removeOFEvents() {
 // OF Event handlers that forward to our event bus
 void NfEventBus::mousePressed(ofMouseEventArgs& args) {
     if (!_initialized) return;
-    ofLogNotice("NfEventBus") << "Mouse pressed at: " << args.x << "," << args.y;
+    // ofLogNotice("NfEventBus") << "Mouse pressed at: " << args.x << "," << args.y;
     publish(Event::fromMouseEvent(args, AppEventType::MOUSE_PRESSED));
 }
 
