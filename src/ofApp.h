@@ -1,5 +1,10 @@
 #pragma once
 
+// Forward declarations
+namespace nfUI {
+    class SelectionNFValue;
+}
+
 #include "ofMain.h"
 
 #include "ofxNodeFlowGUI.hpp"
@@ -11,6 +16,8 @@
 #include "NfToggleSwitch.hpp"
 #include "NfButton.hpp"
 #include "NfTextInputField.hpp"
+#include "NFValue.hpp"
+#include "NfSelection.hpp"
 #include "NfDom.hpp"
 #include "GUIParams.hpp"
 

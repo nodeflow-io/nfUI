@@ -160,9 +160,9 @@ void ofApp::setup() {
     // Create selection options
     std::vector<std::string> waveformNames = {"Sine", "Square", "Mixed"};
     std::vector<int> waveformValues = {0, 1, 2}; // Corresponding values for each option
-    auto waveformSelection = std::make_shared<nfUI::SelectionNFValue>(waveformNames, waveformValues, 0); // 0 = Sine selected
+    // auto waveformSelection = std::make_shared<nfUI::SelectionNFValue>(waveformNames, waveformValues, 0); // 0 = Sine selected - No longer needed here
     
-    // Create and add the selection component
+    // Create and add the selection component, passing constructor args directly
     config.backgroundColor = ofColor(22,34,51);
     config.focusBackgroundColor = ofColor(13,20,30);
     config.bounds = ofRectangle(posX, posY, width-2*margin, 20);
@@ -173,7 +173,9 @@ void ofApp::setup() {
     _guiParamsWaveform = nfUI::createUIElement<nfUI::NfSelection, nfUI::SelectionNFValue>(
         config,
         "Waveform",
-        waveformSelection
+        waveformNames, // Pass constructor arguments directly
+        waveformValues,
+        0             // Initial index (Sine)
     );
     
     // The UI rendering tree is specified here
