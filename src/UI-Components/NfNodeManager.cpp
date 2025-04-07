@@ -66,6 +66,7 @@ NfNodeManager::~NfNodeManager() {
 // Node management
 void NfNodeManager::addNode(std::shared_ptr<NfBoxxer> node) {
     nodes.push_back(node);
+    focusNode(node->_name); // Focus the newly added node
 }
 
 void NfNodeManager::addModalNode(std::shared_ptr<NfBoxxer> node) {
@@ -216,7 +217,6 @@ void NfNodeManager::routeMousePressed(const Event& e) {
         auto args = e.payload_as<ofMouseEventArgs>();
         ofPoint globalPoint(args.x, args.y);
         // ofLogNotice("NfNodeManager") << "Processing mouse press at: " << args.x << "," << args.y;
-
         // Iterate children in reverse (topmost first)
         for (auto it = nodes.rbegin(); it != nodes.rend(); ++it) {
             auto& node = *it;
@@ -239,14 +239,11 @@ void NfNodeManager::routeMouseReleased(const Event& e) {
         auto args = e.payload_as<ofMouseEventArgs>();
         ofPoint globalPoint(args.x, args.y);
         // ofLogNotice("NfNodeManager") << "Processing mouse release at: " << args.x << "," << args.y;
-
-
         // Iterate children in reverse (topmost first)
         for (auto it = nodes.rbegin(); it != nodes.rend(); ++it) {
             auto& node = *it;
             if (node->boundsMouse.inside(globalPoint)) {
                 // ofLogNotice("NfNodeManager::routeMouseReleased") << "Node released: " + node->_name;
-                // Use globalPoint instead of localPoint
                 bool consumed = node->handleRoutedMouseEvent(AppEventType::MOUSE_RELEASED, globalPoint, args.button);
                 if (consumed) {
                     return;
@@ -268,7 +265,6 @@ void NfNodeManager::routeMouseDragged(const Event& e) {
             auto& node = *it;
     
             // ofLogNotice("NfNodeManager::routeMouseDragged") << "Node dragged: " + node->_name;
-            // Use globalPoint instead of localPoint
             bool consumed = node->handleRoutedMouseEvent(AppEventType::MOUSE_DRAGGED, globalPoint, args.button);
             if (consumed) {
                 return;
@@ -288,7 +284,6 @@ void NfNodeManager::routeMouseMoved(const Event& e) {
         // Iterate children in reverse (topmost first)
         for (auto it = nodes.rbegin(); it != nodes.rend(); ++it) {
             auto& node = *it;
-            // Use globalPoint instead of localPoint
             // ofLogNotice("NfNodeManager::routeMouseMoved") << "Node mouseover: " + node->_name;
             bool consumed = node->handleRoutedMouseEvent(AppEventType::MOUSE_MOVED, globalPoint, args.button);
             if (consumed) {
@@ -310,8 +305,7 @@ void NfNodeManager::routeMouseScrolled(const Event& e) {
         for (auto it = nodes.rbegin(); it != nodes.rend(); ++it) {
             auto& node = *it;
             if (node->boundsMouse.inside(globalPoint)) {
-                ofLogNotice("NfNodeManager::routeMouseScrolled") << "Node scrolled: " + node->_name;
-                // Use globalPoint instead of localPoint
+                // ofLogNotice("NfNodeManager::routeMouseScrolled") << "Node scrolled: " + node->_name;
                 // Pass scrollX and scrollY through the button parameter for now
                 bool consumed = node->handleRoutedMouseEvent(AppEventType::MOUSE_SCROLLED, globalPoint, args.button);
                 if (consumed) {
