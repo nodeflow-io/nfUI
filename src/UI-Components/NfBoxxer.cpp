@@ -128,7 +128,7 @@ void NfBoxxer::drawChildren(const float& paddingLeft, const float& paddingTop) {
         // Check if this child has floating elements (like an open dropdown)
         auto selectionChild = dynamic_cast<NfSelection*>(child.get());
         if (selectionChild && selectionChild->hasFloatingElement()) {
-            // Calculate position for the floating element
+            // Calculate vertical position for the floating element
             float childYOffset = 0;
             for (size_t j = 0; j < i; j++) {
                 float w, h;
@@ -136,8 +136,16 @@ void NfBoxxer::drawChildren(const float& paddingLeft, const float& paddingTop) {
                 childYOffset += h;
             }
             
+            // Get horizontal position if needed
+            float childXOffset = 0;
+            
+            // If there's a label in the selection, we need to apply the horizontal shift
+            if (selectionChild->_config.showLabel) {
+                childXOffset = selectionChild->bounds.width / 2;
+            }
+            
             ofPushMatrix();
-            ofTranslate(0, childYOffset);
+            ofTranslate(childXOffset, childYOffset);
             
             // Draw just the dropdown portion
             selectionChild->drawDropdown();
