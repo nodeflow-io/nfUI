@@ -165,6 +165,7 @@ void ofApp::setup() {
     // Create and add the selection component, passing constructor args directly
     config.backgroundColor = ofColor(22,34,51);
     config.focusBackgroundColor = ofColor(13,20,30);
+    config.focusColor = ofColor::yellow;
     config.bounds = ofRectangle(posX, posY, width-2*margin, 20);
     config.setMargin(8, 10, 0, 8);
     config.setPadding(5, 10, 5, 10);
