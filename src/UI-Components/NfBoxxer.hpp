@@ -33,6 +33,14 @@ public:
     void drawChildren(const float& paddingLeft, const float& paddingTop);
     void focus();
     
+    // Floating element support
+    virtual bool hasFloatingElement() const { return false; }
+    virtual bool isPointInFloatingElement(const ofPoint& point) const { return false; }
+    virtual bool handleFloatingElementEvent(AppEventType type, const ofPoint& point, int button) { return false; }
+    
+    // Route events to handle floating elements
+    bool routeEventToFloatingElements(AppEventType type, const ofPoint& localPoint, int button);
+    
     // Listener management
     void setListenerID(ListenerID id);
     ListenerID getListenerID() const;

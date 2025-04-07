@@ -6,6 +6,7 @@
 //
 
 #include "NfBoxxer.hpp"
+#include "NfSelection.hpp"  // Include for dynamic_cast to NfSelection
 
 namespace nfUI {
 
@@ -84,7 +85,7 @@ void NfBoxxer::drawChildren(const float& paddingLeft, const float& paddingTop) {
     // Track current vertical position
     float yOffset = 0;
     
-    // Step 2: Process all children
+    // Step 2: Process all children - first pass for normal elements
     for (size_t i = 0; i < children.size(); ++i) {
         auto& child = children[i];
         
@@ -120,6 +121,31 @@ void NfBoxxer::drawChildren(const float& paddingLeft, const float& paddingTop) {
         yOffset += childHeight;
     }
     
+    // Second pass: draw floating elements (like dropdowns) on top of everything
+    for (size_t i = 0; i < children.size(); ++i) {
+        auto& child = children[i];
+        
+        // Check if this child has floating elements (like an open dropdown)
+        auto selectionChild = dynamic_cast<NfSelection*>(child.get());
+        if (selectionChild && selectionChild->hasFloatingElement()) {
+            // Calculate position for the floating element
+            float childYOffset = 0;
+            for (size_t j = 0; j < i; j++) {
+                float w, h;
+                this->getChildDimensions(children[j], w, h);
+                childYOffset += h;
+            }
+            
+            ofPushMatrix();
+            ofTranslate(0, childYOffset);
+            
+            // Draw just the dropdown portion
+            selectionChild->drawDropdown();
+            
+            ofPopMatrix();
+        }
+    }
+    
     // Update parent's boundsMouse height to encompass all children
     this->boundsMouse.height = paddingTop + yOffset + _config.paddingBottom;
     
@@ -140,6 +166,21 @@ void NfBoxxer::setListenerID(ListenerID id) {
 
 NfBoxxer::ListenerID NfBoxxer::getListenerID() const {
     return listenerID;
+}
+
+bool NfBoxxer::routeEventToFloatingElements(AppEventType type, const ofPoint& localPoint, int button) {
+    // Check if we have any children with floating elements that might handle this event
+    for (auto& child : children) {
+        // Check if this child has a floating element and if the point is inside it
+        // Use dynamic cast to check if this is a selection with dropdown
+        auto selectionChild = dynamic_cast<NfSelection*>(child.get());
+        if (selectionChild && selectionChild->hasFloatingElement() && 
+            selectionChild->isPointInFloatingElement(localPoint)) {
+            // Delegate event handling to the floating element
+            return selectionChild->handleFloatingElementEvent(type, localPoint, button);
+        }
+    }
+    return false;  // No floating element handled the event
 }
 
 } // namespace nfUI

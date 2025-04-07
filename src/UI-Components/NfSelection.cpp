@@ -13,7 +13,16 @@ void NfSelection::draw() {
     ofPushMatrix(); // Save the current drawing context
     NfBoxxer::draw(); // Call base class draw for common drawing code if needed
     
-    // Selection-specific drawing code here
+    // Draw the base selection element
+    drawBaseElement();
+    
+    // NOTE: We don't draw the dropdown here anymore
+    // It will be drawn during the floating elements pass in NfBoxxer::drawChildren
+    
+    ofPopMatrix(); // Restore the drawing context
+}
+
+void NfSelection::drawBaseElement() {
     if (_firstRender) {
         if (_config.isDebug) {
             std::cout << "NfSelection: " << _name << std::endl;
@@ -63,13 +72,6 @@ void NfSelection::draw() {
         }
         ofDrawBitmapString(selectionValue->getSelectedName(), _config.paddingLeft, BITMAP_FONT_SIZE + _config.paddingTop);
     }
-    
-    // draw dropdown if open
-    if (_isDropdownOpen) {
-        drawDropdown();
-    }
-    
-    ofPopMatrix(); // Restore the drawing context
 }
 
 void NfSelection::drawDropdown() {
@@ -117,6 +119,38 @@ int NfSelection::getItemIndexAtPoint(const ofPoint& point) const {
 void NfSelection::setSelectionValue(SelectionNFValue* value) {
     selectionValue = value;
     updateDropdownHeight();
+}
+
+bool NfSelection::handleFloatingElementEvent(AppEventType type, const ofPoint& point, int button) {
+    if (!_isDropdownOpen) return false;
+    
+    switch (type) {
+        case AppEventType::MOUSE_PRESSED:
+            if (isPointInDropdown(point)) {
+                int itemIndex = getItemIndexAtPoint(point);
+                if (itemIndex >= 0 && selectionValue != nullptr) {
+                    selectionValue->setIndex(itemIndex);
+                    _isDropdownOpen = false;
+                    UIEventArgs eventArgs;
+                    ofNotifyEvent(selectionChanged, eventArgs, this);
+                }
+                return true;
+            }
+            break;
+            
+        case AppEventType::MOUSE_MOVED:
+            if (isPointInDropdown(point)) {
+                _hoveredItem = getItemIndexAtPoint(point);
+                setHandCursor();
+                return true;
+            }
+            break;
+            
+        default:
+            break;
+    }
+    
+    return false;
 }
 
 bool NfSelection::handleRoutedMouseEvent(AppEventType type, const ofPoint& localPoint, int button) {

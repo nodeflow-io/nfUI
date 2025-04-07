@@ -48,6 +48,13 @@ public:
     
     // Core functionality
     void draw() override;
+    void drawBaseElement();           // Draws just the selection box
+    void drawDropdown();              // Draws just the dropdown portion
+    
+    // Floating element detection and handling
+    bool hasFloatingElement() const { return _isDropdownOpen; }
+    bool isPointInFloatingElement(const ofPoint& point) const { return isPointInDropdown(point); }
+    bool handleFloatingElementEvent(AppEventType type, const ofPoint& point, int button);
     
     // Event handling
     bool handleRoutedMouseEvent(AppEventType type, const ofPoint& localPoint, int button) override;
@@ -55,7 +62,6 @@ public:
     // Selection specific methods
     void setSelectionValue(SelectionNFValue* value);
     void updateDropdownHeight();
-    void drawDropdown();
     bool isPointInDropdown(const ofPoint& point) const;
     int getItemIndexAtPoint(const ofPoint& point) const;
 };

@@ -126,6 +126,17 @@ void NfNodeManager::routeMousePressed(const Event& e) {
         auto args = e.payload_as<ofMouseEventArgs>();
         ofPoint globalPoint(args.x, args.y);
         // ofLogNotice("NfNodeManager") << "Processing mouse press at: " << args.x << "," << args.y;
+        
+        // First check for floating elements like open dropdowns
+        for (auto it = nodes.rbegin(); it != nodes.rend(); ++it) {
+            auto& node = *it;
+            bool consumed = node->routeEventToFloatingElements(AppEventType::MOUSE_PRESSED, globalPoint, args.button);
+            if (consumed) {
+                return;
+            }
+        }
+        
+        // If no floating element handled it, proceed with normal event flow
         // Iterate children in reverse (topmost first)
         for (auto it = nodes.rbegin(); it != nodes.rend(); ++it) {
             auto& node = *it;
@@ -148,6 +159,17 @@ void NfNodeManager::routeMouseReleased(const Event& e) {
         auto args = e.payload_as<ofMouseEventArgs>();
         ofPoint globalPoint(args.x, args.y);
         // ofLogNotice("NfNodeManager") << "Processing mouse release at: " << args.x << "," << args.y;
+        
+        // First check for floating elements like open dropdowns
+        for (auto it = nodes.rbegin(); it != nodes.rend(); ++it) {
+            auto& node = *it;
+            bool consumed = node->routeEventToFloatingElements(AppEventType::MOUSE_RELEASED, globalPoint, args.button);
+            if (consumed) {
+                return;
+            }
+        }
+        
+        // If no floating element handled it, proceed with normal event flow
         // Iterate children in reverse (topmost first)
         for (auto it = nodes.rbegin(); it != nodes.rend(); ++it) {
             auto& node = *it;
@@ -169,6 +191,15 @@ void NfNodeManager::routeMouseDragged(const Event& e) {
         auto args = e.payload_as<ofMouseEventArgs>();
         ofPoint globalPoint(args.x, args.y);
 
+        // First check for floating elements like open dropdowns
+        for (auto it = nodes.rbegin(); it != nodes.rend(); ++it) {
+            auto& node = *it;
+            bool consumed = node->routeEventToFloatingElements(AppEventType::MOUSE_DRAGGED, globalPoint, args.button);
+            if (consumed) {
+                return;
+            }
+        }
+
         // Iterate children in reverse (topmost first)
         for (auto it = nodes.rbegin(); it != nodes.rend(); ++it) {
             auto& node = *it;
@@ -189,6 +220,15 @@ void NfNodeManager::routeMouseMoved(const Event& e) {
     try {
         auto args = e.payload_as<ofMouseEventArgs>();
         ofPoint globalPoint(args.x, args.y);
+
+        // First check for floating elements like open dropdowns
+        for (auto it = nodes.rbegin(); it != nodes.rend(); ++it) {
+            auto& node = *it;
+            bool consumed = node->routeEventToFloatingElements(AppEventType::MOUSE_MOVED, globalPoint, args.button);
+            if (consumed) {
+                return;
+            }
+        }
 
         // Iterate children in reverse (topmost first)
         for (auto it = nodes.rbegin(); it != nodes.rend(); ++it) {
