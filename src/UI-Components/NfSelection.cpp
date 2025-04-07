@@ -77,18 +77,21 @@ void NfSelection::drawBaseElement() {
 void NfSelection::drawDropdown() {
     if (selectionValue == nullptr) return;
     
+    // Determine the dropdown width - half width when showing label
+    float dropdownWidth = _config.showLabel ? (bounds.width / 2) : bounds.width;
+    
     const auto& names = selectionValue->getNamesList();
     _dropdownHeight = names.size() * _itemHeight;
     
-    // draw dropdown background
+    // Draw dropdown background - positioned relative to selection element
     ofSetColor(backgroundColor.get());
-    ofDrawRectangle(0, bounds.height, bounds.width, _dropdownHeight);
+    ofDrawRectangle(0, bounds.height, dropdownWidth, _dropdownHeight);
     
-    // draw items
+    // Draw items
     for (size_t i = 0; i < names.size(); ++i) {
         if (i == _hoveredItem) {
             ofSetColor(focusBackgroundColor.get());
-            ofDrawRectangle(0, bounds.height + i * _itemHeight, bounds.width, _itemHeight);
+            ofDrawRectangle(0, bounds.height + i * _itemHeight, dropdownWidth, _itemHeight);
         }
         
         if (i == selectionValue->getIndex()) {
@@ -96,7 +99,8 @@ void NfSelection::drawDropdown() {
         } else {
             ofSetColor(textColor.get());
         }
-        ofDrawBitmapString(names[i], _config.paddingLeft, bounds.height + (i + 1) * _itemHeight - 4);
+        ofDrawBitmapString(names[i], _config.paddingLeft, 
+                          bounds.height + (i + 1) * _itemHeight - 4);
     }
 }
 
@@ -109,10 +113,15 @@ void NfSelection::updateDropdownHeight() {
 bool NfSelection::isPointInDropdown(const ofPoint& point) const {
     if (!_isDropdownOpen) return false;
     
+    // Calculate dropdown width based on whether label is shown
+    float dropdownWidth = _config.showLabel ? (bounds.width / 2) : bounds.width;
+    
     // Check if the point is within the dropdown's bounds
-    // Point coordinates are already in local space
-    return (point.x >= 0 && point.x <= bounds.width && 
-            point.y >= bounds.height && point.y <= bounds.height + _dropdownHeight);
+    // Point coordinates are in local space relative to the selection element
+    return (point.x >= 0 && 
+            point.x <= dropdownWidth && 
+            point.y >= bounds.height && 
+            point.y <= bounds.height + _dropdownHeight);
 }
 
 int NfSelection::getItemIndexAtPoint(const ofPoint& point) const {

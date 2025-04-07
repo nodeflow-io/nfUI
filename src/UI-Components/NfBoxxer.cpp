@@ -136,18 +136,20 @@ void NfBoxxer::drawChildren(const float& paddingLeft, const float& paddingTop) {
                 childYOffset += h;
             }
             
-            // Get horizontal position if needed
-            float childXOffset = 0;
-            
-            // If there's a label in the selection, we need to apply the horizontal shift
-            if (selectionChild->_config.showLabel) {
-                childXOffset = selectionChild->bounds.width / 2;
-            }
+            // We need to position the dropdown exactly where the selection element is
+            // This means using the same translation that was applied during the first pass
             
             ofPushMatrix();
-            ofTranslate(childXOffset, childYOffset);
             
-            // Draw just the dropdown portion
+            // For proper positioning, we need to add the same offsets as we did during the first pass
+            // Child's position relative to parent
+            float xPos = child->boundsMouse.x - this->boundsMouse.x - paddingLeft;
+            
+            // Use exact position to ensure alignment
+            ofTranslate(xPos, childYOffset);
+            
+            // Draw just the dropdown portion - the dropdown itself knows its correct position
+            // relative to its parent element (the selection box)
             selectionChild->drawDropdown();
             
             ofPopMatrix();
