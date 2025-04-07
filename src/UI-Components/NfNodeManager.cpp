@@ -325,7 +325,7 @@ void NfNodeManager::routeKeyPressed(const Event& e) {
         // Find focused node and send key event to it
         for (auto& node : nodes) {
             if (node->nodeIsFocused) {
-                ofLogNotice("NfNodeManager::routeKeyPressed") << "Key pressed to focused node: " + node->_name;
+                //ofLogNotice("NfNodeManager::routeKeyPressed") << "Key pressed to focused node: " + node->_name;
                 bool consumed = node->handleRoutedKeyEvent(AppEventType::KEY_PRESSED, args.key);
                 if (consumed) {
                     return;
@@ -354,7 +354,7 @@ void NfNodeManager::routeKeyReleased(const Event& e) {
         // Find focused node and send key event to it
         for (auto& node : nodes) {
             if (node->nodeIsFocused) {
-                ofLogNotice("NfNodeManager::routeKeyReleased") << "Key released to focused node: " + node->_name;
+                // ofLogNotice("NfNodeManager::routeKeyReleased") << "Key released to focused node: " + node->_name;
                 bool consumed = node->handleRoutedKeyEvent(AppEventType::KEY_RELEASED, args.key);
                 if (consumed) {
                     return;
