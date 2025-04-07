@@ -91,11 +91,24 @@ bool NfToggleSwitch::handleRoutedMouseEvent(AppEventType type, const ofPoint& lo
         case AppEventType::MOUSE_PRESSED:
             if (boundsMouse.inside(localPoint)) {
                 parameters.getBool("IsFocused") = true;
-                UIEventArgs eventArgs;
-                ofNotifyEvent(clicked, eventArgs, this);
+                _mousePressedInToggle = true;  // Track that mouse was pressed in toggle
                 return true;
             }
             return false;
+            
+        case AppEventType::MOUSE_RELEASED:
+            // Only trigger the action if the mouse was both pressed and released inside the toggle
+            if (_mousePressedInToggle && boundsMouse.inside(localPoint)) {
+                // Toggle the value
+                UIEventArgs eventArgs;
+                ofNotifyEvent(clicked, eventArgs, this);
+            }
+            
+            // Reset the pressed state
+            _mousePressedInToggle = false;
+            
+            // Return true if we're inside the bounds to consume the event
+            return boundsMouse.inside(localPoint);
             
         case AppEventType::MOUSE_MOVED:
             // Always check whether we're inside or outside on MOUSE_MOVED
@@ -110,12 +123,16 @@ bool NfToggleSwitch::handleRoutedMouseEvent(AppEventType type, const ofPoint& lo
                     parameters.getBool("IsFocused") = false;
                     // No need to return true here - let parent handle events outside our bounds
                 }
+                
+                // Also clear the pressed state if mouse moves out
+                _mousePressedInToggle = false;
             }
             return false;
             
         case AppEventType::MOUSE_EXITED:
             if (!boundsMouse.inside(localPoint)) {
                 parameters.getBool("IsFocused") = false;
+                _mousePressedInToggle = false;  // Clear pressed state when exiting
                 return true;
             }
             return false;

@@ -28,6 +28,7 @@ class NfToggleSwitch : public NfBoxxer {
     
 private:
     bool _firstRender = true;           // Flag to track if draw() was called for the first time
+    bool _mousePressedInToggle = false; // Flag to track if mouse was pressed in toggle
     
 public:
     // Inherit NfBoxxer constructor
@@ -40,7 +41,7 @@ public:
     NFValue* valueRawPtr;
     
     // Core functionality
-    void draw();
+    void draw() override;
     
     // Event handling
     bool handleRoutedMouseEvent(AppEventType type, const ofPoint& localPoint, int button) override;
