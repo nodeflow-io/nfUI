@@ -47,17 +47,8 @@ NfNodeManager::NfNodeManager() {
 
 // Destructor
 NfNodeManager::~NfNodeManager() {
-    // Clean up all modal nodes first
-    for (auto& modalNode : modalNodes) {
-        if (modalNode) {
-            closeModalNode(modalNode->_name);
-        }
-    }
-    modalNodes.clear();
-
     // Clear regular nodes
     nodes.clear();
-
     // Unsubscribe from all events
     // nfUI::NfEventManager::getEventManager().unsubscribeAll(this);
     BUS.unsubscribeAll(this);
@@ -67,10 +58,6 @@ NfNodeManager::~NfNodeManager() {
 void NfNodeManager::addNode(std::shared_ptr<NfBoxxer> node) {
     nodes.push_back(node);
     focusNode(node->_name); // Focus the newly added node
-}
-
-void NfNodeManager::addModalNode(std::shared_ptr<NfBoxxer> node) {
-    modalNodes.push_back(node);
 }
 
 bool NfNodeManager::removeNode(const std::string& name) {
@@ -83,29 +70,11 @@ bool NfNodeManager::removeNode(const std::string& name) {
     return false;
 }
 
-bool NfNodeManager::removeModalNode(const std::string& name) {
-    auto it = std::find_if(modalNodes.begin(), modalNodes.end(),
-                           [&name](const std::shared_ptr<NfBoxxer>& node) { return node->_name == name; });
-    if (it != modalNodes.end()) {
-        modalNodes.erase(it);
-        return true;
-    }
-    return false;
-}
-
 // Drawing
 void NfNodeManager::drawNodes() {
     // Draw regular nodes first
     for (auto& node : nodes) {
         node->draw();
-    }
-    
-    // Then draw modal nodes
-    if (modalNodes.size()) {
-        
-        for (auto& modalNode : modalNodes) {
-            modalNode->draw();
-        }
     }
 }
 
@@ -125,18 +94,6 @@ bool NfNodeManager::focusNode(const std::string& name) {
         std::rotate(it, it + 1, nodes.end());
     }
 
-    // Attempt to focus in modal nodes with higher priority
-    found = focusInCollection(modalNodes, name) || found;
-
-    // Find the focused node - there should be only one probably but who knows now
-    it = std::find_if(modalNodes.begin(), modalNodes.end(),
-                            [](const std::shared_ptr<NfBoxxer>& node) { return node->nodeIsFocused; });
-    
-    if (it != modalNodes.end()) {
-        // Move the focused node to the end of the vector
-        std::rotate(it, it + 1, modalNodes.end());
-    }
-
     return found; // Return true if any node was found and focused
 }
 
@@ -144,10 +101,6 @@ bool NfNodeManager::unfocusAll() {
     for (auto& node : nodes) {
         node->nodeIsFocused = false;
         node->parameters.getBool("IsFocused") = false;
-    }
-    for (auto& modalNode : modalNodes) {
-        modalNode->nodeIsFocused = false;
-        modalNode->parameters.getBool("IsFocused") = false;
     }
     return false; // Return false as a convenience for chaining
 }
@@ -162,50 +115,6 @@ bool NfNodeManager::focusInCollection(std::vector<std::shared_ptr<NfBoxxer>>& co
         }
     }
     return false; // Node not found in this collection
-}
-
-// Modal management
-void NfNodeManager::requestModalNode(std::shared_ptr<NfBoxxer> requestingNode, NfModalType modalType, NfUIConfig config, std::string name) {
-    std::shared_ptr<NfBoxxer> modalNode;
-    if (modalType == NfModalType::Dropdown) {
-        modalNode = std::make_shared<NfDropdown>(config, name);
-    }
-
-    // Subscribe and save the listener ID
-    ListenerID id = nfUI::NfEventManager::getEventManager().subscribe("dropdown_selection", [requestingNode](const std::string& itemIndexStr) {
-        int itemIndex = std::stoi(itemIndexStr);
-        // requestingNode->setValueFromModal(itemIndex);
-    });
-
-    // Store the listener ID with the modal node or in a map
-    modalNode->setListenerID(id); // Or modalListenerIDs[modalNodeName] = id;
-
-    addModalNode(modalNode);
-}
-
-void NfNodeManager::closeModalNode(const std::string& modalNodeName) {
-    // Retrieve the listener ID for the modal node
-    auto modalNode = getModalNodeByName(modalNodeName);
-    if (modalNode) {
-        ListenerID id = modalNode->getListenerID(); // Or id = modalListenerIDs[modalNodeName];
-        
-        // Unsubscribe using both the event type and the listener ID
-        nfUI::NfEventManager::getEventManager().unsubscribe("dropdown_selection", id);
-        
-        // Proceed to remove the modal node
-        removeModalNode(modalNodeName);
-    }
-}
-
-std::shared_ptr<NfBoxxer> NfNodeManager::getModalNodeByName(const std::string& modalNodeName) {
-    // Search through the modalNodes collection for a node with the matching name
-    for (const auto& modalNode : modalNodes) {
-        if (modalNode->_name == modalNodeName) {
-            return modalNode; // Return the found node
-        }
-    }
-    // Return nullptr if no matching node is found
-    return nullptr;
 }
 
 
@@ -333,15 +242,6 @@ void NfNodeManager::routeKeyPressed(const Event& e) {
             }
         }
         
-        // Also check modal nodes
-        for (auto& node : modalNodes) {
-            if (node->nodeIsFocused) {
-                bool consumed = node->handleRoutedKeyEvent(AppEventType::KEY_PRESSED, args.key);
-                if (consumed) {
-                    return;
-                }
-            }
-        }
     } catch (const std::bad_any_cast& e) {
         ofLogError("NfNodeManager::routeKeyPressed") << "Bad payload cast for KEY_PRESSED";
     }
@@ -362,15 +262,6 @@ void NfNodeManager::routeKeyReleased(const Event& e) {
             }
         }
         
-        // Also check modal nodes if any
-        for (auto& node : modalNodes) {
-            if (node->nodeIsFocused) {
-                bool consumed = node->handleRoutedKeyEvent(AppEventType::KEY_RELEASED, args.key);
-                if (consumed) {
-                    return;
-                }
-            }
-        }
     } catch (const std::bad_any_cast& e) {
         ofLogError("NfNodeManager::routeKeyReleased") << "Bad payload cast for KEY_RELEASED";
     }
