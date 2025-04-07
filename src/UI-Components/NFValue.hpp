@@ -10,6 +10,7 @@
 
 #include "ofMain.h"
 #include "../API/ValueType.hpp"
+#include <vector>
 
 namespace nfUI {
 
@@ -59,6 +60,32 @@ public:
     std::string toString() const override;
     nfAPI::ValueType getType() const override;
     bool toBool() const override;
+};
+
+class SelectionNFValue : public NFValue {
+public:
+    static const int NOTHING_SELECTED_INDEX = -1;
+    static const std::string NOTHING_SELECTED_NAME;
+    static const int NOTHING_SELECTED_VALUE = 0;
+
+    ofParameter<int> index;
+    std::vector<std::string> names;
+    std::vector<int> values;
+
+    explicit SelectionNFValue(std::vector<std::string> _names, std::vector<int> _values, int initialIndex = NOTHING_SELECTED_INDEX);
+
+    // NFValue overrides
+    std::string toString() const override;
+    nfAPI::ValueType getType() const override;
+    bool toBool() const override;
+
+    // Selection specific methods
+    bool setIndex(int _index);
+    int getIndex() const;
+    std::string getSelectedName() const;
+    int getSelectedValue() const;
+    const std::vector<std::string>& getNamesList() const;
+    const std::vector<int>& getValuesList() const;
 };
 
 } // namespace nfUI
