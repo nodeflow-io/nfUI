@@ -64,6 +64,12 @@ public:
     void updateDropdownHeight();
     bool isPointInDropdown(const ofPoint& point) const;
     int getItemIndexAtPoint(const ofPoint& point) const;
+    
+    // Get proper vertical offset for dropdown positioning
+    float getDropdownOffset() const {
+        // Intentionally return a positive value for proper spacing
+        return 5.0f;  // Visual gap between selection and dropdown
+    }
 };
 
 } // namespace nfUI

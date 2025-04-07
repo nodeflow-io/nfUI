@@ -80,18 +80,21 @@ void NfSelection::drawDropdown() {
     // Determine the dropdown width - half width when showing label
     float dropdownWidth = _config.showLabel ? (bounds.width / 2) : bounds.width;
     
+    // Use the dropdown offset for positioning
+    float dropdownOffset = getDropdownOffset();
+    
     const auto& names = selectionValue->getNamesList();
     _dropdownHeight = names.size() * _itemHeight;
     
     // Draw dropdown background - positioned relative to selection element
     ofSetColor(backgroundColor.get());
-    ofDrawRectangle(0, bounds.height, dropdownWidth, _dropdownHeight);
+    ofDrawRectangle(0, bounds.height + dropdownOffset, dropdownWidth, _dropdownHeight);
     
     // Draw items
     for (size_t i = 0; i < names.size(); ++i) {
         if (i == _hoveredItem) {
             ofSetColor(focusBackgroundColor.get());
-            ofDrawRectangle(0, bounds.height + i * _itemHeight, dropdownWidth, _itemHeight);
+            ofDrawRectangle(0, bounds.height + dropdownOffset + i * _itemHeight, dropdownWidth, _itemHeight);
         }
         
         if (i == selectionValue->getIndex()) {
@@ -100,7 +103,7 @@ void NfSelection::drawDropdown() {
             ofSetColor(textColor.get());
         }
         ofDrawBitmapString(names[i], _config.paddingLeft, 
-                          bounds.height + (i + 1) * _itemHeight - 4);
+                          bounds.height + dropdownOffset + (i + 1) * _itemHeight - 4);
     }
 }
 
@@ -116,17 +119,24 @@ bool NfSelection::isPointInDropdown(const ofPoint& point) const {
     // Calculate dropdown width based on whether label is shown
     float dropdownWidth = _config.showLabel ? (bounds.width / 2) : bounds.width;
     
+    // Use the dropdown offset for hit testing
+    float dropdownOffset = getDropdownOffset();
+    
     // Check if the point is within the dropdown's bounds
     // Point coordinates are in local space relative to the selection element
     return (point.x >= 0 && 
             point.x <= dropdownWidth && 
-            point.y >= bounds.height && 
-            point.y <= bounds.height + _dropdownHeight);
+            point.y >= bounds.height + dropdownOffset && 
+            point.y <= bounds.height + dropdownOffset + _dropdownHeight);
 }
 
 int NfSelection::getItemIndexAtPoint(const ofPoint& point) const {
     if (!isPointInDropdown(point)) return -1;
-    return static_cast<int>((point.y - bounds.height) / _itemHeight);
+    
+    // Use the dropdown offset for calculation
+    float dropdownOffset = getDropdownOffset();
+    
+    return static_cast<int>((point.y - bounds.height - dropdownOffset) / _itemHeight);
 }
 
 void NfSelection::setSelectionValue(SelectionNFValue* value) {

@@ -141,12 +141,14 @@ void NfBoxxer::drawChildren(const float& paddingLeft, const float& paddingTop) {
             
             ofPushMatrix();
             
-            // For proper positioning, we need to add the same offsets as we did during the first pass
-            // Child's position relative to parent
+            // For proper positioning, we need to locate the dropdown precisely
             float xPos = child->boundsMouse.x - this->boundsMouse.x - paddingLeft;
             
-            // Use exact position to ensure alignment
-            ofTranslate(xPos, childYOffset);
+            // Get the dropdown offset from the selection element
+            float dropdownOffset = selectionChild->getDropdownOffset();
+            
+            // Position the floating element
+            ofTranslate(xPos, childYOffset + dropdownOffset);
             
             // Draw just the dropdown portion - the dropdown itself knows its correct position
             // relative to its parent element (the selection box)
