@@ -66,6 +66,7 @@ private:
     std::shared_ptr<nfUI::NfToggleSwitch> _guiParamsShowStatusBar;
     std::shared_ptr<nfUI::NfToggleSwitch> _guiParamsShowStatusFPS;
     std::shared_ptr<nfUI::NfButton> _guiParamsButton;
+    std::shared_ptr<nfUI::NfSelection> _guiParamsWaveform;
     // Inspector widget
     std::shared_ptr<nfUI::NfBoxxer> _inspectorNode;
     std::shared_ptr<nfUI::NfBoxxer> _inspectorLabel;

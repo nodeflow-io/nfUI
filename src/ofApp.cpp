@@ -1,5 +1,6 @@
 #include "ofApp.h"
 #include "UI-Components/NfEventBus.hpp"
+#include "UI-Components/NfSelection.hpp"
 
 
 //--------------------------------------------------------------
@@ -156,6 +157,44 @@ void ofApp::setup() {
         "Set GUI-Parameters"
     );
 
+    // Create selection options
+    std::vector<std::string> waveformNames = {"Sine", "Square", "Mixed"};
+    std::vector<int> waveformValues = {0, 1, 2}; // Corresponding values for each option
+    auto waveformSelection = std::make_shared<nfUI::SelectionNFValue>(waveformNames, waveformValues, 0); // 0 = Sine selected
+    
+    // Create and add the selection component
+    config.backgroundColor = ofColor(22,34,51);
+    config.focusBackgroundColor = ofColor(13,20,30);
+    config.bounds = ofRectangle(posX, posY, width-2*margin, 20);
+    config.setMargin(8, 10, 0, 8);
+    config.setPadding(5, 10, 5, 10);
+    config.maxTextLength = 255;
+    config.showLabel = true;
+    _guiParamsWaveform = nfUI::createUIElement<nfUI::NfSelection, nfUI::SelectionNFValue>(
+        config,
+        "Waveform",
+        waveformSelection
+    );
+    
+    // The UI rendering tree is specified here
+    // adding childs to GUI-Parameters widget here
+    _guiParamsNode->addChild(_guiParamsLabel);
+    _guiParamsNode->addChild(_guiParamsShowGrid);
+    _guiParamsNode->addChild(_guiParamsGridSize);
+    _guiParamsNode->addChild(_guiParamsMajorStep);
+    _guiParamsNode->addChild(_guiParamsProject);
+    _guiParamsNode->addChild(_guiParamsVersion);
+    _guiParamsNode->addChild(_guiParamsPassword);
+    _guiParamsNode->addChild(_guiParamsShowStatusBar);
+    _guiParamsNode->addChild(_guiParamsShowStatusFPS);
+    _guiParamsNode->addChild(_guiParamsWaveform);  // Add waveform selector before the button
+    _guiParamsNode->addChild(_guiParamsButton);
+    // add event handlers for interactive elements
+     ofAddListener(_guiParamsShowGrid->clicked, this, &ofApp::onGuiParametersShowGridClicked);
+     ofAddListener(_guiParamsShowStatusBar->clicked, this, &ofApp::onGuiParametersShowStatusBarClicked);
+     ofAddListener(_guiParamsShowStatusFPS->clicked, this, &ofApp::onGuiParametersShowStatusFPSClicked);
+     ofAddListener(_guiParamsButton->clicked, this, &ofApp::onGuiParametersButtonClicked);
+    
     // Setup Inspector Widget -----------------[ DOM configuration / Elements & Styles ]------------
     width+=40;                                                          // the inspector needs more room
     posX = 0;
@@ -221,24 +260,6 @@ void ofApp::setup() {
         "Button",
         "Update Widget"
     );
-    
-    // The UI rendering tree is specified here
-    // adding childs to GUI-Parameters widget here
-    _guiParamsNode->addChild(_guiParamsLabel);
-    _guiParamsNode->addChild(_guiParamsShowGrid);
-    _guiParamsNode->addChild(_guiParamsGridSize);
-    _guiParamsNode->addChild(_guiParamsMajorStep);
-    _guiParamsNode->addChild(_guiParamsProject);
-    _guiParamsNode->addChild(_guiParamsVersion);
-    _guiParamsNode->addChild(_guiParamsPassword);
-    _guiParamsNode->addChild(_guiParamsShowStatusBar);
-    _guiParamsNode->addChild(_guiParamsShowStatusFPS);
-    _guiParamsNode->addChild(_guiParamsButton);
-    // add event handlers for interactive elements
-     ofAddListener(_guiParamsShowGrid->clicked, this, &ofApp::onGuiParametersShowGridClicked);
-     ofAddListener(_guiParamsShowStatusBar->clicked, this, &ofApp::onGuiParametersShowStatusBarClicked);
-     ofAddListener(_guiParamsShowStatusFPS->clicked, this, &ofApp::onGuiParametersShowStatusFPSClicked);
-     ofAddListener(_guiParamsButton->clicked, this, &ofApp::onGuiParametersButtonClicked);
     
     // adding childs to inspector widget here
     _inspectorNode->addChild(_inspectorLabel);
