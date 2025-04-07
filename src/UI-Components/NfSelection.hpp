@@ -31,7 +31,6 @@ class NfSelection : public NfBoxxer {
     
 private:
     bool _firstRender = true;           // Flag to track if draw() was called for the first time
-    bool _isDropdownOpen = false;       // Flag to track if dropdown is open
     float _dropdownHeight = 0;          // Height of the dropdown when open
     float _itemHeight = 20;             // Height of each dropdown item
     int _hoveredItem = -1;              // Index of currently hovered item (-1 for none)
@@ -40,6 +39,9 @@ private:
     int _pressedDropdownItem = -1;          // Index of item where mouse was pressed
     
 public:
+    // Made public for NfNodeManager to access
+    bool _isDropdownOpen = false;       // Flag to track if dropdown is open
+    
     // Inherit NfBoxxer constructor
     using NfBoxxer::NfBoxxer;
     

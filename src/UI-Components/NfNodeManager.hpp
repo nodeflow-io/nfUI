@@ -14,6 +14,7 @@
 #include "NfEventManager.hpp"
 #include "NfEventBus.hpp"
 #include "ofEvents.h"
+#include "NfSelection.hpp"
 
 namespace nfUI {
 
@@ -48,6 +49,8 @@ public:
     bool unfocusAll();
     bool focusInCollection(std::vector<std::shared_ptr<NfBoxxer>>& collection, const std::string& name);
     
+    // Dropdown management
+    void closeAllDropdowns();
 };
 
 // Declaration only

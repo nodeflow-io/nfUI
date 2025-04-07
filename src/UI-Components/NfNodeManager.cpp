@@ -10,6 +10,9 @@
 
 namespace nfUI {
 
+// Forward declaration of helper function
+void closeDropdownsInNode(NfBoxxer* node);
+
 // Global instance definition
 NfNodeManager g_nodeManager;
 
@@ -127,13 +130,21 @@ void NfNodeManager::routeMousePressed(const Event& e) {
         ofPoint globalPoint(args.x, args.y);
         // ofLogNotice("NfNodeManager") << "Processing mouse press at: " << args.x << "," << args.y;
         
+        bool floatingElementHandledEvent = false;
+        
         // First check for floating elements like open dropdowns
         for (auto it = nodes.rbegin(); it != nodes.rend(); ++it) {
             auto& node = *it;
             bool consumed = node->routeEventToFloatingElements(AppEventType::MOUSE_PRESSED, globalPoint, args.button);
             if (consumed) {
-                return;
+                floatingElementHandledEvent = true;
+                break;
             }
+        }
+        
+        // If no floating element handled it, close all open dropdowns
+        if (!floatingElementHandledEvent) {
+            closeAllDropdowns();
         }
         
         // If no floating element handled it, proceed with normal event flow
@@ -160,12 +171,15 @@ void NfNodeManager::routeMouseReleased(const Event& e) {
         ofPoint globalPoint(args.x, args.y);
         // ofLogNotice("NfNodeManager") << "Processing mouse release at: " << args.x << "," << args.y;
         
+        bool floatingElementHandledEvent = false;
+        
         // First check for floating elements like open dropdowns
         for (auto it = nodes.rbegin(); it != nodes.rend(); ++it) {
             auto& node = *it;
             bool consumed = node->routeEventToFloatingElements(AppEventType::MOUSE_RELEASED, globalPoint, args.button);
             if (consumed) {
-                return;
+                floatingElementHandledEvent = true;
+                break;
             }
         }
         
@@ -304,6 +318,31 @@ void NfNodeManager::routeKeyReleased(const Event& e) {
         
     } catch (const std::bad_any_cast& e) {
         ofLogError("NfNodeManager::routeKeyReleased") << "Bad payload cast for KEY_RELEASED";
+    }
+}
+
+void NfNodeManager::closeAllDropdowns() {
+    // Iterate through all nodes and find all open dropdowns
+    for (auto& node : nodes) {
+        // Recursively visit all children of each node
+        closeDropdownsInNode(node.get());
+    }
+}
+
+// Helper function to recursively close dropdowns in node hierarchy
+void closeDropdownsInNode(NfBoxxer* node) {
+    // Check if this is a selection with an open dropdown
+    auto selection = dynamic_cast<NfSelection*>(node);
+    if (selection && selection->_isDropdownOpen) {
+        selection->_isDropdownOpen = false;
+    }
+    
+    // Recursively check children
+    for (auto& child : node->children) {
+        auto childBoxer = dynamic_cast<NfBoxxer*>(child.get());
+        if (childBoxer) {
+            closeDropdownsInNode(childBoxer);
+        }
     }
 }
 
