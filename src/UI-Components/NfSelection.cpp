@@ -147,17 +147,30 @@ void NfSelection::setSelectionValue(SelectionNFValue* value) {
 bool NfSelection::handleFloatingElementEvent(AppEventType type, const ofPoint& point, int button) {
     if (!_isDropdownOpen) return false;
     
-    // Point coordinates are now in local space relative to this component
     switch (type) {
         case AppEventType::MOUSE_PRESSED:
             if (isPointInDropdown(point)) {
-                int itemIndex = getItemIndexAtPoint(point);
-                if (itemIndex >= 0 && selectionValue != nullptr) {
-                    selectionValue->setIndex(itemIndex);
+                // Store the item where the mouse was pressed
+                _pressedDropdownItem = getItemIndexAtPoint(point);
+                _mousePressedInDropdown = true;
+                return true;
+            }
+            break;
+            
+        case AppEventType::MOUSE_RELEASED:
+            if (_mousePressedInDropdown && isPointInDropdown(point)) {
+                // Check if released on the same item as pressed
+                int releasedItemIndex = getItemIndexAtPoint(point);
+                
+                if (releasedItemIndex == _pressedDropdownItem && releasedItemIndex >= 0 && selectionValue != nullptr) {
+                    selectionValue->setIndex(releasedItemIndex);
                     _isDropdownOpen = false;
                     UIEventArgs eventArgs;
                     ofNotifyEvent(selectionChanged, eventArgs, this);
                 }
+                
+                _mousePressedInDropdown = false;
+                _pressedDropdownItem = -1;
                 return true;
             }
             break;
@@ -182,21 +195,47 @@ bool NfSelection::handleRoutedMouseEvent(AppEventType type, const ofPoint& local
         case AppEventType::MOUSE_PRESSED:
             if (boundsMouse.inside(localPoint)) {
                 parameters.getBool("IsFocused") = true;
-                _isDropdownOpen = !_isDropdownOpen;
+                _mousePressedInSelection = true;  // Track mouse press in selection area
                 return true;
             } else if (_isDropdownOpen && isPointInDropdown(localPoint)) {
-                int itemIndex = getItemIndexAtPoint(localPoint);
-                if (itemIndex >= 0 && selectionValue != nullptr) {
-                    selectionValue->setIndex(itemIndex);
+                // Store the dropdown item where mouse was pressed
+                _pressedDropdownItem = getItemIndexAtPoint(localPoint);
+                _mousePressedInDropdown = true;
+                return true;
+            } else if (_isDropdownOpen) {
+                // Close dropdown if clicked outside
+                _isDropdownOpen = false;
+                return true;
+            }
+            return false;
+            
+        case AppEventType::MOUSE_RELEASED:
+            if (_mousePressedInSelection && boundsMouse.inside(localPoint)) {
+                // Mouse was pressed and released in selection area - toggle dropdown
+                _isDropdownOpen = !_isDropdownOpen;
+                _mousePressedInSelection = false;
+                return true;
+            } else if (_mousePressedInDropdown && _isDropdownOpen && isPointInDropdown(localPoint)) {
+                // Mouse was pressed and released in dropdown
+                int releasedItemIndex = getItemIndexAtPoint(localPoint);
+                
+                // Only trigger if released on the same item that was pressed
+                if (releasedItemIndex == _pressedDropdownItem && releasedItemIndex >= 0 && selectionValue != nullptr) {
+                    selectionValue->setIndex(releasedItemIndex);
                     _isDropdownOpen = false;
                     UIEventArgs eventArgs;
                     ofNotifyEvent(selectionChanged, eventArgs, this);
                 }
-                return true;
-            } else if (_isDropdownOpen) {
-                _isDropdownOpen = false;
+                
+                _mousePressedInDropdown = false;
+                _pressedDropdownItem = -1;
                 return true;
             }
+            
+            // Reset all mouse press states on release
+            _mousePressedInSelection = false;
+            _mousePressedInDropdown = false;
+            _pressedDropdownItem = -1;
             return false;
             
         case AppEventType::MOUSE_MOVED:

@@ -35,6 +35,9 @@ private:
     float _dropdownHeight = 0;          // Height of the dropdown when open
     float _itemHeight = 20;             // Height of each dropdown item
     int _hoveredItem = -1;              // Index of currently hovered item (-1 for none)
+    bool _mousePressedInSelection = false;  // Flag to track if mouse was pressed in selection
+    bool _mousePressedInDropdown = false;   // Flag to track if mouse was pressed in dropdown
+    int _pressedDropdownItem = -1;          // Index of item where mouse was pressed
     
 public:
     // Inherit NfBoxxer constructor
