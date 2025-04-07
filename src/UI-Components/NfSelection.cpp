@@ -108,7 +108,11 @@ void NfSelection::updateDropdownHeight() {
 
 bool NfSelection::isPointInDropdown(const ofPoint& point) const {
     if (!_isDropdownOpen) return false;
-    return point.y >= bounds.height && point.y <= bounds.height + _dropdownHeight;
+    
+    // Check if the point is within the dropdown's bounds
+    // Point coordinates are already in local space
+    return (point.x >= 0 && point.x <= bounds.width && 
+            point.y >= bounds.height && point.y <= bounds.height + _dropdownHeight);
 }
 
 int NfSelection::getItemIndexAtPoint(const ofPoint& point) const {
@@ -124,6 +128,7 @@ void NfSelection::setSelectionValue(SelectionNFValue* value) {
 bool NfSelection::handleFloatingElementEvent(AppEventType type, const ofPoint& point, int button) {
     if (!_isDropdownOpen) return false;
     
+    // Point coordinates are now in local space relative to this component
     switch (type) {
         case AppEventType::MOUSE_PRESSED:
             if (isPointInDropdown(point)) {

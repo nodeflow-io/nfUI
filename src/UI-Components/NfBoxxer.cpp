@@ -168,16 +168,23 @@ NfBoxxer::ListenerID NfBoxxer::getListenerID() const {
     return listenerID;
 }
 
-bool NfBoxxer::routeEventToFloatingElements(AppEventType type, const ofPoint& localPoint, int button) {
+bool NfBoxxer::routeEventToFloatingElements(AppEventType type, const ofPoint& globalPoint, int button) {
     // Check if we have any children with floating elements that might handle this event
     for (auto& child : children) {
         // Check if this child has a floating element and if the point is inside it
-        // Use dynamic cast to check if this is a selection with dropdown
         auto selectionChild = dynamic_cast<NfSelection*>(child.get());
-        if (selectionChild && selectionChild->hasFloatingElement() && 
-            selectionChild->isPointInFloatingElement(localPoint)) {
-            // Delegate event handling to the floating element
-            return selectionChild->handleFloatingElementEvent(type, localPoint, button);
+        if (selectionChild && selectionChild->hasFloatingElement()) {
+            // Transform global coordinates to the child's local coordinates
+            ofPoint localPoint = globalPoint;
+            
+            // Adjust coordinates based on child's position in parent
+            localPoint.x -= child->boundsMouse.x;
+            localPoint.y -= child->boundsMouse.y;
+            
+            if (selectionChild->isPointInFloatingElement(localPoint)) {
+                // Delegate event handling to the floating element with transformed coordinates
+                return selectionChild->handleFloatingElementEvent(type, localPoint, button);
+            }
         }
     }
     return false;  // No floating element handled the event
