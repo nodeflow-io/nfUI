@@ -35,11 +35,11 @@ public:
     
     // Floating element support
     virtual bool hasFloatingElement() const { return false; }
-    virtual bool isPointInFloatingElement(const ofPoint& point) const { return false; }
-    virtual bool handleFloatingElementEvent(AppEventType type, const ofPoint& point, int button) { return false; }
+    virtual bool isPointInFloatingElement(const ofPoint& globalPoint) const { return false; }
+    virtual bool handleFloatingElementEvent(AppEventType type, const ofPoint& globalPoint, int button) { return false; }
     
     // Route events to handle floating elements
-    bool routeEventToFloatingElements(AppEventType type, const ofPoint& localPoint, int button);
+    bool routeEventToFloatingElements(AppEventType type, const ofPoint& globalPoint, int button);
     
     // Listener management
     void setListenerID(ListenerID id);
