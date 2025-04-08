@@ -149,6 +149,13 @@ bool NfSelection::handleFloatingElementEvent(AppEventType type, const ofPoint& p
     
     switch (type) {
         case AppEventType::MOUSE_PRESSED:
+            // Check if the press is in the selection box itself (not the dropdown)
+            if (point.y < bounds.height) {
+                _mousePressedInSelection = true;
+                _dropdownStateChanged = false;  // Reset state change tracking
+                return true;
+            }
+            
             if (isPointInDropdown(point)) {
                 // Store the item where the mouse was pressed
                 _pressedDropdownItem = getItemIndexAtPoint(point);
@@ -158,6 +165,27 @@ bool NfSelection::handleFloatingElementEvent(AppEventType type, const ofPoint& p
             break;
             
         case AppEventType::MOUSE_RELEASED:
+            // If pressed and released in the selection box, close the dropdown
+            if (_mousePressedInSelection && point.y < bounds.height) {
+                // Get current time to check if dropdown was recently closed
+                uint64_t currentTime = ofGetElapsedTimeMillis();
+                
+                // If the dropdown was closed within the last 300ms, don't do anything
+                if ((currentTime - _lastDropdownCloseTime) < 300) {
+                    _mousePressedInSelection = false;
+                    return true;
+                }
+                
+                // Only close if we haven't already changed the state
+                if (!_dropdownStateChanged) {
+                    _isDropdownOpen = false;
+                    _lastDropdownCloseTime = ofGetElapsedTimeMillis(); // Update timestamp
+                    _dropdownStateChanged = true;
+                }
+                _mousePressedInSelection = false;
+                return true;
+            }
+            
             if (_mousePressedInDropdown && isPointInDropdown(point)) {
                 // Check if released on the same item as pressed
                 int releasedItemIndex = getItemIndexAtPoint(point);
@@ -165,6 +193,8 @@ bool NfSelection::handleFloatingElementEvent(AppEventType type, const ofPoint& p
                 if (releasedItemIndex == _pressedDropdownItem && releasedItemIndex >= 0 && selectionValue != nullptr) {
                     selectionValue->setIndex(releasedItemIndex);
                     _isDropdownOpen = false;
+                    _lastDropdownCloseTime = ofGetElapsedTimeMillis(); // Update timestamp
+                    _dropdownStateChanged = true;
                     UIEventArgs eventArgs;
                     ofNotifyEvent(selectionChanged, eventArgs, this);
                 }
@@ -196,6 +226,7 @@ bool NfSelection::handleRoutedMouseEvent(AppEventType type, const ofPoint& local
             if (boundsMouse.inside(localPoint)) {
                 parameters.getBool("IsFocused") = true;
                 _mousePressedInSelection = true;  // Track mouse press in selection area
+                _dropdownStateChanged = false;    // Reset state change tracking for this click cycle
                 return true;
             } else if (_isDropdownOpen && isPointInDropdown(localPoint)) {
                 // Store the dropdown item where mouse was pressed
@@ -205,15 +236,39 @@ bool NfSelection::handleRoutedMouseEvent(AppEventType type, const ofPoint& local
             } else if (_isDropdownOpen) {
                 // Close dropdown if clicked outside
                 _isDropdownOpen = false;
+                _lastDropdownCloseTime = ofGetElapsedTimeMillis(); // Update timestamp
+                _dropdownStateChanged = true;     // Mark that we changed the state during this click
                 return true;
             }
             return false;
             
         case AppEventType::MOUSE_RELEASED:
             if (_mousePressedInSelection && boundsMouse.inside(localPoint)) {
-                // Mouse was pressed and released in selection area - toggle dropdown
-                _isDropdownOpen = !_isDropdownOpen;
                 _mousePressedInSelection = false;
+                
+                // Get current time to check if dropdown was recently closed
+                uint64_t currentTime = ofGetElapsedTimeMillis();
+                
+                // If the dropdown was closed within the last 100ms, don't reopen it
+                if ((currentTime - _lastDropdownCloseTime) < 100) {
+                    // Dropdown was just closed, don't toggle
+                    _dropdownStateChanged = false;
+                    return true;
+                }
+                
+                // Only toggle the dropdown if we haven't already changed state during this click cycle
+                if (!_dropdownStateChanged) {
+                    // Toggle from current state
+                    _isDropdownOpen = !_isDropdownOpen;
+                    
+                    // If we closed the dropdown, update the timestamp
+                    if (!_isDropdownOpen) {
+                        _lastDropdownCloseTime = ofGetElapsedTimeMillis();
+                    }
+                }
+                
+                // Reset state change tracking after handling the release
+                _dropdownStateChanged = false;
                 return true;
             } else if (_mousePressedInDropdown && _isDropdownOpen && isPointInDropdown(localPoint)) {
                 // Mouse was pressed and released in dropdown
@@ -223,6 +278,8 @@ bool NfSelection::handleRoutedMouseEvent(AppEventType type, const ofPoint& local
                 if (releasedItemIndex == _pressedDropdownItem && releasedItemIndex >= 0 && selectionValue != nullptr) {
                     selectionValue->setIndex(releasedItemIndex);
                     _isDropdownOpen = false;
+                    _lastDropdownCloseTime = ofGetElapsedTimeMillis(); // Update timestamp
+                    _dropdownStateChanged = true;
                     UIEventArgs eventArgs;
                     ofNotifyEvent(selectionChanged, eventArgs, this);
                 }
@@ -236,6 +293,7 @@ bool NfSelection::handleRoutedMouseEvent(AppEventType type, const ofPoint& local
             _mousePressedInSelection = false;
             _mousePressedInDropdown = false;
             _pressedDropdownItem = -1;
+            _dropdownStateChanged = false;        // Reset state change tracking
             return false;
             
         case AppEventType::MOUSE_MOVED:
@@ -258,6 +316,7 @@ bool NfSelection::handleRoutedMouseEvent(AppEventType type, const ofPoint& local
             if (!boundsMouse.inside(localPoint) && !(_isDropdownOpen && isPointInDropdown(localPoint))) {
                 parameters.getBool("IsFocused") = false;
                 _hoveredItem = -1;
+                _dropdownStateChanged = false;     // Reset state change tracking
                 return true;
             }
             return false;

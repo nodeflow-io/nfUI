@@ -334,7 +334,7 @@ void closeDropdownsInNode(NfBoxxer* node) {
     // Check if this is a selection with an open dropdown
     auto selection = dynamic_cast<NfSelection*>(node);
     if (selection && selection->_isDropdownOpen) {
-        selection->_isDropdownOpen = false;
+        selection->closeDropdown();  // Use the new method to close and track timestamp
     }
     
     // Recursively check children

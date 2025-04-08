@@ -37,6 +37,8 @@ private:
     bool _mousePressedInSelection = false;  // Flag to track if mouse was pressed in selection
     bool _mousePressedInDropdown = false;   // Flag to track if mouse was pressed in dropdown
     int _pressedDropdownItem = -1;          // Index of item where mouse was pressed
+    bool _dropdownStateChanged = false;     // Flag to track if dropdown state changed during current click
+    uint64_t _lastDropdownCloseTime = 0;    // Timestamp when dropdown was last closed
     
 public:
     // Made public for NfNodeManager to access
@@ -74,6 +76,14 @@ public:
     float getDropdownOffset() const {
         // Intentionally return a positive value for proper spacing
         return 5.0f;  // Visual gap between selection and dropdown
+    }
+    
+    // Method to close dropdown from external sources
+    void closeDropdown() {
+        if (_isDropdownOpen) {
+            _isDropdownOpen = false;
+            _lastDropdownCloseTime = ofGetElapsedTimeMillis();
+        }
     }
 };
 
