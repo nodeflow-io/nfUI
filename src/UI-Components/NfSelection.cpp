@@ -10,8 +10,16 @@
 namespace nfUI {
 
 void NfSelection::draw() {
-    ofPushMatrix(); // Save the current drawing context
-    NfBoxxer::draw(); // Call base class draw for common drawing code if needed
+    // First render initialization
+    if (_firstRender) {
+        if (_config.isDebug) {
+            std::cout << "NfSelection: " << _name << std::endl;
+        }
+        _firstRender = false;
+    }
+    
+    // Call base class draw for setup of transformations
+    NfBoxxer::draw();
     
     // Draw the base selection element
     drawBaseElement();
@@ -19,7 +27,11 @@ void NfSelection::draw() {
     // NOTE: We don't draw the dropdown here anymore
     // It will be drawn during the floating elements pass in NfBoxxer::drawChildren
     
-    ofPopMatrix(); // Restore the drawing context
+    // Call children draw method with appropriate padding
+    drawChildren(_config.paddingLeft, _config.paddingTop);
+    
+    // End the drawing transform stack (started in NfBoxxer::draw())
+    ofPopMatrix();
 }
 
 void NfSelection::drawBaseElement() {
@@ -41,14 +53,16 @@ void NfSelection::drawBaseElement() {
     if (_config.showLabel) {
         ofDrawBitmapString(_name, 0, BITMAP_FONT_SIZE + _config.paddingTop);
         textfieldWidth /= 2;
-        boundsMouse.width /= 2;
-    }
-    
-    // draw the background text panel
-    if (_config.showLabel) {
+        boundsMouse.width = textfieldWidth;
+        // draw the background text pannel
         ofTranslate(textfieldWidth, 0);
-        translateBounds(boundsMouse, textfieldWidth, 0, _name);
+        // Calculate relative boundsMouse coordinates by subtracting boundsMouse from parent position
+        if (auto parentPtr = parent.lock()) {
+            boundsMouse.x = parentPtr->boundsMouse.x + parentPtr->_config.paddingLeft 
+            + _config.paddingLeft + textfieldWidth;
+        }
     }
+
 
     ofColor bgBackgroundColor = backgroundColor.get();
     ofColor bgFocusBackgroundColor = focusBackgroundColor.get();
@@ -70,7 +84,9 @@ void NfSelection::drawBaseElement() {
         } else {
             ofSetColor(textColor.get());
         }
-        ofDrawBitmapString(selectionValue->getSelectedName(), _config.paddingLeft, BITMAP_FONT_SIZE + _config.paddingTop);
+        // ofDrawBitmapString(selectionValue->getSelectedName(), _config.paddingLeft, BITMAP_FONT_SIZE + _config.paddingTop);
+        ofDrawBitmapString("Testing", _config.paddingLeft, BITMAP_FONT_SIZE + _config.paddingTop);
+
     }
 }
 

@@ -60,6 +60,14 @@ NfNodeManager::~NfNodeManager() {
 // Node management
 void NfNodeManager::addNode(std::shared_ptr<NfBoxxer> node) {
     nodes.push_back(node);
+    
+    // Make sure the node's bounds are properly initialized
+    auto boxer = dynamic_cast<NfBoxxer*>(node.get());
+    if (boxer) {
+        boxer->markTransformationDirty();  // Mark bounds for recalculation
+        boxer->updateGlobalBounds();       // Initialize bounds before first draw
+    }
+    
     focusNode(node->_name); // Focus the newly added node
 }
 

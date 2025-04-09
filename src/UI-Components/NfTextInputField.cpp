@@ -162,9 +162,8 @@ bool NfTextInputField::getIsEnabled(){
 
 void NfTextInputField::draw() {
     this->setup();
-    ofPushMatrix();
-    NfBoxxer::draw(); // Call base class draw for common drawing code if needed
     
+    // First render initialization
     if (_firstRender) {
         this->init();
         if (_config.isDebug) {
@@ -182,20 +181,24 @@ void NfTextInputField::draw() {
         _firstRender = false;
     }
     
+    // Call base class draw for setup of transformations
+    NfBoxxer::draw();
+    
     float textfieldWith = bounds.width;
     // Draw the label text
     ofSetColor(textColor.get());
     if (_config.showLabel) {
-        fontRef->drawString(_name, 0, _config.paddingTop + fontRef->getLineHeight());
+        ofDrawBitmapString(_name, 0, BITMAP_FONT_SIZE + _config.paddingTop);
         textfieldWith /= 2;
-        boundsMouse.width /= 2;
-    }
-    
-    // draw the background text pannel
-    if (_config.showLabel) {
+        boundsMouse.width = textfieldWith;
+        // draw the background text pannel
         ofTranslate(textfieldWith, 0);
-        translateBounds(boundsMouse, textfieldWith, 0, _name);
+        if (auto parentPtr = parent.lock()) {
+            boundsMouse.x = parentPtr->boundsMouse.x + parentPtr->_config.paddingLeft 
+            + _config.paddingLeft + textfieldWith;
+        }
     }
+
     
     if(isEditing) {
         ofSetColor(focusBackgroundColor.get());
@@ -212,7 +215,11 @@ void NfTextInputField::draw() {
     // Draw the text inside the textbox
     this->drawText();
     
-    ofPopMatrix(); // Restore the drawing context
+    // Call children draw method with appropriate padding
+    drawChildren(_config.paddingLeft, _config.paddingTop);
+    
+    // End the drawing transform stack (started in NfBoxxer::draw())
+    ofPopMatrix();
 }
 
 void NfTextInputField::drawText() {

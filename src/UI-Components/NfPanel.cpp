@@ -10,9 +10,7 @@
 namespace nfUI {
 
 void NfPanel::draw() {
-    ofPushMatrix();
-    NfBoxxer::draw(); // Call base class draw for common drawing
-    
+    // First render initialization
     if (_firstRender) {
         if (_config.isDebug) {
             std::cout << "NfPanel: " << _name << std::endl;
@@ -20,26 +18,31 @@ void NfPanel::draw() {
         _firstRender = false;
         markDimensionsDirty();  // Ensure dimensions are calculated on first render
     }
-
+    
+    // Call base class to handle bounds calculation and transformations
+    NfBoxxer::draw();
+    
+    // Draw the panel background
     if (nodeIsFocused || isFocused.get()) {
         ofSetColor(focusBackgroundColor.get());
     } else {
         ofSetColor(backgroundColor.get());
     }
     
-    // get Dimensions children requires
+    // Get dimensions children requires
     float width, height;
     this->getDimensions(width, height);
     _config.width = width;
     _config.height = height;
     
-    // draw own content
+    // Draw the panel background - using (0,0) because NfBoxxer::draw() already set up the transform
     ofDrawRectangle(0, 0, _config.width, _config.height);
     
-    // call drawChildren with the current paddings
+    // Draw all children
     drawChildren(_config.paddingLeft, _config.paddingTop);
     
-    ofPopMatrix(); // Restore the drawing context
+    // End the drawing transform stack (started in NfBoxxer::draw())
+    ofPopMatrix();
 }
 
 bool NfPanel::routeMouseEvent(AppEventType type, const ofPoint& localPoint, int button) {

@@ -139,25 +139,24 @@ void NfUIElement::getPosition(ofPoint& position) {
 }
 
 void NfUIElement::setPosition(const ofPoint& position) {
+    // Only update the bounds of the root element
     NfUIElement* rootElement = this->findRoot();
-    float offsetX = position.x - rootElement->bounds.x;
-    float offsetY = position.y - rootElement->bounds.y;
     
+    // Calculate how much the position is changing by
+    float deltaX = position.x - rootElement->bounds.x;
+    float deltaY = position.y - rootElement->bounds.y;
+    
+    // Update the root element's local bounds
     rootElement->bounds.x = position.x;
     rootElement->bounds.y = position.y;
     rootElement->_config.bounds.x = position.x;
     rootElement->_config.bounds.y = position.y;
-    rootElement->boundsMouse.x = position.x;
-    rootElement->boundsMouse.y = position.y;
     
-    for (auto& child : rootElement->children) {
-        child->bounds.x += offsetX;
-        child->bounds.y += offsetY;
-        child->boundsMouse.x += offsetX;
-        child->boundsMouse.y += offsetY;
-    }
+    // Note: We don't update boundsMouse here anymore - that will be handled by
+    // the NfBoxxer::updateGlobalBounds method through the dirty flag system
     
-    // Emit position change event
+    // Emit position change event - this will trigger any listeners that need to know
+    // about the position change
     BUS.publish(nfUI::Event::fromPositionChange(position, this));
 }
 

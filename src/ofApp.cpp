@@ -354,7 +354,13 @@ void ofApp::keyPressed(int key) {
             _guiParamsShowStatusFPS->setValue(std::move(boolNFtemp));
         }
             break;
-
+        case 'd':
+        case 'D': {
+            // Check if 'D' is pressed to toggle debug bounds rendering
+            nfUI::NfBoxxer::showDebugBounds = !nfUI::NfBoxxer::showDebugBounds;
+            ofLogNotice("ofApp") << "Debug bounds visualization: " << (nfUI::NfBoxxer::showDebugBounds ? "ON" : "OFF");
+        }
+            break;
         default:
             // Default action for other keys
             cout << "ofApp::keyPressed: " << key << endl;

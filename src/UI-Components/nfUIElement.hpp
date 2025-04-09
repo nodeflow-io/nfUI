@@ -80,14 +80,14 @@ public:
     // Dimension and position management
     void getDimensions(float& width, float& height);
     void getPosition(ofPoint& position);
-    void setPosition(const ofPoint& position);
+    virtual void setPosition(const ofPoint& position);
     void getChildDimensions(const std::shared_ptr<NfUIElement>& child, float& width, float& height);
     void translateBounds(ofRectangle& boundsref, float deltaX, float deltaY, std::string name = "");
     size_t getChildCountOfRoot();
 
     // Method to handle events routed *by the parent*
     // Returns true if the event was consumed, false otherwise.
-    virtual bool handleRoutedMouseEvent(AppEventType type, const ofPoint& localPoint, int button) {
+    virtual bool handleRoutedMouseEvent(AppEventType type, const ofPoint& globalPoint, int button) {
         return false; // Base implementation consumes nothing
     }
 

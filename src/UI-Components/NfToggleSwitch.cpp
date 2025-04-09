@@ -10,10 +10,7 @@
 namespace nfUI {
 
 void NfToggleSwitch::draw() {
-    ofPushMatrix(); // Save the current drawing context
-    NfBoxxer::draw(); // Call base class draw for common drawing code if needed
-    
-    // Textbox-specific drawing code here
+    // First render initialization
     if (_firstRender) {
         if (_config.isDebug) {
             std::cout << "NfToggleSwitch: " << _name << std::endl;
@@ -27,8 +24,14 @@ void NfToggleSwitch::draw() {
             this->text = "";
             std::cout << "NfToggleSwitch: " << _name << ":no value available." << std::endl;
         }
+
+        // setup
+
         _firstRender = false;
     }
+    
+    // Call base class draw for setup of transformations
+    NfBoxxer::draw();
     
     float textfieldWith = bounds.width;
     // Draw the label text
@@ -36,13 +39,13 @@ void NfToggleSwitch::draw() {
     if (_config.showLabel) {
         ofDrawBitmapString(_name, 0, BITMAP_FONT_SIZE + _config.paddingTop);
         textfieldWith /= 2;
-        boundsMouse.width /= 2;
-    }
-    
-    // draw the background text pannel
-    if (_config.showLabel) {
+        boundsMouse.width = textfieldWith;
+        // draw the background text pannel
         ofTranslate(textfieldWith, 0);
-        translateBounds(boundsMouse, textfieldWith, 0, _name);
+        if (auto parentPtr = parent.lock()) {
+            boundsMouse.x = parentPtr->boundsMouse.x + parentPtr->_config.paddingLeft 
+            + _config.paddingLeft + textfieldWith;
+        }
     }
 
     NFValue* valueRawPtr = this->getValue();
@@ -83,7 +86,11 @@ void NfToggleSwitch::draw() {
     // draw value
     ofDrawBitmapString(valueAsString, _config.paddingLeft, BITMAP_FONT_SIZE + _config.paddingTop);
 
-    ofPopMatrix(); // Restore the drawing context
+    // Call children draw method with appropriate padding
+    drawChildren(_config.paddingLeft, _config.paddingTop);
+    
+    // End the drawing transform stack (started in NfBoxxer::draw())
+    ofPopMatrix();
 }
 
 bool NfToggleSwitch::handleRoutedMouseEvent(AppEventType type, const ofPoint& localPoint, int button) {

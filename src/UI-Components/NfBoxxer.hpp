@@ -18,9 +18,13 @@ class NfBoxxer : public NfUIElement {
 private:
     using ListenerID = size_t;
     bool _firstRender = true; // Flag to track if draw() was called for the first time
+    bool _transformationDirty = true; // Flag to track if bounds need recalculation
+    bool _childrenTransformationDirty = true; // Flag to track if children bounds need recalculation
     ListenerID listenerID;
-
+    
 public:
+    static bool showDebugBounds; // Global flag to toggle bounds visualization
+    
     std::string _name;
     NfUIConfig _config;
     bool nodeIsFocused = false;
@@ -32,6 +36,19 @@ public:
     void draw();
     void drawChildren(const float& paddingLeft, const float& paddingTop);
     void focus();
+    
+    // Position and size management
+    void setPosition(const ofPoint& position);
+    void setSize(float width, float height);
+    
+    // Bounds transformation methods
+    void updateGlobalBounds();
+    void updateChildrenBounds();
+    void markTransformationDirty(bool includeChildren = true);
+    
+    // Debug visualization
+    void drawMouseBounds();
+    void drawChildrenMouseBounds();
     
     // Floating element support
     virtual bool hasFloatingElement() const { return false; }
