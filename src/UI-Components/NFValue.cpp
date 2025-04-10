@@ -74,7 +74,7 @@ bool IntNFValue::toBool() const {
 const std::string SelectionNFValue::NOTHING_SELECTED_NAME = "NOTHING SELECTED";
 
 SelectionNFValue::SelectionNFValue(std::vector<std::string> _names, std::vector<int> _values, int initialIndex)
-    : names(std::move(_names)), values(std::move(_values)) {
+    : names(_names), values(_values) {
 
     if (names.size() != values.size()) {
         ofLogError("SelectionNFValue") << "Cannot construct with different sized name and value vectors. Initializing empty.";

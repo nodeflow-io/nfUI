@@ -15,6 +15,19 @@ void NfSelection::draw() {
         if (_config.isDebug) {
             std::cout << "NfSelection: " << _name << std::endl;
         }
+        // Try to initialize the selection value if not already done
+        if (selectionValue == nullptr) {
+            NFValue* baseValue = this->getValue();
+            if (baseValue) {
+                selectionValue = dynamic_cast<SelectionNFValue*>(baseValue);
+                if (selectionValue == nullptr) {
+                    ofLogError("NfSelection") << _name << ": Cannot cast value to SelectionNFValue. Check value type.";
+                }
+            } else {
+                ofLogError("NfSelection") << _name << ": No value available.";
+            }
+        }
+        
         _firstRender = false;
     }
     
@@ -39,11 +52,7 @@ void NfSelection::drawBaseElement() {
         if (_config.isDebug) {
             std::cout << "NfSelection: " << _name << std::endl;
         }
-        // Initialize selection value
-        selectionValue = dynamic_cast<SelectionNFValue*>(this->getValue());
-        if (selectionValue == nullptr) {
-            std::cout << "NfSelection: " << _name << ": no selection value available." << std::endl;
-        }
+        // This initialization has moved to draw() method
         _firstRender = false;
     }
     
@@ -62,7 +71,6 @@ void NfSelection::drawBaseElement() {
             + _config.paddingLeft + textfieldWidth;
         }
     }
-
 
     ofColor bgBackgroundColor = backgroundColor.get();
     ofColor bgFocusBackgroundColor = focusBackgroundColor.get();
@@ -84,9 +92,12 @@ void NfSelection::drawBaseElement() {
         } else {
             ofSetColor(textColor.get());
         }
-        // ofDrawBitmapString(selectionValue->getSelectedName(), _config.paddingLeft, BITMAP_FONT_SIZE + _config.paddingTop);
-        ofDrawBitmapString("Testing", _config.paddingLeft, BITMAP_FONT_SIZE + _config.paddingTop);
-
+        // Draw the actual selected name
+        ofDrawBitmapString(selectionValue->getSelectedName(), _config.paddingLeft, BITMAP_FONT_SIZE + _config.paddingTop);
+    } else {
+        // Draw placeholder if no selection value
+        ofSetColor(textColor.get());
+        ofDrawBitmapString("No selection", _config.paddingLeft, BITMAP_FONT_SIZE + _config.paddingTop);
     }
 }
 
@@ -99,7 +110,13 @@ void NfSelection::drawDropdown() {
     // Use the dropdown offset for positioning
     float dropdownOffset = getDropdownOffset();
     
-    const auto& names = selectionValue->getNamesList();
+    // Safely get names vector with null/empty checks
+    const std::vector<std::string>& names = selectionValue->getNamesList();
+    if (names.empty()) {
+        _dropdownHeight = 0;
+        return; // Exit early if no names to display
+    }
+    
     _dropdownHeight = names.size() * _itemHeight;
     
     // Draw dropdown background - positioned relative to selection element
@@ -124,13 +141,20 @@ void NfSelection::drawDropdown() {
 }
 
 void NfSelection::updateDropdownHeight() {
-    if (selectionValue != nullptr) {
-        _dropdownHeight = selectionValue->getNamesList().size() * _itemHeight;
-    }
+    if (selectionValue == nullptr) return;
+    
+    // Get names list safely
+    const auto& names = selectionValue->getNamesList();
+    // Calculate dropdown height only if we have items
+    _dropdownHeight = names.empty() ? 0 : names.size() * _itemHeight;
 }
 
 bool NfSelection::isPointInDropdown(const ofPoint& point) const {
-    if (!_isDropdownOpen) return false;
+    if (!_isDropdownOpen || selectionValue == nullptr) return false;
+    
+    // If names list is empty, there's no dropdown to check
+    const auto& names = selectionValue->getNamesList();
+    if (names.empty()) return false;
     
     // Calculate dropdown width based on whether label is shown
     float dropdownWidth = _config.showLabel ? (bounds.width / 2) : bounds.width;
@@ -151,18 +175,31 @@ bool NfSelection::isPointInDropdown(const ofPoint& point) const {
 }
 
 int NfSelection::getItemIndexAtPoint(const ofPoint& point) const {
-    if (!isPointInDropdown(point)) return -1;
+    if (!isPointInDropdown(point) || selectionValue == nullptr) return -1;
     
     // Use the dropdown offset for calculation
     float dropdownOffset = getDropdownOffset();
     float dropdownY = boundsMouse.y + bounds.height + dropdownOffset;
     
     // Calculate index based on position in global coordinates
-    return static_cast<int>((point.y - dropdownY) / _itemHeight);
+    int calculatedIndex = static_cast<int>((point.y - dropdownY) / _itemHeight);
+    
+    // Verify index is within bounds of our names list
+    const auto& names = selectionValue->getNamesList();
+    if (calculatedIndex < 0 || calculatedIndex >= names.size()) {
+        return -1; // Out of bounds
+    }
+    
+    return calculatedIndex;
 }
 
 void NfSelection::setSelectionValue(SelectionNFValue* value) {
     selectionValue = value;
+    if (selectionValue == nullptr) {
+        ofLogWarning("NfSelection") << _name << ": Setting null selection value.";
+        _dropdownHeight = 0;
+        return;
+    }
     updateDropdownHeight();
 }
 

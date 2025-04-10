@@ -160,7 +160,6 @@ void ofApp::setup() {
     // Create selection options
     std::vector<std::string> waveformNames = {"Sine", "Square", "Mixed"};
     std::vector<int> waveformValues = {0, 1, 2}; // Corresponding values for each option
-    // auto waveformSelection = std::make_shared<nfUI::SelectionNFValue>(waveformNames, waveformValues, 0); // 0 = Sine selected - No longer needed here
     
     // Create and add the selection component, passing constructor args directly
     config.backgroundColor = ofColor(22,34,51);
