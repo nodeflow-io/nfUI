@@ -53,6 +53,15 @@ A comprehensive event management system featuring:
 
 ## Component Library
 
+NfUIElement (Abstract Base Class)
+  └── NfBoxxer (Primary Visual Component)
+      ├── NfPanel
+      ├── NfLabel
+      ├── NfButton
+      ├── NfToggleSwitch
+      ├── NfTextInputField
+      └── NfSelection
+
 ### Layout Components
 
 #### `NfPanel`
@@ -71,16 +80,17 @@ Standard button component with:
 
 #### `NfTextInputField`
 Text input component supporting:
-- Different value types (string, int, double)
+- Different value types (string, int, double, bool)
 - Password masking
 - Text length limits
 - Character validation
+- Selection, Copy and Paste
 
 #### `NfToggleSwitch`
 Two-state toggle component for boolean values.
 
 #### `NfSelection`
-Dropdown selection component for choosing from a list of options.
+A modal Dropdown selection component for choosing from a list of options.
 
 ### Display Components
 
@@ -189,14 +199,14 @@ void onButtonClicked(nfUI::UIEventArgs& eventArgs) {
 - 🎨 **NfColorPicker**: Color selection tool
 - 🖥️ **NfCommandLine**: Command-line interface component
 - 📜 **Scrollable Containers**: For handling overflow content
-- 📱 **Responsive Layouts**: For adaptable UI across different screen sizes
 
 ## Development Roadmap
 
-- GUI event display animation
-- Text-Adventure layout (Image panel & TextInput)
-- Improved text rendering with selection highlighting
+- Performance stats for the rendering pipeline
 - Enhanced theming capabilities
+- Event recording and playback
+- Read only Textfields
+- Text-Adventure layout (Image panel & TextInput)
 
 ## Documentation
 
