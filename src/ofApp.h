@@ -20,6 +20,7 @@ namespace nfUI {
 #include "NfSelection.hpp"
 #include "NfDom.hpp"
 #include "GUIParams.hpp"
+#include "demos/DemoManager.h"
 
 
 
@@ -81,4 +82,6 @@ private:
     std::shared_ptr<nfUI::NfBoxxer> _inspectorPosY;
     std::shared_ptr<nfUI::NfButton> _inspectorButton;
     
+    // Demo manager
+    DemoManager _demoManager;
 };

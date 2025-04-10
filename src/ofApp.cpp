@@ -44,8 +44,8 @@ void ofApp::setup() {
     nfUI::NfUIConfig config;                                            // Create a config object
     float width = 220;
     float margin = 10;
-    float posX = 300;
-    float posY = 100;
+    float posX = 260;
+    float posY = 40;
     config.backgroundColor = ofColor(20,25,31);                         // background color of pannel
     config.focusBackgroundColor = ofColor(35,38,42);                    // focus color of panel
     config.focusColor = ofColor::black;
@@ -199,8 +199,8 @@ void ofApp::setup() {
     
     // Setup Inspector Widget -----------------[ DOM configuration / Elements & Styles ]------------
     width+=40;                                                          // the inspector needs more room
-    posX = 0;
-    posY = 20;
+    posX = 500;
+    posY = 40;
     config.backgroundColor = ofColor(20,25,31);                         // background color of pannel
     config.focusBackgroundColor = ofColor(35,38,42);                    // focus color of panel
     config.bounds = ofRectangle(posX, posY, width, 20);                 // Set desired position and size
@@ -291,11 +291,15 @@ void ofApp::setup() {
         }
     }, this);
     
+    // Initialize the demo manager
+    nfUI::NfUIConfig demoConfig;
+    _demoManager.setup(demoConfig);
 }
 
 //--------------------------------------------------------------
 void ofApp::update(){
-
+    // Update the demo manager
+    _demoManager.update();
 }
 
 
@@ -311,12 +315,16 @@ void ofApp::draw(){
     // draw nodes
     nfUI::g_nodeManager.drawNodes(); // This starts the recursive drawing process
     
+    // Draw the demo content
+    _demoManager.draw();
+    
     ofPopMatrix(); // Restore the transformation matrix
 }
 
 //--------------------------------------------------------------
 void ofApp::exit(){
-
+    // Clean up the demo manager
+    _demoManager.cleanup();
 }
 
 //--------------------------------------------------------------

@@ -113,7 +113,6 @@
     <ClCompile Include="src\UI-Components\NfBoxxerManager.cpp" />
     <ClCompile Include="src\UI-Components\NfButton.cpp" />
     <ClCompile Include="src\UI-Components\NfDom.cpp" />
-    <ClCompile Include="src\UI-Components\NfDropdown.cpp" />
     <ClCompile Include="src\UI-Components\NfEventManager.cpp" />
     <ClCompile Include="src\UI-Components\NfLabel.cpp" />
     <ClCompile Include="src\UI-Components\NfNodeManager.cpp" />
@@ -138,7 +137,6 @@
     <ClInclude Include="src\UI-Components\NfBoxxerManager.hpp" />
     <ClInclude Include="src\UI-Components\NfButton.hpp" />
     <ClInclude Include="src\UI-Components\NfDom.hpp" />
-    <ClInclude Include="src\UI-Components\NfDropdown.hpp" />
     <ClInclude Include="src\UI-Components\NfEventManager.hpp" />
     <ClInclude Include="src\UI-Components\NfLabel.hpp" />
     <ClInclude Include="src\UI-Components\NfModalType.h" />

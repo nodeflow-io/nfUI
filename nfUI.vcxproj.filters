@@ -28,9 +28,6 @@
 		<ClCompile Include="src\UI-Components\NfDom.cpp">
 			<Filter>src\UI-Components</Filter>
 		</ClCompile>
-		<ClCompile Include="src\UI-Components\NfDropdown.cpp">
-			<Filter>src\UI-Components</Filter>
-		</ClCompile>
 		<ClCompile Include="src\UI-Components\NfEventManager.cpp">
 			<Filter>src\UI-Components</Filter>
 		</ClCompile>
@@ -126,9 +123,6 @@
 			<Filter>src\UI-Components</Filter>
 		</ClInclude>
 		<ClInclude Include="src\UI-Components\NfDom.hpp">
-			<Filter>src\UI-Components</Filter>
-		</ClInclude>
-		<ClInclude Include="src\UI-Components\NfDropdown.hpp">
 			<Filter>src\UI-Components</Filter>
 		</ClInclude>
 		<ClInclude Include="src\UI-Components\NfEventManager.hpp">

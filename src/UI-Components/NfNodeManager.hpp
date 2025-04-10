@@ -10,7 +10,6 @@
 #include <vector>
 #include <memory>
 #include "NfBoxxer.hpp"
-#include "NfDropdown.hpp"
 #include "NfEventManager.hpp"
 #include "NfEventBus.hpp"
 #include "ofEvents.h"
@@ -49,7 +48,7 @@ public:
     bool unfocusAll();
     bool focusInCollection(std::vector<std::shared_ptr<NfBoxxer>>& collection, const std::string& name);
     
-    // Dropdown management
+    // Selection management
     void closeAllDropdowns();
 };
 

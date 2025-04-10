@@ -27,8 +27,6 @@ Project{
             'src/UI-Components/NfBoxxerManager.hpp',
             'src/UI-Components/NfDom.cpp',
             'src/UI-Components/NfDom.hpp',
-            'src/UI-Components/NfDropdown.cpp',
-            'src/UI-Components/NfDropdown.hpp',
             'src/UI-Components/NfEventManager.cpp',
             'src/UI-Components/NfEventManager.hpp',
             'src/UI-Components/NfLabel.cpp',
