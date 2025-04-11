@@ -57,6 +57,7 @@ public:
     void draw() override;
     void drawBaseElement();           // Draws just the selection box
     void drawDropdown();              // Draws just the dropdown portion
+    void update() override;           // Handle time-based state updates
     
     // Floating element detection and handling
     bool hasFloatingElement() const { return _isDropdownOpen; }

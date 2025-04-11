@@ -89,6 +89,14 @@ void NfNodeManager::drawNodes() {
     }
 }
 
+// Update logic
+void NfNodeManager::updateNodes() {
+    // Update regular nodes
+    for (auto& node : nodes) {
+        node->update();
+    }
+}
+
 // Focus management
 bool NfNodeManager::focusNode(const std::string& name) {
     bool found = unfocusAll(); // Unfocus all nodes first

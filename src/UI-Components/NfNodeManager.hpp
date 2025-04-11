@@ -43,6 +43,9 @@ public:
     // Drawing
     void drawNodes();
     
+    // Update logic
+    void updateNodes();
+    
     // Focus management
     bool focusNode(const std::string& name);
     bool unfocusAll();

@@ -121,6 +121,27 @@ void NfBoxxer::updateChildrenBounds() {
     }
 }
 
+void NfBoxxer::update() {
+    // Perform any time-based state updates for this component
+    
+    // This method is intended to be overridden by derived classes
+    // to implement specific update logic for animations, transitions,
+    // or other time-dependent behaviors
+    
+    // After updating this component, update all children
+    updateChildren();
+}
+
+void NfBoxxer::updateChildren() {
+    // Update all children
+    for (auto& child : children) {
+        auto boxer = dynamic_cast<NfBoxxer*>(child.get());
+        if (boxer) {
+            boxer->update();
+        }
+    }
+}
+
 void NfBoxxer::markTransformationDirty(bool includeChildren) {
     _transformationDirty = true;
     

@@ -847,4 +847,23 @@ bool NfTextInputField::handleRoutedKeyEvent(AppEventType type, const int key) {
     }
 }
 
+void NfTextInputField::update() {
+    // Handle cursor blinking animation - previously this was done in the draw method
+    // Moving it to update() makes the state management cleaner and more predictable
+    
+    // Only update cursor blinking when editing
+    if (isEditing && drawCursor) {
+        // No need to recalculate this on every frame in draw() now
+        float timeSinceLastCursorMove = ofGetElapsedTimef() - lastTimeCursorMoved;
+        
+        // After 10 seconds of inactivity, automatically end editing
+        if (timeSinceLastCursorMove > 10.0f) {
+            endEditing();
+        }
+    }
+    
+    // Call parent's update method to handle children
+    NfBoxxer::update();
+}
+
 }

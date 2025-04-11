@@ -189,7 +189,7 @@ void ofApp::setup() {
     _guiParamsNode->addChild(_guiParamsPassword);
     _guiParamsNode->addChild(_guiParamsShowStatusBar);
     _guiParamsNode->addChild(_guiParamsShowStatusFPS);
-    _guiParamsNode->addChild(_guiParamsWaveform);  // Add waveform selector before the button
+    //_guiParamsNode->addChild(_guiParamsWaveform);  // Add waveform selector before the button
     _guiParamsNode->addChild(_guiParamsButton);
     // add event handlers for interactive elements
      ofAddListener(_guiParamsShowGrid->clicked, this, &ofApp::onGuiParametersShowGridClicked);
@@ -300,6 +300,9 @@ void ofApp::setup() {
 void ofApp::update(){
     // Update the demo manager
     _demoManager.update();
+    
+    // Update UI components
+    nfUI::g_nodeManager.updateNodes();
 }
 
 
@@ -312,11 +315,13 @@ void ofApp::draw(){
     // draw status bar
     _nfGUI.drawStatusBar(this->_guiParams);
     
+    // Draw the demo content
+    _demoManager.draw();
+    
     // draw nodes
     nfUI::g_nodeManager.drawNodes(); // This starts the recursive drawing process
     
-    // Draw the demo content
-    _demoManager.draw();
+    
     
     ofPopMatrix(); // Restore the transformation matrix
 }

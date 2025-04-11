@@ -279,6 +279,29 @@ bool NfSelection::handleFloatingElementEvent(AppEventType type, const ofPoint& p
     return false;
 }
 
+void NfSelection::update() {
+    // Update animations or transitions related to the dropdown
+    
+    // Example: Handle auto-closing of dropdowns that have been open too long
+    if (_isDropdownOpen) {
+        uint64_t currentTime = ofGetElapsedTimeMillis();
+        uint64_t openDuration = currentTime - _lastDropdownCloseTime;
+        
+        // Auto-close dropdown if it's been open for more than 10 seconds with no interaction
+        // This helps prevent forgotten open dropdowns
+        if (openDuration > 10000 && _hoveredItem == -1) {
+            _isDropdownOpen = false;
+            _lastDropdownCloseTime = currentTime;
+            _dropdownStateChanged = true;
+        }
+    }
+    
+    // Update any hover animations or transitions here
+    
+    // Call parent's update method to handle children
+    NfBoxxer::update();
+}
+
 bool NfSelection::handleRoutedMouseEvent(AppEventType type, const ofPoint& globalPoint, int button) {
     switch (type) {
         case AppEventType::MOUSE_PRESSED:

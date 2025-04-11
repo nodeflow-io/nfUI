@@ -37,6 +37,10 @@ public:
     void drawChildren(const float& paddingLeft, const float& paddingTop);
     void focus();
     
+    // Override update method from NfUIElement
+    void update() override;
+    void updateChildren();
+    
     // Position and size management
     void setPosition(const ofPoint& position);
     void setSize(float width, float height);

@@ -70,6 +70,7 @@ public:
 
     // Core functionality
     virtual void draw() = 0;
+    virtual void update() {}; // Update method for time-based state changes
     bool isRoot() const;
     NfUIElement* findRoot();
     void addChild(const std::shared_ptr<NfUIElement>& child);

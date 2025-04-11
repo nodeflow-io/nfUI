@@ -115,6 +115,7 @@ public:
     void drawText();
     void clear();
     
+    void update() override;
     
     int cursorPosition;
     
