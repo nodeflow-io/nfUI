@@ -122,6 +122,11 @@ void NfBoxxer::updateChildrenBounds() {
 }
 
 void NfBoxxer::update() {
+    // Update bounds if needed - moved from draw() method
+    if (_transformationDirty) {
+        updateGlobalBounds();
+    }
+    
     // Perform any time-based state updates for this component
     
     // This method is intended to be overridden by derived classes
@@ -256,10 +261,7 @@ void NfBoxxer::draw() {
         _firstRender = false;
     }
     
-    // Update bounds if needed
-    if (_transformationDirty) {
-        updateGlobalBounds();
-    }
+    // Bounds are now updated in the update() method, not here
     
     // Draw debug mouse bounds if enabled
     if (showDebugBounds) {
